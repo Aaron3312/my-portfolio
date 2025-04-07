@@ -1,235 +1,239 @@
-// src/app/page.tsx
-import { Button } from "@/components/ui/Button"
-import Image from "next/image"
-import { Briefcase, Code, Layout, Server, Hourglass, Globe, Cake } from "lucide-react"
-// Import projects data from the projects page
-import { projects } from "@/app/projects/page"
+// File: src/app/page.tsx
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import HeroSection from "@/components/sections/HeroSection";
+import SkillsSection from "@/components/sections/SkillsSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
+import CTASection from "@/components/sections/CTASection";
+import BackgroundCanvas from "@/components/ui/BackgroundCanvas";
+import LoadingScreen from "@/components/ui/LoadingScreen";
+import { projects } from "@/app/projects/page";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+
+// Register GSAP plugins
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, MotionPathPlugin);
+}
 
 export default function Home() {
   // Get 3 featured projects to display on the home page
   const featuredProjects = projects.slice(0, 3);
   
-  // Map the project icon to the corresponding Lucide icon component
-  const getProjectIcon = (slug) => {
-    switch (slug) {
-      case "supply-stream":
-        return <Globe className="h-6 w-6 text-sky-600" />;
-      case "cronos":
-        return <Hourglass className="h-6 w-6 text-amber-600" />;
-      case "bakery-pos":
-        return <Cake className="h-6 w-6 text-pink-500" />;
-      default:
-        return <Briefcase className="h-6 w-6 text-blue-600" />;
+  // State for 3D effect and interactive elements
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // Refs for animations
+  const heroRef = useRef<HTMLElement>(null);
+  const heroTextRef = useRef<HTMLDivElement>(null);
+  const heroImageRef = useRef<HTMLDivElement>(null);
+  const skillsRef = useRef<HTMLElement>(null);
+  const skillItemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const projectsRef = useRef<HTMLElement>(null);
+  const projectItemsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const ctaRef = useRef<HTMLElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  
+  // Initialize empty refs arrays
+  useEffect(() => {
+    skillItemsRef.current = skillItemsRef.current.slice(0, 6);
+    projectItemsRef.current = projectItemsRef.current.slice(0, 3);
+  }, []);
+
+  // Initialize animations
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    
+    // Loading animation
+    const loadingTimeline = gsap.timeline({
+      onComplete: () => {
+        setIsLoading(false);
+      }
+    });
+    
+    // Initial loading animation
+    loadingTimeline
+      .to(".loading-progress", {
+        width: "100%",
+        duration: 1.5,
+        ease: "power2.inOut"
+      })
+      .to(".loading-screen", {
+        opacity: 0,
+        pointerEvents: "none",
+        duration: 0.5,
+        ease: "power2.inOut"
+      });
+      
+    return () => {
+      // Clean up timeline
+      loadingTimeline.kill();
+    };
+  }, []);
+
+  // Set up animations separately after loading is complete
+  useEffect(() => {
+    if (typeof window === "undefined" || isLoading) return;
+    
+    // Hero section animations
+    const heroTimeline = gsap.timeline();
+    
+    if (heroTextRef.current) {
+      heroTimeline.from(heroTextRef.current.querySelectorAll('.animate-in'), {
+        y: 50,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.8,
+        ease: "power3.out"
+      });
     }
-  };
+    
+    if (heroImageRef.current) {
+      heroTimeline.from(heroImageRef.current, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 1,
+        ease: "elastic.out(1, 0.5)"
+      }, "-=0.5");
+    }
+    
+    // Initialize ScrollTrigger
+    ScrollTrigger.refresh();
+    
+    // Set up scroll-triggered animations
+    // Skills section
+    if (skillsRef.current && skillItemsRef.current.length > 0) {
+      gsap.from(skillItemsRef.current.filter(Boolean), {
+        y: 50,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.6,
+        scrollTrigger: {
+          trigger: skillsRef.current,
+          start: "top 70%",
+          markers: process.env.NODE_ENV === 'development', // Add markers in dev mode for debugging
+          toggleActions: "play none none none"
+        }
+      });
+    }
+    
+    // Projects section
+    if (projectsRef.current && projectItemsRef.current.length > 0) {
+      gsap.from(projectItemsRef.current.filter(Boolean), {
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.6,
+        scrollTrigger: {
+          trigger: projectsRef.current,
+          start: "top 70%",
+          markers: process.env.NODE_ENV === 'development', // Add markers in dev mode for debugging
+          toggleActions: "play none none none"
+        }
+      });
+    }
+    
+    // CTA section
+    if (ctaRef.current) {
+      gsap.from(ctaRef.current.querySelectorAll('.animate-in'), {
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.6,
+        scrollTrigger: {
+          trigger: ctaRef.current,
+          start: "top 80%",
+          markers: process.env.NODE_ENV === 'development', // Add markers in dev mode for debugging
+          toggleActions: "play none none none"
+        }
+      });
+    }
+
+    // 3D tilt effect for projects
+    projectItemsRef.current.forEach(project => {
+      if (!project) return;
+      
+      const mouseMoveHandler = (e: MouseEvent) => {
+        const rect = project.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const xPercent = (x / rect.width - 0.5) * 20;
+        const yPercent = (y / rect.height - 0.5) * 20;
+        
+        gsap.to(project, {
+          rotationY: xPercent,
+          rotationX: -yPercent,
+          transformPerspective: 1000,
+          duration: 0.5,
+          ease: "power1.out"
+        });
+      };
+      
+      const mouseLeaveHandler = () => {
+        gsap.to(project, {
+          rotationY: 0,
+          rotationX: 0,
+          duration: 0.5,
+          ease: "power1.out"
+        });
+      };
+      
+      project.addEventListener('mousemove', mouseMoveHandler as EventListener);
+      project.addEventListener('mouseleave', mouseLeaveHandler);
+      
+      // Return cleanup function to remove listeners
+      return () => {
+        project.removeEventListener('mousemove', mouseMoveHandler as EventListener);
+        project.removeEventListener('mouseleave', mouseLeaveHandler);
+      };
+    });
+    
+    // Add a window resize listener to refresh ScrollTrigger
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    // Make sure ScrollTrigger refreshes when images load
+    window.addEventListener('load', () => {
+      ScrollTrigger.refresh();
+    });
+    
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <>
+      {/* Interactive background canvas */}
+      <BackgroundCanvas canvasRef={canvasRef} mousePosition={mousePosition} setMousePosition={setMousePosition} />
+      
+      {/* Loading screen */}
+      {isLoading && <LoadingScreen />}
+      
       {/* Hero Section */}
-      <section className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-blue-950/30 dark:via-slate-950 dark:to-indigo-950/30"></div>
-        <div className="absolute inset-0 opacity-30 dark:opacity-20">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-400/20 dark:bg-blue-400/10 rounded-full filter blur-3xl transform -translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-400/20 dark:bg-indigo-400/10 rounded-full filter blur-3xl transform translate-x-1/3 translate-y-1/3"></div>
-        </div>
-        
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div className="flex flex-col gap-4 text-center md:text-left">
-              <div className="inline-block mx-auto md:mx-0 mb-2 px-3 py-1 text-sm font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
-                Software Engineer
-              </div>
-              <h1 className="text-3xl md:text-5xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
-                Hi, I'm Aaron Hernández Jiménez
-              </h1>
-              <p className="text-xl text-blue-600 dark:text-blue-400 font-medium">
-                Full Stack Developer | Cloud Solutions Architect
-              </p>
-              <p className="text-muted-foreground md:text-lg">
-                Computer Science student at Tecnológico de Monterrey with expertise in building scalable web applications, cloud-native solutions, and AI-powered systems.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3 mt-6 justify-center md:justify-start">
-                <Button 
-                  href="/projects" 
-                  size="lg" 
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl"
-                >
-                  View My Work
-                </Button>
-                <Button 
-                  href="/contact" 
-                  variant="outline" 
-                  size="lg"
-                  className="border-2 hover:bg-slate-100 dark:hover:bg-slate-800"
-                >
-                  Get In Touch
-                </Button>
-              </div>
-            </div>
-            <div className="flex justify-center items-center">
-              <div className="relative h-[280px] w-[280px] md:h-[400px] md:w-[400px] rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900 mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 dark:from-blue-500/20 dark:to-indigo-500/20 z-10"></div>
-                <Image
-                  src="https://raw.githubusercontent.com/Aaron3312/aaron3312/main/SGCAM_20241125_163111155.PORTRAIT.jpg"
-                  alt="Aaron Hernandez"
-                  fill
-                  className="object-cover z-0"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HeroSection heroRef={heroRef} heroTextRef={heroTextRef} heroImageRef={heroImageRef} />
 
-      {/* Skills Section */}
-      <section className="py-20 bg-white dark:bg-slate-950">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">My Skills</h2>
-            <p className="mt-4 text-muted-foreground md:text-lg max-w-3xl">
-              Expertise in multiple domains of software development and engineering
-            </p>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <div className="flex flex-col items-center p-6 bg-gray-50 dark:bg-slate-900 rounded-lg shadow-sm">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <Layout className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Frontend Development</h3>
-              <p className="text-muted-foreground text-center">
-                React, React Native, Next.js, Angular, Redux, TailwindCSS
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-6 bg-gray-50 dark:bg-slate-900 rounded-lg shadow-sm">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <Server className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Backend Development</h3>
-              <p className="text-muted-foreground text-center">
-                Node.js, Express, Spring Boot, Firebase, PostgreSQL
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-6 bg-gray-50 dark:bg-slate-900 rounded-lg shadow-sm">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                  <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
-                  <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
-                  <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">AI & Machine Learning</h3>
-              <p className="text-muted-foreground text-center">
-                TensorFlow Lite, Computer Vision, YOLOv5, OpenAI API
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-6 bg-gray-50 dark:bg-slate-900 rounded-lg shadow-sm">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
-                  <path d="M18 10h-4v4h4v-4z"></path>
-                  <path d="M10 10H6v4h4v-4z"></path>
-                  <path d="M18 3H6v4h12V3z"></path>
-                  <path d="M6 17h12v4H6v-4z"></path>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Cloud & DevOps</h3>
-              <p className="text-muted-foreground text-center">
-                AWS, GCP, Azure, Docker, Kubernetes, GitHub Actions
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-6 bg-gray-50 dark:bg-slate-900 rounded-lg shadow-sm">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <Code className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Programming Languages</h3>
-              <p className="text-muted-foreground text-center">
-                C++, Python, JavaScript, TypeScript, Java, C#, SQL, Haskell
-              </p>
-            </div>
-            <div className="flex flex-col items-center p-6 bg-gray-50 dark:bg-slate-900 rounded-lg shadow-sm">
-              <div className="rounded-full bg-primary/10 p-3 mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary">
-                  <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                  <polyline points="16 17 21 12 16 7"></polyline>
-                  <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-2">Software Engineering</h3>
-              <p className="text-muted-foreground text-center">
-                Agile Methodology, CI/CD Pipelines, Requirements Engineering, CCNA Networking
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Skills Section with Interactive Cards */}
+      <SkillsSection skillsRef={skillsRef} skillItemsRef={skillItemsRef} />
 
-      {/* Featured Projects Section */}
-      <section className="py-20 bg-gray-50 dark:bg-slate-900">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center text-center mb-12">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Featured Projects</h2>
-            <p className="mt-4 text-muted-foreground md:text-lg max-w-3xl">
-              A selection of my most innovative work
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* Map through featured projects from the projects array */}
-            {featuredProjects.map((project) => (
-              <div key={project.slug} className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:translate-y-[-5px] duration-300">
-                <div className="absolute top-4 right-4 z-10 rounded-full bg-white/90 p-2 shadow-md dark:bg-slate-900/90">
-                  {getProjectIcon(project.slug)}
-                </div>
-                <div className="aspect-video w-full bg-gray-100 dark:bg-slate-800 relative">
-                  <Image
-                    src={project.image}
-                    alt={`${project.title} Project`}
-                    fill
-                    className="object-cover transition-transform group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6 bg-white dark:bg-slate-950">
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-muted-foreground mb-4">
-                    {project.description}
-                  </p>
-                  <div className="flex justify-center">
-                    <Button href={`/projects/${project.slug}`} variant="outline" size="sm">
-                      View Project
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center mt-12">
-            <Button href="/projects" variant="default" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl">
-              View All Projects
-            </Button>
-          </div>
-        </div>
-      </section>
+      {/* Featured Projects Section with 3D effects */}
+      <ProjectsSection 
+        projectsRef={projectsRef} 
+        projectItemsRef={projectItemsRef}
+        featuredProjects={featuredProjects} 
+      />
 
       {/* CTA Section */}
-      <section className="py-20 bg-white dark:bg-slate-950 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 opacity-50 dark:from-blue-950/20 dark:to-indigo-950/20"></div>
-        <div className="container mx-auto px-4 md:px-6 relative z-10">
-          <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-5 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400 leading-relaxed -mt-1">
-              Let's Build Something Amazing
-            </h2>
-            <p className="text-muted-foreground mb-8 md:text-lg">
-              I'm currently available for freelance projects, full-time positions, or consulting work. 
-              If you're interested in working together on innovative solutions, let's connect!
-            </p>
-            <Button href="/contact" size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl">
-              Contact Me
-            </Button>
-          </div>
-        </div>
-      </section>
+      <CTASection ctaRef={ctaRef} />
     </>
-  )
+  );
 }
