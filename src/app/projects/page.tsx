@@ -53,7 +53,7 @@ export const projects = [
     title: "Warehouse MultiAgent System",
     description: "Autonomous robotics simulation with real-time computer vision using YOLOv5 and intelligent navigation.",
     image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Warehouse.gif",
-    tags: ["Unity", "Python", "YOLOv5", "UDP", "NavMesh"],
+    tags: ["Unity", "Python", "YOLOv5", "UDP", "NavMesh", "Computer Vision", "AI", "Autonomous Agents", "Intelligent Navigation", "React"],
     githubUrl: "https://github.com/Aaron3312/ProyectoSkeletons",
     liveUrl: "https://photos.app.goo.gl/vM2MzAaMhbRRqmNJ8",
     slug: "warehouse-system"

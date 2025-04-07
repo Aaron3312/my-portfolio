@@ -75,7 +75,7 @@ export default function AboutPage() {
             <div className="relative border-l border-slate-200 pl-6 dark:border-slate-800">
               <div className="absolute -left-[7px] top-[10px] h-3.5 w-3.5 rounded-full border border-white bg-slate-200 dark:border-slate-950 dark:bg-slate-800"></div>
               <h3 className="text-xl font-semibold">CCNA 200-301 Networking</h3>
-              <p className="text-muted-foreground">Cisco Certification</p>
+              <p className="text-muted-foreground">Cisco Training Certification</p>
               <p className="text-sm text-muted-foreground">2023</p>
               <p className="mt-2">
                 Comprehensive program covering networking fundamentals, IP connectivity, 
@@ -119,10 +119,10 @@ export default function AboutPage() {
             <div className="relative border-l border-slate-200 pl-6 dark:border-slate-800">
               <div className="absolute -left-[7px] top-[10px] h-3.5 w-3.5 rounded-full border border-white bg-slate-200 dark:border-slate-950 dark:bg-slate-800"></div>
               <h3 className="text-xl font-semibold">Web Development Teaching Assistant</h3>
-              <p className="text-muted-foreground">Tecnológico de Monterrey</p>
+              <p className="text-muted-foreground">Universidad del Valle de México</p>
               <p className="text-sm text-muted-foreground">2021 - 2022</p>
               <p className="mt-2">
-                Assisted students in learning web development concepts and technologies. 
+                Assisted students in learning web development basic concepts and technologies. 
                 Provided code reviews and troubleshooting support.
               </p>
             </div>
