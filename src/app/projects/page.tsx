@@ -41,7 +41,7 @@ const projects = [
   {
     title: "Warehouse MultiAgent System",
     description: "Autonomous robotics simulation with real-time computer vision using YOLOv5 and intelligent navigation.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/warehouse-system.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Warehouse.gif",
     tags: ["Unity", "Python", "YOLOv5", "UDP", "NavMesh"],
     githubUrl: "https://github.com/Aaron3312/ProyectoSkeletons",
     liveUrl: "",
@@ -59,7 +59,7 @@ const projects = [
   {
     title: "Solo Para Eva",
     description: "E-commerce showcase for artisanal natural body care products with elegant product display and categorization.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/solo-para-eva.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/SoloParaEva.png",
     tags: ["Next.js", "React", "TailwindCSS", "Responsive Design"],
     githubUrl: "https://github.com/Aaron3312/tienda-limpieza-corporal",
     liveUrl: "https://soloparaeva.lat",
