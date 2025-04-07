@@ -5,7 +5,7 @@ const projects = [
   {
     title: "SupplyStream",
     description: "AI-powered inventory management system for Food Bank Guadalajara, reducing manual tracking time by 50%.",
-    image: "/images/supply-stream.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/SupplyStream.png",
     tags: ["React Native", "Firebase", "TensorFlow Lite", "Machine Learning"],
     githubUrl: "https://github.com/Aaron3312/SupplyStream",
     liveUrl: "",
@@ -14,7 +14,7 @@ const projects = [
   {
     title: "BakeryPOS",
     description: "Comprehensive point-of-sale system for bakeries with offline functionality and real-time order management.",
-    image: "/images/bakery-pos.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/bakery-pos.jpg",
     tags: ["JavaScript", "Firebase", "IndexedDB", "Python", "Thermal Printing"],
     githubUrl: "https://github.com/Aaron3312/BakeryPOS",
     liveUrl: "",
@@ -23,7 +23,7 @@ const projects = [
   {
     title: "Cuevana by Aaron",
     description: "Modern web application for exploring movies and series using TMDB API with advanced search functionality.",
-    image: "/images/cuevana.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/cuevana.jpg",
     tags: ["React", "Vite", "TMDB API", "Cypress", "GitHub Actions"],
     githubUrl: "https://github.com/Aaron3312/web2",
     liveUrl: "https://aaron3312.github.io/web2/",
@@ -32,7 +32,7 @@ const projects = [
   {
     title: "Cronos Project",
     description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
-    image: "/images/cronos.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/cronos.jpg",
     tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
     githubUrl: "https://github.com/Aaron3312/CronosProject",
     liveUrl: "",
@@ -41,7 +41,7 @@ const projects = [
   {
     title: "Warehouse MultiAgent System",
     description: "Autonomous robotics simulation with real-time computer vision using YOLOv5 and intelligent navigation.",
-    image: "/images/warehouse-system.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/warehouse-system.jpg",
     tags: ["Unity", "Python", "YOLOv5", "UDP", "NavMesh"],
     githubUrl: "https://github.com/Aaron3312/ProyectoSkeletons",
     liveUrl: "",
@@ -50,7 +50,7 @@ const projects = [
   {
     title: "Security Multi-Agent System",
     description: "Prison security simulation with autonomous drones, security cameras, and AI-powered threat detection.",
-    image: "/images/security-system.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/security-system.jpg",
     tags: ["Unity", "Python", "Computer Vision", "AI", "Autonomous Agents"],
     githubUrl: "https://github.com/Aaron3312/ProyectoDronUnity",
     liveUrl: "https://youtu.be/k5nwyPjoEUE",
@@ -59,7 +59,7 @@ const projects = [
   {
     title: "Solo Para Eva",
     description: "E-commerce showcase for artisanal natural body care products with elegant product display and categorization.",
-    image: "/images/solo-para-eva.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/solo-para-eva.jpg",
     tags: ["Next.js", "React", "TailwindCSS", "Responsive Design"],
     githubUrl: "https://github.com/Aaron3312/tienda-limpieza-corporal",
     liveUrl: "https://soloparaeva.lat",
