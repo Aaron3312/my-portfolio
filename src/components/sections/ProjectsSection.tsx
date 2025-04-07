@@ -1,19 +1,97 @@
 // File: src/components/sections/ProjectsSection.jsx
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { getProjectIcon } from "@/utils/projectIcons";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register GSAP plugins
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const ProjectsSection = ({ projectsRef, projectItemsRef, featuredProjects }) => {
+  const titleRef = useRef(null);
+  const subtitleRef = useRef(null);
+  const ctaButtonRef = useRef(null);
+  
+  useEffect(() => {
+    // Skip if we're server-side rendering
+    if (typeof window === "undefined") return;
+    
+    // Basic entrance animations for section elements
+    if (titleRef.current) {
+      gsap.from(titleRef.current, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: titleRef.current,
+          start: "top 80%"
+        }
+      });
+    }
+    
+    if (subtitleRef.current) {
+      gsap.from(subtitleRef.current, {
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        delay: 0.2,
+        scrollTrigger: {
+          trigger: subtitleRef.current,
+          start: "top 80%"
+        }
+      });
+    }
+    
+    // Simple card animations
+    projectItemsRef.current.forEach((card, index) => {
+      if (!card) return;
+      
+      gsap.from(card, {
+        y: 50,
+        opacity: 0,
+        duration: 0.6,
+        delay: index * 0.1,
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%"
+        }
+      });
+    });
+    
+    // Button animation
+    if (ctaButtonRef.current) {
+      gsap.from(ctaButtonRef.current, {
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        delay: 0.3,
+        scrollTrigger: {
+          trigger: ctaButtonRef.current,
+          start: "top 90%"
+        }
+      });
+    }
+    
+    // Clean up
+    return () => {
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    };
+  }, [projectsRef, projectItemsRef]);
+  
   return (
     <section ref={projectsRef} className="py-16 sm:py-20 md:py-28 bg-gray-50 dark:bg-slate-900 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/50 dark:from-blue-950/10 dark:to-indigo-950/10"></div>
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col items-center justify-center text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+          <h2 ref={titleRef} className="text-3xl sm:text-4xl font-bold tracking-tighter md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
             Featured Projects
           </h2>
-          <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-3xl">
+          <p ref={subtitleRef} className="mt-4 text-base sm:text-lg text-muted-foreground max-w-3xl">
             A selection of my most innovative work
           </p>
         </div>
@@ -61,14 +139,13 @@ const ProjectsSection = ({ projectsRef, projectItemsRef, featuredProjects }) => 
                 </div>
                 <div className="absolute border border-transparent group-hover:border-blue-500/20 dark:group-hover:border-blue-400/20 rounded-lg transition-colors duration-300"></div>
               </div>
-              
-              {/* Highlight effect around the card */}
             </div>
           ))}
         </div>
         
         <div className="flex justify-center mt-10 sm:mt-12">
           <Button 
+            ref={ctaButtonRef}
             href="/projects" 
             variant="default" 
             size="lg"

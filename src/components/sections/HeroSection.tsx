@@ -43,8 +43,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       
       // Add mouse move parallax effect
       const handleMouseMove = (e: MouseEvent) => {
-        const xPos = (e.clientX / window.innerWidth - 0.5) * 20;
-        const yPos = (e.clientY / window.innerHeight - 0.5) * 20;
+        const xPos = (e.clientX / window.innerWidth - 0.5) * 220;
+        const yPos = (e.clientY / window.innerHeight - 0.5) * 220;
         
         gsap.to(imageContainer, {
           x: xPos,
