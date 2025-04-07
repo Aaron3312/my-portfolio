@@ -165,23 +165,23 @@ export const projects: ProjectsData = {
       },
 
       {
-        url: "/images/cronos/Chatbot.png",
+        url: "/images/Cronos/Chatbot.png",
         alt: "Cronos Chatbot"
       },
       {
-        url: "/images/cronos/CronoAskAProyect.png",
+        url: "/images/Cronos/CronoAskAProyect.png",
         alt: "Cronos Ask a Project"
       },
       {
-        url: "/images/cronos/ResponseProyect.png",
+        url: "/images/Cronos/ResponseProyect.png",
         alt: "Cronos Project Response"
       },
       {
-        url: "/images/cronos/ResponseProyect2.png",
+        url: "/images/Cronos/ResponseProyect2.png",
         alt: "Cronos Project Response 2"
       },
       {
-        url: "/images/cronos/NotionResponse.png",
+        url: "/images/Cronos/NotionResponse.png",
         alt: "Cronos Notion Response"
       }
     ]

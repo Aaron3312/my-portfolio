@@ -55,7 +55,7 @@ export const projects = [
     image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Warehouse.gif",
     tags: ["Unity", "Python", "YOLOv5", "UDP", "NavMesh"],
     githubUrl: "https://github.com/Aaron3312/ProyectoSkeletons",
-    liveUrl: "",
+    liveUrl: "https://photos.app.goo.gl/vM2MzAaMhbRRqmNJ8",
     slug: "warehouse-system"
   },
   {
