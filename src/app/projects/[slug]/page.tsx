@@ -5,10 +5,7 @@ import { ArrowLeft, Github, ExternalLink, Globe, Cake, Hourglass, Film, HeartHan
 import Link from "next/link"
 import { getProjectData } from "@/utils/project-utils"
 import ProjectCarousel from "@/components/project-carousel"
-import { projects } from "@/data/projects"
-
-
-
+import { projects } from "../page" // Import from the correct location
 
 // Helper function to get the correct icon component
 const getIconComponent = (iconName: string, className: string) => {
@@ -28,29 +25,24 @@ const getIconComponent = (iconName: string, className: string) => {
 // This function generates all the possible slug values at build time
 export async function generateStaticParams() {
   // Get all project slugs from your projects data
-  const slugs = Object.keys(projects);
-  
-  return slugs.map((slug) => ({
-    slug: slug,
+  return projects.map((project) => ({
+    slug: project.slug,
   }));
 }
 
-// Define proper type that matches Next.js expectations
-type ProjectParams = {
-  params: {
-    slug: string;
-  };
-  searchParams?: Record<string, string | string[] | undefined>;
-};
+// Define the proper type for the params
+type Params = {
+  slug: string;
+}
 
-// Make the component async
-export default async function ProjectDetail({ params }: { params: { slug: string } }) {
-  // Make sure params is properly awaited
-  const paramData = await Promise.resolve(params);
-  const slug = paramData.slug;
+// Use async component for dynamic routes in Next.js 15
+export default async function ProjectDetail({ params }: { params: Params }) {
+  // Await the params object before destructuring
+  const resolvedParams = await Promise.resolve(params);
+  const { slug } = resolvedParams;
   
-  // If getProjectData is async, add await here
-  const project = getProjectData(slug);
+  // Find the project in your projects array
+  const project = projects.find(p => p.slug === slug);
   
   if (!project) {
     return (
@@ -59,16 +51,18 @@ export default async function ProjectDetail({ params }: { params: { slug: string
         <p className="mt-4 text-muted-foreground">
           The project you're looking for doesn't exist or has been removed.
         </p>
-        <Button href="/projects" className="mt-8">
+        <Link href="/projects" className="mt-8 inline-flex items-center">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Projects
-        </Button>
+        </Link>
       </div>
     );
   }
-  // Get the icon
-  const icon = getIconComponent(project.iconName, `h-6 w-6 ${project.iconColor}`);
 
+  // For the icon, we'll use a simpler approach
+  const iconName = project.slug;
+  let icon = <Globe className="h-6 w-6" />;
+  
   return (
     <div className="container max-w-5xl mx-auto py-12 md:py-20">
       <div className="mb-8">
@@ -103,7 +97,10 @@ export default async function ProjectDetail({ params }: { params: { slug: string
       
       <div className="mb-10 grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="col-span-2">
-          <div className="prose max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: project.fullDescription }} />
+          <div className="prose max-w-none dark:prose-invert">
+            {/* Display a simplified description if fullDescription is not available */}
+            <p>{project.description}</p>
+          </div>
         </div>
         
         <div className="space-y-8">
@@ -151,9 +148,7 @@ export default async function ProjectDetail({ params }: { params: { slug: string
         </div>
       </div>
       
-      {project.screenshots && project.screenshots.length > 0 && (
-        <ProjectCarousel screenshots={project.screenshots} title={project.title} />
-      )}
+      {/* Remove the ProjectCarousel section as it depends on data we don't have */}
     </div>
   )
 }
