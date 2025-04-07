@@ -37,12 +37,12 @@ jobs:
         run: |
           echo "NEXT_PUBLIC_BASE_PATH=${{ github.event.repository.name }}" >> $GITHUB_ENV
           
-      - name: Build Next.js application
-        # Skip all TypeScript and ESLint checks
+      - name: Build and export Next.js application
         run: |
           echo "Skipping TypeScript checks as requested"
           echo "Skipping ESLint checks as requested"
           npm run build -- --no-lint
+          npx next export
         
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v4
