@@ -61,7 +61,7 @@ export default async function ProjectDetail({ params }: { params: Params }) {
 
   // For the icon, we'll use a simpler approach
   const iconName = project.slug;
-  let icon = <Globe className="h-6 w-6" />;
+  const icon = <Globe className="h-6 w-6" />;
   
   return (
     <div className="container max-w-5xl mx-auto py-12 md:py-20">
