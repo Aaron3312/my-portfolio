@@ -16,20 +16,21 @@ const nextConfig = {
     ],
   },
   // Add your repository name if your site will be hosted in a subdirectory
-  // basePath: '/my-portfolio',
+  basePath: process.env.NODE_ENV === 'production' ? '/my-portfolio' : '',
   
   // For GitHub Pages, this is required if you're not using a custom domain
-  // assetPrefix: process.env.NODE_ENV === 'production' ? '/my-portfolio' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/my-portfolio' : '',
   
   eslint: {
-    // This will ignore all ESLint errors during the build
     ignoreDuringBuilds: true,
   },
   
   typescript: {
-    // This will ignore all TypeScript errors during the build
     ignoreBuildErrors: true,
-  }
+  },
+
+  // Remove the experimental section if it exists
+  experimental: {}
 };
 
 module.exports = nextConfig;
