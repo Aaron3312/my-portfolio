@@ -1,7 +1,7 @@
 // src/app/page.tsx
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import Image from "next/image"
-import { Briefcase, Code, Database, Layout, Server, Hourglass, Globe, Cake, Brain, Cpu, Shield } from "lucide-react"
+import { Briefcase, Code, Layout, Server, Hourglass, Globe, Cake } from "lucide-react"
 // Import projects data from the projects page
 import { projects } from "@/app/projects/page"
 

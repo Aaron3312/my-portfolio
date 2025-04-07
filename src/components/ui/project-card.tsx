@@ -1,7 +1,7 @@
 // src/components/project-card.tsx
 // src/components/project-card.tsx
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/Button"
 import { Github, ExternalLink, Globe, Hourglass, Cake, Film, HeartHandshake, Brain, Shield } from "lucide-react"
 
 interface ProjectCardProps {

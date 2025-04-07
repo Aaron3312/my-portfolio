@@ -1,6 +1,6 @@
 // src/app/projects/[slug]/page.tsx
 import Image from "next/image"
-import { Button } from "../../components/ui/button"
+import { Button } from "../../components/ui/Button"
 import { ArrowLeft, Github, ExternalLink, Globe, Cake, Hourglass, Film, HeartHandshake, Brain, Shield } from "lucide-react"
 import Link from "next/link"
 import { getProjectData } from "@/utils/project-utils"
