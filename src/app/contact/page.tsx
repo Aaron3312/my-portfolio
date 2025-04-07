@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { Button } from "@/components/ui/button"
+import { Button } from "../../components/ui/button"
 import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react"
 import emailjs from '@emailjs/browser';
 

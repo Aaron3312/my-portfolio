@@ -1,6 +1,6 @@
 // src/app/about/page.tsx
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
+import { Button } from "../../components/ui/button"
 import { FileText, GraduationCap, Briefcase } from "lucide-react"
 
 export default function AboutPage() {
