@@ -1,36 +1,35 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
 
-const nextConfig: NextConfig = {
-  output: 'export',  // Enable static exports for GitHub Pages
+const nextConfig = {
+  output: 'export',
   images: {
-    domains: ["raw.githubusercontent.com", "github.com"],
-    unoptimized: true,  // Required for static export with Next.js Image component
+    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'raw.githubusercontent.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'github.com',
+      }
+    ],
   },
   // Add your repository name if your site will be hosted in a subdirectory
-  // basePath: '/my-portfolio',  // Uncomment and replace with your repo name
+  // basePath: '/my-portfolio',
   
   // For GitHub Pages, this is required if you're not using a custom domain
-  // assetPrefix: process.env.NODE_ENV === 'production' ? '/my-portfolio' : '',  // Uncomment and replace with your repo name
+  // assetPrefix: process.env.NODE_ENV === 'production' ? '/my-portfolio' : '',
   
-  // Ignore TypeScript and ESLint errors during build
-  typescript: {
-    ignoreBuildErrors: true,
-  },
   eslint: {
+    // This will ignore all ESLint errors during the build
     ignoreDuringBuilds: true,
   },
   
-  // Configure webpack to handle module resolution errors
-  webpack: (config, { isServer }) => {
-    // This is for handling module resolution errors
-    config.resolve.fallback = {
-      ...config.resolve.fallback,
-      fs: false,
-      path: false,
-    };
-    
-    return config;
-  },
+  typescript: {
+    // This will ignore all TypeScript errors during the build
+    ignoreBuildErrors: true,
+  }
 };
 
-export default nextConfig;
+module.exports = nextConfig;
