@@ -7,6 +7,9 @@ import { getProjectData } from "@/utils/project-utils"
 import ProjectCarousel from "@/components/project-carousel"
 import { projects } from "@/data/projects"
 
+
+
+
 // Helper function to get the correct icon component
 const getIconComponent = (iconName: string, className: string) => {
   const icons = {
@@ -32,8 +35,22 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function ProjectDetail({ params }: { params: { slug: string } }) {
-  const project = getProjectData(params.slug);
+// Define proper type that matches Next.js expectations
+type ProjectParams = {
+  params: {
+    slug: string;
+  };
+  searchParams?: Record<string, string | string[] | undefined>;
+};
+
+// Make the component async
+export default async function ProjectDetail({ params }: { params: { slug: string } }) {
+  // Make sure params is properly awaited
+  const paramData = await Promise.resolve(params);
+  const slug = paramData.slug;
+  
+  // If getProjectData is async, add await here
+  const project = getProjectData(slug);
   
   if (!project) {
     return (
@@ -49,7 +66,6 @@ export default function ProjectDetail({ params }: { params: { slug: string } }) 
       </div>
     );
   }
-
   // Get the icon
   const icon = getIconComponent(project.iconName, `h-6 w-6 ${project.iconColor}`);
 
