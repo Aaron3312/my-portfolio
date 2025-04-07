@@ -21,9 +21,9 @@ const projects = [
     slug: "bakery-pos"
   },
   {
-    title: "Cuevana by Aaron",
+    title: "Web2",
     description: "Modern web application for exploring movies and series using TMDB API with advanced search functionality.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/cuevana.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Web2.png",
     tags: ["React", "Vite", "TMDB API", "Cypress", "GitHub Actions"],
     githubUrl: "https://github.com/Aaron3312/web2",
     liveUrl: "https://aaron3312.github.io/web2/",
@@ -32,7 +32,7 @@ const projects = [
   {
     title: "Cronos Project",
     description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/cronos.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
     tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
     githubUrl: "https://github.com/Aaron3312/CronosProject",
     liveUrl: "",
