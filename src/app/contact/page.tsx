@@ -1,11 +1,12 @@
-// src/app/contact/page.tsx
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react"
+import emailjs from '@emailjs/browser';
 
 export default function ContactPage() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -24,17 +25,23 @@ export default function ContactPage() {
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!formRef.current) return;
+    
     setIsSubmitting(true)
     setSubmitSuccess(false)
     setSubmitError("")
     
-    // Simulate form submission
     try {
-      // In a real application, you would send this data to your backend
-      console.log("Form data:", formData)
-      
-      // Simulate network delay
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+      // Send the email using EmailJS
+      const result = await emailjs.sendForm(
+        'service_1vvdr8z', // Replace with your EmailJS service ID
+        'template_fvt4mlb', // Replace with your EmailJS template ID
+        formRef.current,
+        'PG3s5S25cIVZe_CcM' // Replace with your EmailJS public key
+      );
+
+      console.log('Email sent successfully:', result.text);
       
       setSubmitSuccess(true)
       setFormData({
@@ -44,6 +51,7 @@ export default function ContactPage() {
         message: "",
       })
     } catch (error) {
+      console.error('Failed to send email:', error);
       setSubmitError("There was an error sending your message. Please try again.")
     } finally {
       setIsSubmitting(false)
@@ -130,7 +138,7 @@ export default function ContactPage() {
         <div>
           <h2 className="mb-6 text-2xl font-bold">Send Me a Message</h2>
           
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="mb-2 block text-sm font-medium">
                 Your Name

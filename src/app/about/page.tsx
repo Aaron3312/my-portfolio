@@ -16,7 +16,7 @@ export default function AboutPage() {
       <div className="grid grid-cols-1 gap-12 md:grid-cols-2">
         <div className="relative aspect-square overflow-hidden rounded-2xl border bg-gray-100 dark:border-slate-800 dark:bg-slate-800">
           <Image
-            src="/images/profile-about.jpg"
+            src="/images/about.jpg"
             alt="Aaron Hernandez"
             fill
             className="object-cover"
