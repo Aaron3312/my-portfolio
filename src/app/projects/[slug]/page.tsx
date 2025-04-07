@@ -5,6 +5,7 @@ import { ArrowLeft, Github, ExternalLink, Globe, Cake, Hourglass, Film, HeartHan
 import Link from "next/link"
 import { getProjectData } from "@/utils/project-utils"
 import ProjectCarousel from "@/components/project-carousel"
+import { projects } from "@/data/projects"
 
 // Helper function to get the correct icon component
 const getIconComponent = (iconName: string, className: string) => {
@@ -20,6 +21,16 @@ const getIconComponent = (iconName: string, className: string) => {
   
   return icons[iconName as keyof typeof icons] || <Globe className={className} />;
 };
+
+// This function generates all the possible slug values at build time
+export async function generateStaticParams() {
+  // Get all project slugs from your projects data
+  const slugs = Object.keys(projects);
+  
+  return slugs.map((slug) => ({
+    slug: slug,
+  }));
+}
 
 export default function ProjectDetail({ params }: { params: { slug: string } }) {
   const project = getProjectData(params.slug);
