@@ -2,8 +2,27 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Briefcase, Code, Database, Layout, Server, Hourglass, Globe, Cake, Brain, Cpu, Shield } from "lucide-react"
+// Import projects data from the projects page
+import { projects } from "@/app/projects/page"
 
 export default function Home() {
+  // Get 3 featured projects to display on the home page
+  const featuredProjects = projects.slice(0, 3);
+  
+  // Map the project icon to the corresponding Lucide icon component
+  const getProjectIcon = (slug) => {
+    switch (slug) {
+      case "supply-stream":
+        return <Globe className="h-6 w-6 text-sky-600" />;
+      case "cronos":
+        return <Hourglass className="h-6 w-6 text-amber-600" />;
+      case "bakery-pos":
+        return <Cake className="h-6 w-6 text-pink-500" />;
+      default:
+        return <Briefcase className="h-6 w-6 text-blue-600" />;
+    }
+  };
+
   return (
     <>
       {/* Hero Section */}
@@ -51,7 +70,7 @@ export default function Home() {
               <div className="relative h-[280px] w-[280px] md:h-[400px] md:w-[400px] rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900 mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 dark:from-blue-500/20 dark:to-indigo-500/20 z-10"></div>
                 <Image
-                  src="https://raw.githubusercontent.com/Aaron3312/aaron3312/main/IMG_20230214_210450.jpg"
+                  src="https://raw.githubusercontent.com/Aaron3312/aaron3312/main/SGCAM_20241125_163111155.PORTRAIT.jpg"
                   alt="Aaron Hernandez"
                   fill
                   className="object-cover z-0"
@@ -157,83 +176,33 @@ export default function Home() {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {/* SupplyStream */}
-            <div className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:translate-y-[-5px] duration-300">
-              <div className="absolute top-4 right-4 z-10 rounded-full bg-white/90 p-2 shadow-md dark:bg-slate-900/90">
-                <Globe className="h-6 w-6 text-sky-600" />
-              </div>
-              <div className="aspect-video w-full bg-gray-100 dark:bg-slate-800 relative">
-                <Image
-                  src="/images/supply-stream.jpg"
-                  alt="SupplyStream Project"
-                  fill
-                  className="object-cover transition-transform group-hover:scale-105"
-                />
-              </div>
-              <div className="p-6 bg-white dark:bg-slate-950">
-                <h3 className="text-xl font-bold mb-2">SupplyStream</h3>
-                <p className="text-muted-foreground mb-4">
-                  AI-powered inventory management for Food Bank Guadalajara
-                </p>
-                <div className="flex justify-center">
-                  <Button href="/projects/supply-stream" variant="outline" size="sm">
-                    View Project
-                  </Button>
+            {/* Map through featured projects from the projects array */}
+            {featuredProjects.map((project) => (
+              <div key={project.slug} className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:translate-y-[-5px] duration-300">
+                <div className="absolute top-4 right-4 z-10 rounded-full bg-white/90 p-2 shadow-md dark:bg-slate-900/90">
+                  {getProjectIcon(project.slug)}
+                </div>
+                <div className="aspect-video w-full bg-gray-100 dark:bg-slate-800 relative">
+                  <Image
+                    src={project.image}
+                    alt={`${project.title} Project`}
+                    fill
+                    className="object-cover transition-transform group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-6 bg-white dark:bg-slate-950">
+                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                  <p className="text-muted-foreground mb-4">
+                    {project.description}
+                  </p>
+                  <div className="flex justify-center">
+                    <Button href={`/projects/${project.slug}`} variant="outline" size="sm">
+                      View Project
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
-            
-            {/* Cronos Project */}
-            <div className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:translate-y-[-5px] duration-300">
-              <div className="absolute top-4 right-4 z-10 rounded-full bg-white/90 p-2 shadow-md dark:bg-slate-900/90">
-                <Hourglass className="h-6 w-6 text-amber-600" />
-              </div>
-              <div className="aspect-video w-full bg-gray-100 dark:bg-slate-800 relative">
-                <Image
-                  src="/images/cronos.jpg"
-                  alt="Cronos Project"
-                  fill
-                  className="object-cover transition-transform group-hover:scale-105"
-                />
-              </div>
-              <div className="p-6 bg-white dark:bg-slate-950">
-                <h3 className="text-xl font-bold mb-2">Cronos Project</h3>
-                <p className="text-muted-foreground mb-4">
-                  AI-powered project management with intelligent task organization
-                </p>
-                <div className="flex justify-center">
-                  <Button href="/projects/cronos" variant="outline" size="sm">
-                    View Project
-                  </Button>
-                </div>
-              </div>
-            </div>
-            
-            {/* BakeryPOS */}
-            <div className="group relative rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all hover:translate-y-[-5px] duration-300">
-              <div className="absolute top-4 right-4 z-10 rounded-full bg-white/90 p-2 shadow-md dark:bg-slate-900/90">
-                <Cake className="h-6 w-6 text-pink-500" />
-              </div>
-              <div className="aspect-video w-full bg-gray-100 dark:bg-slate-800 relative">
-                <Image
-                  src="/images/bakery-pos.jpg"
-                  alt="BakeryPOS Project"
-                  fill
-                  className="object-cover transition-transform group-hover:scale-105"
-                />
-              </div>
-              <div className="p-6 bg-white dark:bg-slate-950">
-                <h3 className="text-xl font-bold mb-2">BakeryPOS</h3>
-                <p className="text-muted-foreground mb-4">
-                  Smart point-of-sale system with offline functionality for bakeries
-                </p>
-                <div className="flex justify-center">
-                  <Button href="/projects/bakery-pos" variant="outline" size="sm">
-                    View Project
-                  </Button>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
           <div className="flex justify-center mt-12">
             <Button href="/projects" variant="default" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl">

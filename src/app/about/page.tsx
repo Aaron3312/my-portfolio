@@ -5,7 +5,7 @@ import { FileText, GraduationCap, Briefcase } from "lucide-react"
 
 export default function AboutPage() {
   return (
-    <div className="container py-12 md:py-20">
+    <div className="container mx-auto max-w-5xl px-4 py-12 md:py-20">
       <div className="mb-12 text-center">
         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">About Me</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
@@ -41,7 +41,7 @@ export default function AboutPage() {
             <Button href="/contact" icon>
               Get In Touch
             </Button>
-            <Button href="/resume.pdf" variant="outline" className="inline-flex items-center">
+            <Button href="https://github.com/Aaron3312/my-portfolio/raw/master/resume.pdf" variant="outline" className="inline-flex items-center">
               <FileText className="mr-2 h-4 w-4" />
               Download Resume
             </Button>

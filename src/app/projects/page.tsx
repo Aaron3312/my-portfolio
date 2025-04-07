@@ -1,24 +1,34 @@
 // src/app/projects/page.tsx
-import { ProjectCard } from "@/components/project-card"
+import { ProjectCard } from "@/components/ui/project-card"
 
-const projects = [
-  {
-    title: "SupplyStream",
-    description: "AI-powered inventory management system for Food Bank Guadalajara, reducing manual tracking time by 50%.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/SupplyStream.png",
-    tags: ["React Native", "Firebase", "TensorFlow Lite", "Machine Learning"],
-    githubUrl: "https://github.com/Aaron3312/SupplyStream",
-    liveUrl: "",
-    slug: "supply-stream"
-  },
+// Export the projects array so it can be imported in other files
+export const projects = [
   {
     title: "BakeryPOS",
     description: "Comprehensive point-of-sale system for bakeries with offline functionality and real-time order management.",
     image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/BakeryPos.png",
     tags: ["JavaScript", "Firebase", "IndexedDB", "Python", "Thermal Printing"],
-    githubUrl: "https://github.com/Aaron3312/BakeryPOS",
+    githubUrl: "",
     liveUrl: "",
     slug: "bakery-pos"
+  },
+  {
+    title: "Cronos Project",
+    description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
+    tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
+    githubUrl: "https://github.com/Aaron3312/CronosProject",
+    liveUrl: "https://aaronprojects.xyz",
+    slug: "cronos"
+  },
+  {
+    title: "Solo Para Eva",
+    description: "E-commerce showcase for artisanal natural body care products with elegant product display and categorization.",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/SoloParaEva.png",
+    tags: ["Next.js", "React", "TailwindCSS", "Responsive Design"],
+    githubUrl: "https://github.com/Aaron3312/tienda-limpieza-corporal",
+    liveUrl: "https://soloparaeva.lat",
+    slug: "solo-para-eva"
   },
   {
     title: "Web2",
@@ -29,14 +39,15 @@ const projects = [
     liveUrl: "https://aaron3312.github.io/web2/",
     slug: "cuevana"
   },
+  
   {
-    title: "Cronos Project",
-    description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
-    tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
-    githubUrl: "https://github.com/Aaron3312/CronosProject",
+    title: "SupplyStream",
+    description: "AI-powered inventory management system for Food Bank Guadalajara, reducing manual tracking time by 50%.",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/SupplyStream.png",
+    tags: ["React Native", "Firebase", "TensorFlow Lite", "Machine Learning"],
+    githubUrl: "https://github.com/Aaron3312/SupplyStream",
     liveUrl: "",
-    slug: "cronos"
+    slug: "supply-stream"
   },
   {
     title: "Warehouse MultiAgent System",
@@ -55,15 +66,6 @@ const projects = [
     githubUrl: "https://github.com/Aaron3312/ProyectoDronUnity",
     liveUrl: "https://youtu.be/k5nwyPjoEUE",
     slug: "security-system"
-  },
-  {
-    title: "Solo Para Eva",
-    description: "E-commerce showcase for artisanal natural body care products with elegant product display and categorization.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/SoloParaEva.png",
-    tags: ["Next.js", "React", "TailwindCSS", "Responsive Design"],
-    githubUrl: "https://github.com/Aaron3312/tienda-limpieza-corporal",
-    liveUrl: "https://soloparaeva.lat",
-    slug: "solo-para-eva"
   }
 ]
 
