@@ -43,9 +43,6 @@ jobs:
           echo "Skipping TypeScript checks as requested"
           echo "Skipping ESLint checks as requested"
           npm run build -- --no-lint
-          
-      - name: Export static files
-        run: npm run export || npx next export
         
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v4

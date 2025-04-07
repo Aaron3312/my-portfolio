@@ -15,11 +15,11 @@ const nextConfig = {
       }
     ],
   },
-  // Add your repository name if your site will be hosted in a subdirectory
-  basePath: process.env.NODE_ENV === 'production' ? '/my-portfolio' : '',
+  // Use the environment variable from GitHub Actions
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH ? `/${process.env.NEXT_PUBLIC_BASE_PATH}` : '',
   
-  // For GitHub Pages, this is required if you're not using a custom domain
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/my-portfolio' : '',
+  // Match assetPrefix with basePath for GitHub Pages
+  assetPrefix: process.env.NEXT_PUBLIC_BASE_PATH ? `/${process.env.NEXT_PUBLIC_BASE_PATH}` : '',
   
   eslint: {
     ignoreDuringBuilds: true,
