@@ -50,7 +50,7 @@ const projects = [
   {
     title: "Security Multi-Agent System",
     description: "Prison security simulation with autonomous drones, security cameras, and AI-powered threat detection.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/security-system.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Security.gif",
     tags: ["Unity", "Python", "Computer Vision", "AI", "Autonomous Agents"],
     githubUrl: "https://github.com/Aaron3312/ProyectoDronUnity",
     liveUrl: "https://youtu.be/k5nwyPjoEUE",
