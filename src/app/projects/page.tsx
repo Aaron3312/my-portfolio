@@ -14,7 +14,7 @@ const projects = [
   {
     title: "BakeryPOS",
     description: "Comprehensive point-of-sale system for bakeries with offline functionality and real-time order management.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/bakery-pos.jpg",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/BakeryPos.png",
     tags: ["JavaScript", "Firebase", "IndexedDB", "Python", "Thermal Printing"],
     githubUrl: "https://github.com/Aaron3312/BakeryPOS",
     liveUrl: "",
