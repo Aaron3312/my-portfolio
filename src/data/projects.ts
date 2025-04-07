@@ -127,7 +127,7 @@ export const projects: ProjectsData = {
   "cronos": {
     title: "Cronos Project",
     description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
-    image: "/images/cronos.png",
+    image: "/images/Cronos.png",
     iconName: "Hourglass",
     iconColor: "text-amber-600",
     tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
