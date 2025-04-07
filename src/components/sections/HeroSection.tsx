@@ -1,7 +1,8 @@
 // File: src/components/sections/HeroSection.tsx
-import React, { RefObject } from 'react';
+import React, { RefObject, useEffect } from 'react';
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import gsap from "gsap";
 
 interface HeroSectionProps {
   heroRef: RefObject<HTMLElement>;
@@ -14,6 +15,79 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   heroTextRef, 
   heroImageRef 
 }) => {
+  useEffect(() => {
+    // Create the main timeline
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    
+    // Get hero elements
+    const heroElements = heroTextRef.current?.children;
+    const imageContainer = heroImageRef.current;
+    
+    if (heroElements && imageContainer) {
+      // Stagger animation for text elements
+      tl.from(heroElements, {
+        y: 50,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        delay: 0.5
+      });
+      
+      // Animate the profile image
+      tl.from(imageContainer, {
+        scale: 0.8,
+        opacity: 0,
+        rotation: -5,
+        duration: 1.2
+      }, "-=0.8");
+      
+      // Add mouse move parallax effect
+      const handleMouseMove = (e: MouseEvent) => {
+        const xPos = (e.clientX / window.innerWidth - 0.5) * 20;
+        const yPos = (e.clientY / window.innerHeight - 0.5) * 20;
+        
+        gsap.to(imageContainer, {
+          x: xPos,
+          y: yPos,
+          rotation: xPos * 0.1,
+          duration: 1.5,
+          ease: "power2.out"
+        });
+        
+        // Subtle parallax for text elements
+        gsap.to(heroElements, {
+          x: xPos * 0.3,
+          duration: 1.5,
+          ease: "power2.out",
+          stagger: 0.05
+        });
+      };
+      
+      // Add scroll-based animation for the scroll indicator
+      const scrollIndicator = heroRef.current?.querySelector('.animate-bounce');
+      if (scrollIndicator) {
+        gsap.fromTo(scrollIndicator, 
+          { opacity: 0, y: -20 },
+          { 
+            opacity: 1, 
+            y: 0,
+            duration: 0.5,
+            delay: 2.5
+          }
+        );
+      }
+      
+      // Add event listener for mouse move
+      window.addEventListener("mousemove", handleMouseMove);
+      
+      // Clean up on unmount
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+        tl.kill();
+      };
+    }
+  }, [heroRef, heroTextRef, heroImageRef]);
+
   return (
     <section 
       ref={heroRef} 
@@ -24,19 +98,19 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div ref={heroTextRef} className="flex flex-col gap-4 sm:gap-6 text-center md:text-left order-2 md:order-1">
-            <div className="inline-block mx-auto md:mx-0 px-3 py-1 text-xs sm:text-sm font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300 animate-in">
+            <div className="inline-block mx-auto md:mx-0 px-3 py-1 text-xs sm:text-sm font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
               Software Engineer
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 leading-tight animate-in">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 leading-tight">
               Hi, I'm Aaron Hernández Jiménez
             </h1>
-            <p className="text-xl sm:text-2xl text-blue-600 dark:text-blue-400 font-medium animate-in">
+            <p className="text-xl sm:text-2xl text-blue-600 dark:text-blue-400 font-medium">
               Full Stack Developer | Cloud Solutions Architect
             </p>
-            <p className="text-base sm:text-lg text-muted-foreground animate-in">
+            <p className="text-base sm:text-lg text-muted-foreground">
               Computer Science student at Tecnológico de Monterrey with expertise in building scalable web applications, cloud-native solutions, and AI-powered systems.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mt-6 justify-center md:justify-start animate-in">
+            <div className="flex flex-col sm:flex-row gap-4 mt-6 justify-center md:justify-start">
               <Button 
                 href="/projects" 
                 size="lg"
@@ -57,7 +131,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             </div>
             
             {/* Bouncing scroll indicator */}
-            <div className="hidden md:flex justify-center md:justify-start mt-12 animate-in">
+            <div className="hidden md:flex justify-center md:justify-start mt-12">
               <div className="animate-bounce w-6 h-10 border-2 border-slate-400 dark:border-slate-600 rounded-full flex flex-col items-center justify-start p-1">
                 <div className="w-1 h-2 bg-slate-400 dark:bg-slate-600 rounded-full animate-pulse"></div>
               </div>

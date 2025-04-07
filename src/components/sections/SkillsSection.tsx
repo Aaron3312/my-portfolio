@@ -1,7 +1,14 @@
 // File: src/components/sections/SkillsSection.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import React from "react";
-import { skills } from "@/data/skillsData"
+import { skills } from "@/data/skillsData";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register GSAP plugins
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const SkillsSection = ({ skillsRef, skillItemsRef }) => {
   const [activeSkillIndex, setActiveSkillIndex] = useState(null);
@@ -12,8 +19,103 @@ const SkillsSection = ({ skillsRef, skillItemsRef }) => {
     setActiveSkillIndex(activeSkillIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    // Skip if we're server-side rendering
+    if (typeof window === "undefined") return;
+
+    // Setup section entrance animation
+    const sectionTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: skillsRef.current,
+        start: "top 80%",
+        once: true,
+        onEnter: () => setSkillsInView(true)
+      }
+    });
+
+    // Animate section title and subtitle
+    const titleElements = skillsRef.current.querySelectorAll("h2, p");
+    sectionTimeline.from(titleElements, {
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.2
+    });
+
+    // Animate skill cards on scroll with staggered entrance
+    skillItemsRef.current.forEach((card, index) => {
+      if (!card) return;
+
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          once: true
+        },
+        y: 100,
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.8,
+        delay: index * 0.1,
+        ease: "power3.out"
+      });
+    });
+
+    // Cleanup function
+    return () => {
+      if (sectionTimeline.scrollTrigger) {
+        sectionTimeline.scrollTrigger.kill();
+      }
+      
+      skillItemsRef.current.forEach((card) => {
+        if (card && ScrollTrigger.getById(card)) {
+          ScrollTrigger.getById(card).kill();
+        }
+      });
+    };
+  }, [skillsRef, skillItemsRef]);
+
+  // Card expansion animation effect
+  useEffect(() => {
+    if (activeSkillIndex !== null) {
+      const activeCard = skillItemsRef.current[activeSkillIndex];
+      if (!activeCard) return;
+
+      // Create expansion timeline
+      const expandTl = gsap.timeline();
+      
+      // Animate the expansion
+      expandTl.to(activeCard, {
+        scale: 1.02,
+        duration: 0.3,
+        ease: "power2.out"
+      })
+      .to(activeCard.querySelector('.p-6, .p-8'), {
+        backgroundColor: "#000000", // black
+        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
+        duration: 0.3
+      }, "<");
+      
+      // Animate content appearing
+      const content = activeCard.querySelector('.w-full.mt-4');
+      if (content) {
+        expandTl.from(content.children, {
+          opacity: 0,
+          y: 20,
+          stagger: 0.1,
+          duration: 0.4
+        }, "-=0.2");
+      }
+      
+      // Clean up animations when component unmounts
+      return () => {
+        expandTl.kill();
+      };
+    }
+  }, [activeSkillIndex, skillItemsRef]);
+
   return (
-    <section ref={skillsRef} className="py-16 sm:py-20 md:py-28 bg-white dark:bg-slate-950 relative">
+    <section ref={skillsRef} className="py-16 sm:py-20 md:py-28 bg-dark dark:bg-slate-950 relative">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center justify-center text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
@@ -33,7 +135,7 @@ const SkillsSection = ({ skillsRef, skillItemsRef }) => {
               onClick={() => handleSkillClick(index)}
             >
               <div 
-                className={`flex flex-col items-center p-6 sm:p-8 rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm overflow-hidden ${activeSkillIndex === index ? 'bg-white dark:bg-slate-900' : 'bg-gray-50 dark:bg-slate-900 hover:shadow-md hover:-translate-y-1'}`}
+                className={`flex flex-col items-center p-6 sm:p-8 rounded-xl border border-dark dark:border-slate-800 shadow-sm overflow-hidden ${activeSkillIndex === index ? 'bg-white dark:bg-slate-900' : 'bg-gray-50 dark:bg-slate-900 hover:shadow-md hover:-translate-y-1'}`}
                 style={{
                   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
