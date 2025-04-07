@@ -20,7 +20,7 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-40 border-b bg-white dark:bg-slate-950 dark:border-slate-800">
-      <div className="container flex h-16 items-center justify-between py-4">
+      <div className="container mx-auto flex h-16 items-center justify-between py-4">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center space-x-2">
             <Code className="h-6 w-6" />
@@ -45,7 +45,6 @@ export function Navbar() {
               <span>{link.name}</span>
             </Link>
           ))}
-          <ThemeToggle />
         </nav>
 
         {/* Mobile navigation */}
@@ -65,7 +64,6 @@ export function Navbar() {
               </svg>
             )}
           </button>
-          <ThemeToggle />
         </div>
       </div>
 
