@@ -84,7 +84,7 @@ export const projects: ProjectsData = {
   "bakery-pos": {
     title: "BakeryPOS",
     description: "Smart point-of-sale system with offline functionality for bakeries via IndexedDB.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/BakeryPos.png",
+    image: "/images/BakeryPos/BakeryPos.gif",
     iconName: "Cake",
     iconColor: "text-pink-500",
     tags: ["JavaScript", "Firebase", "IndexedDB", "Python", "Thermal Printing"],

@@ -6,7 +6,7 @@ export const projects = [
   {
     title: "BakeryPOS",
     description: "Comprehensive point-of-sale system for bakeries with offline functionality and real-time order management.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/BakeryPos.png",
+    image: "/images/BakeryPos/BakeryPos.gif",
     tags: ["JavaScript", "Firebase", "IndexedDB", "Python", "Thermal Printing"],
     githubUrl: "",
     liveUrl: "",
