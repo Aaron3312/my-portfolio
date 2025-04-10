@@ -132,7 +132,7 @@ export const projects: ProjectsData = {
     iconColor: "text-amber-600",
     tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
     githubUrl: "https://github.com/Aaron3312/CronosProject",
-    liveUrl: "",
+    liveUrl: "https://aaronprojects.xyz/cronos1",
     fullDescription: `
       <h2>Overview</h2>
       <p>An innovative AI-powered project management platform that streamlines project setup and task management.</p>

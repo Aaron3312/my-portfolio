@@ -3,6 +3,7 @@ import React, { RefObject, useEffect } from 'react';
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import gsap from "gsap";
+import { FileText } from "lucide-react";
 
 interface HeroSectionProps {
   heroRef: RefObject<HTMLElement>;
@@ -128,6 +129,18 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-100 dark:bg-blue-900 rounded-full opacity-30 group-hover:w-96 group-hover:h-96"></span>
                 <span className="relative z-10">Get In Touch</span>
               </Button>
+              <Button 
+  href="https://github.com/Aaron3312/my-portfolio/raw/master/resume.pdf" 
+  variant="outline" 
+  size="lg"
+  className="border-2 hover:bg-slate-100 dark:hover:bg-slate-800 w-full sm:w-auto font-medium relative overflow-hidden group"
+>
+  <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-100 dark:bg-blue-900 rounded-full opacity-30 group-hover:w-96 group-hover:h-96"></span>
+  <span className="relative z-10 inline-flex items-center">
+    <FileText className="mr-2 h-4 w-4" />
+    Download Resume
+  </span>
+</Button>
             </div>
             
             {/* Bouncing scroll indicator */}
