@@ -13,15 +13,6 @@ export const projects = [
     slug: "bakery-pos"
   },
   {
-    title: "Cronos Project",
-    description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
-    tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
-    githubUrl: "https://github.com/Aaron3312/CronosProject",
-    liveUrl: "https://aaronprojects.xyz",
-    slug: "cronos"
-  },
-  {
     title: "Solo Para Eva",
     description: "E-commerce showcase for artisanal natural body care products with elegant product display and categorization.",
     image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/SoloParaEva.png",
@@ -39,7 +30,15 @@ export const projects = [
     liveUrl: "https://aaron3312.github.io/web2/",
     slug: "cuevana"
   },
-  
+  {
+    title: "Cronos Project",
+    description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
+    tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
+    githubUrl: "https://github.com/Aaron3312/CronosProject",
+
+    slug: "cronos"
+  },
   {
     title: "SupplyStream",
     description: "AI-powered inventory management system for Food Bank Guadalajara, reducing manual tracking time by 50%.",
