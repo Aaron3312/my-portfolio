@@ -35,7 +35,7 @@ export const projects = [
     description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
     image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
     tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
-    githubUrl: "https://github.com/Aaron3312/CronosProject",
+    githubUrl: "https://github.com/Aaron3312/CronosProyect1",
 
     slug: "cronos"
   },
@@ -44,7 +44,7 @@ export const projects = [
     description: "AI-powered inventory management system for Food Bank Guadalajara, reducing manual tracking time by 50%.",
     image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/SupplyStream.png",
     tags: ["React Native", "Firebase", "TensorFlow Lite", "Machine Learning"],
-    githubUrl: "https://github.com/Aaron3312/SupplyStream",
+    githubUrl: "https://github.com/Aaron3312/SupplyStreamR",
     liveUrl: "",
     slug: "supply-stream"
   },

@@ -131,7 +131,7 @@ export const projects: ProjectsData = {
     iconName: "Hourglass",
     iconColor: "text-amber-600",
     tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
-    githubUrl: "https://github.com/Aaron3312/CronosProject",
+    githubUrl: "https://github.com/Aaron3312/CronosProyect1",
     liveUrl: "",
     fullDescription: `
       <h2>Overview</h2>
