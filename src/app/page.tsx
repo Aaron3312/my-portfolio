@@ -8,7 +8,7 @@ import ProjectsSection from "@/components/sections/ProjectsSection";
 import CTASection from "@/components/sections/CTASection";
 import BackgroundCanvas from "@/components/ui/BackgroundCanvas";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { projects } from "@/app/projects/page";
+import { projectsMin } from "@/utils/project-utils";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -21,7 +21,7 @@ if (typeof window !== "undefined") {
 
 export default function Home() {
   // Get 3 featured projects to display on the home page
-  const featuredProjects = projects.slice(0, 3);
+  const featuredProjects = projectsMin.slice(0, 3);
   
   // State for 3D effect and interactive elements
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

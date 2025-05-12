@@ -1,0 +1,156 @@
+
+import { useEffect, useRef } from "react";
+import { ProjectCard } from "@/components/project-card";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+// Register ScrollTrigger plugin
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+export default function ProjectsPage() {
+  const headingRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const projectsContainerRef = useRef(null);
+
+  useEffect(() => {
+    // Animation for the heading and description
+    const tl = gsap.timeline();
+    tl.fromTo(
+      headingRef.current,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+    ).fromTo(
+      descriptionRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+      "-=0.4" // Slight overlap with previous animation
+    );
+
+    // Animation for project cards
+    const projectCards = document.querySelectorAll(".project-card");
+    gsap.set(projectCards, { opacity: 0, y: 50 });
+    
+    ScrollTrigger.batch(projectCards, {
+      start: "top bottom-=100px",
+      onEnter: (batch) => {
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          stagger: 0.15,
+          duration: 0.8,
+          ease: "power3.out",
+        });
+      },
+      once: true,
+    });
+
+    // Hover animations are handled in CSS within the ProjectCard component
+    // But we can enhance them with GSAP too
+    projectCards.forEach((card) => {
+      const image = card.querySelector(".card-image");
+      const content = card.querySelector(".card-content");
+      const tags = card.querySelectorAll(".card-tag");
+      const buttons = card.querySelectorAll(".card-button");
+      
+      card.addEventListener("mouseenter", () => {
+        gsap.to(card, {
+          y: -5,
+          boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
+          duration: 0.3,
+        });
+        gsap.to(image, {
+          scale: 1.05,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+        gsap.to(tags, {
+          scale: 1.05,
+          stagger: 0.03,
+          duration: 0.2,
+        });
+        gsap.to(buttons, {
+          y: -3,
+          stagger: 0.05,
+          duration: 0.2,
+        });
+      });
+      
+      card.addEventListener("mouseleave", () => {
+        gsap.to(card, {
+          y: 0,
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.05)",
+          duration: 0.3,
+        });
+        gsap.to(image, {
+          scale: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        });
+        gsap.to(tags, {
+          scale: 1,
+          stagger: 0.02,
+          duration: 0.2,
+        });
+        gsap.to(buttons, {
+          y: 0,
+          stagger: 0.03,
+          duration: 0.2,
+        });
+      });
+    });
+
+    // Clean up on component unmount
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      tl.kill();
+    };
+  }, []);
+
+  return (
+    <div className="container mx-auto px-4 py-12 md:py-20">
+      <div className="mb-12 text-center">
+        <h1 
+          ref={headingRef}
+          className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+        >
+          My Projects
+        </h1>
+        <p 
+          ref={descriptionRef}
+          className="mt-4 text-muted-foreground md:text-lg"
+        >
+          A showcase of my web development projects and applications
+        </p>
+      </div>
+      <div 
+        ref={projectsContainerRef}
+        className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto"
+      >
+        {projects.map((project, index) => (
+          <div 
+            key={project.slug} 
+            className="project-card"
+            style={{ 
+              opacity: 0,
+              // Add slight delay variation based on position for initial load
+              transitionDelay: `${index * 0.1}s` 
+            }}
+          >
+            <ProjectCard
+              title={project.title}
+              description={project.description}
+              image={project.image}
+              tags={project.tags}
+              githubUrl={project.githubUrl}
+              liveUrl={project.liveUrl}
+              slug={project.slug}
+              icon={project.slug}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

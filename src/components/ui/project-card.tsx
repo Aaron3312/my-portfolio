@@ -54,9 +54,9 @@ export function ProjectCard({
     }
   };
   return (
-    <div className="group flex flex-col overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md hover:translate-y-[-5px] duration-300 dark:border-slate-800 dark:bg-slate-950">
-      <div className="aspect-video w-full overflow-hidden bg-gray-100 dark:bg-slate-800 relative">
-        <div className="absolute top-4 right-4 z-10 rounded-full bg-white/90 p-2 shadow-md dark:bg-slate-900/90">
+    <div className="group flex flex-col overflow-hidden rounded-lg bg-black shadow-sm transition-all  hover:translate-y-[-5px] duration-300 dark:border-slate-800 dark:bg-slate-950">
+      <div className="aspect-video w-full overflow-hidden bg-black dark:bg-slate-800 relative">
+        <div className="absolute top-4 right-4 z-10 rounded-full bg-black/90 p-2 shadow-md dark:bg-slate-900/90">
           {getIcon()}
         </div>
         <Image
@@ -75,7 +75,7 @@ export function ProjectCard({
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-800 dark:bg-slate-800 dark:text-slate-100"
+                className="inline-flex items-center rounded-full bg-black px-2.5 py-0.5 text-xs font-medium text-slate-800 dark:bg-slate-800 dark:text-slate-100"
               >
                 {tag}
               </span>
@@ -91,7 +91,7 @@ export function ProjectCard({
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-9 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900"
+              className="inline-flex h-9 items-center justify-center rounded-md border border-slate-200 bg-black px-3 text-sm font-medium text-slate-900 transition-colors hover:bg-black hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900"
             >
               <Github className="mr-2 h-4 w-4" />
               GitHub
@@ -102,7 +102,7 @@ export function ProjectCard({
               href={liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-9 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900"
+              className="inline-flex h-9 items-center justify-center rounded-md border border-slate-200 bg-black px-3 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-800 dark:hover:text-slate-100 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900"
             >
               <ExternalLink className="mr-2 h-4 w-4" />
               Live Demo
