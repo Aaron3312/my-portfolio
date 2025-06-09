@@ -7,13 +7,22 @@ export const getProjectData = (slug: string): Project | undefined => {
 
 export const projectsMin = [
   {
-    title: "Cache of Recipes",
-    description: "Aplicación web moderna para descubrir, guardar y compartir recetas culinarias con autenticación, favoritos y calificaciones.",
-    image: "/images/CacheOfRecipes/Cache.png",
-    tags: ["Next.js 15", "React 19", "TypeScript", "Firebase", "Spoonacular API", "GSAP"],
-    githubUrl: "https://github.com/Aaron3312/cacheofrecipes",
-    liveUrl: "https://cacheofrecipes.vercel.app",
-    slug: "cache-of-recipes"
+    title: "Cronos Project",
+    description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
+    tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
+    githubUrl: "https://github.com/Aaron3312/CronosProyect1",
+    liveUrl: "",
+    slug: "cronos"
+  },
+  {
+    title: "Security Multi-Agent System",
+    description: "Prison security simulation with autonomous drones, security cameras, and AI-powered threat detection.",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Security.gif",
+    tags: ["Unity", "Python", "Computer Vision", "AI", "Autonomous Agents"],
+    githubUrl: "https://github.com/Aaron3312/ProyectoDronUnity",
+    liveUrl: "https://youtu.be/k5nwyPjoEUE",
+    slug: "security-system"
   },
   {
     title: "JAI-VIER: Sistema de Gestión de Tareas",
@@ -23,6 +32,15 @@ export const projectsMin = [
     githubUrl: "https://github.com/Aaron3312/task-management-system",
     liveUrl: "http://jai-vier.online",
     slug: "jai-vier"
+  },
+  {
+    title: "Cache of Recipes",
+    description: "Aplicación web moderna para descubrir, guardar y compartir recetas culinarias con autenticación, favoritos y calificaciones.",
+    image: "/images/CacheOfRecipes/Cache.png",
+    tags: ["Next.js 15", "React 19", "TypeScript", "Firebase", "Spoonacular API", "GSAP"],
+    githubUrl: "https://github.com/Aaron3312/cacheofrecipes",
+    liveUrl: "https://cacheofrecipes.vercel.app",
+    slug: "cache-of-recipes"
   },
   {
     title: "BakeryPOS",
