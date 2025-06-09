@@ -137,6 +137,12 @@ export const projects: ProjectsData = {
       <h2>Overview</h2>
       <p>An innovative AI-powered project management platform that streamlines project setup and task management.</p>
       
+      <h2>Project Presentation</h2>
+      <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
+        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;" src="https://www.canva.com/design/DAGH8BuRwig/sTRtHyyXpxexpQt0bXMDpQ/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+      </div>
+      <p style="font-size: 12px; margin-top: 0.5em; text-align: center;"><a href="https://www.canva.com/design/DAGH8BuRwig/sTRtHyyXpxexpQt0bXMDpQ/view?utm_content=DAGH8BuRwig&utm_campaign=designshare&utm_medium=embeds&utm_source=link" target="_blank" rel="noopener" style="color: #666; text-decoration: none;">View Full Presentation</a> by A01638657</p>
+      
       <h2>Key Achievements</h2>
       <ul>
         <li><strong>AI Task Generation:</strong> Developed a platform that transforms project descriptions into actionable task lists using AI.</li>
@@ -307,6 +313,12 @@ export const projects: ProjectsData = {
       <h2>Overview</h2>
       <p>A multi-agent simulation system modeling interactions between autonomous drones, security cameras, and security personnel in a prison environment.</p>
       
+      <h2>Project Presentation</h2>
+      <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
+        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;" src="https://www.canva.com/design/DAGXyHlqQeE/R9dCppmP2wrmYetSsfTzyA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+      </div>
+      <p style="font-size: 12px; margin-top: 0.5em; text-align: center;"><a href="https://www.canva.com/design/DAGXyHlqQeE/R9dCppmP2wrmYetSsfTzyA/view?utm_content=DAGXyHlqQeE&utm_campaign=designshare&utm_medium=embeds&utm_source=link" target="_blank" rel="noopener" style="color: #666; text-decoration: none;">Black Purple 3D Cybersecurity Keynote Presentation</a> by aaron hernandez</p>
+      
       <h2>Key Achievements</h2>
       <ul>
         <li><strong>Autonomous Surveillance:</strong> Implemented an autonomous drone that performs aerial patrols and detects suspicious activities using computer vision.</li>
@@ -383,6 +395,146 @@ export const projects: ProjectsData = {
       {
         url: "https://raw.githubusercontent.com/Aaron3312/tienda-limpieza-corporal/master/NosotrosSoloEva.png",
         alt: "Solo Para Eva About Us Page"
+      }
+    ]
+  },
+  "jai-vier": {
+    title: "JAI-VIER: Sistema de Gestión de Tareas",
+    description: "Sistema completo de gestión de tareas inspirado en Jira, desarrollado con Next.js, TypeScript y patrones de diseño avanzados.",
+    image: "/images/jaivier/image.png",
+    iconName: "Brain",
+    iconColor: "text-blue-600",
+    tags: ["Next.js", "TypeScript", "Spring Boot", "TailwindCSS", "Docker"],
+    githubUrl: "https://github.com/Aaron3312/task-management-system",
+    liveUrl: "http://jai-vier.online",
+    fullDescription: `
+      <h2>Overview</h2>
+      <p>JAI-VIER es un sistema completo de gestión de tareas inspirado en Jira, desarrollado con Next.js, TypeScript y patrones de diseño avanzados. Ofrece una solución integral para la gestión de proyectos, sprints y tareas con una interfaz moderna y intuitiva.</p>
+      
+      <h2>Key Features</h2>
+      <ul>
+        <li><strong>Gestión de Proyectos:</strong> Crear, editar y monitorear proyectos con herramientas completas de administración.</li>
+        <li><strong>Gestión de Sprints:</strong> Organizar el trabajo en sprints con fechas de inicio y fin, monitoreo en tiempo real.</li>
+        <li><strong>Gestión de Tareas:</strong> Crear, asignar y dar seguimiento a tareas y subtareas con estados personalizables.</li>
+        <li><strong>Panel de Control:</strong> Visualizar el estado de proyectos, sprints y tareas en tiempo real.</li>
+        <li><strong>Informes Detallados:</strong> Analizar progreso, velocidad del equipo y desviaciones de cronograma.</li>
+        <li><strong>Interfaz Moderna:</strong> Diseño responsive con componentes de shadcn/ui y Tailwind CSS.</li>
+      </ul>
+      
+      <h2>Design Patterns Implemented</h2>
+      <ul>
+        <li><strong>Bridge Pattern:</strong> Separación de tareas de los métodos de notificación para mayor flexibilidad.</li>
+        <li><strong>Factory Pattern:</strong> Creación automática de tareas, dividiendo las que superan 4 horas.</li>
+        <li><strong>Singleton Pattern:</strong> Manejo centralizado del estado de la aplicación en memoria.</li>
+        <li><strong>Composite Pattern:</strong> Trabajo uniforme con tareas y subtareas en jerarquías complejas.</li>
+      </ul>
+      
+      <h2>Technologies Used</h2>
+      <ul>
+        <li><strong>Frontend:</strong> Next.js, React, TypeScript, Tailwind CSS para una experiencia moderna.</li>
+        <li><strong>UI Components:</strong> shadcn/ui basado en Radix UI para componentes accesibles.</li>
+        <li><strong>Backend:</strong> Spring Boot API REST para lógica de negocio robusta.</li>
+        <li><strong>Deployment:</strong> Docker para contenedorización y despliegue automatizado.</li>
+        <li><strong>Icons & Utilities:</strong> Lucide React, date-fns para formateo de fechas.</li>
+      </ul>
+      
+      <h2>Team Development (Equipo 31)</h2>
+      <ul>
+        <li><strong>Tellez:</strong> Project Manager / System Administrator</li>
+        <li><strong>Bañales:</strong> Especialista en algoritmos, Java con Spring Boot</li>
+        <li><strong>Diego:</strong> Desarrollador Backend</li>
+        <li><strong>Fernando Cuevas:</strong> QA Specialist</li>
+        <li><strong>Aaron:</strong> Desarrollador Full Stack</li>
+        <li><strong>Aram:</strong> Intern Developer</li>
+      </ul>
+    `,
+    screenshots: [
+      {
+        url: "https://raw.githubusercontent.com/Aaron3312/task-management-system/master/JaivierInicioBlack.png",
+        alt: "JAI-VIER Página de Inicio"
+      },
+      {
+        url: "https://raw.githubusercontent.com/Aaron3312/task-management-system/master/JavierProyectsBlack.png",
+        alt: "JAI-VIER Gestión de Proyectos"
+      },
+      {
+        url: "https://raw.githubusercontent.com/Aaron3312/task-management-system/master/JaivierSprintsBlack.png",
+        alt: "JAI-VIER Gestión de Sprints"
+      },
+      {
+        url: "https://raw.githubusercontent.com/Aaron3312/task-management-system/master/JaivierTareasBlack.png",
+        alt: "JAI-VIER Gestión de Tareas"
+      },
+      {
+        url: "https://raw.githubusercontent.com/Aaron3312/task-management-system/master/JaivierTareasDetailBlack.png",
+        alt: "JAI-VIER Detalles de Tareas"
+      },
+      {
+        url: "https://raw.githubusercontent.com/Aaron3312/task-management-system/master/InformesJaivierBlack.png",
+        alt: "JAI-VIER Informes y Análisis"
+      },
+      {
+        url: "https://raw.githubusercontent.com/Aaron3312/task-management-system/master/EquipoJaivier.png",
+        alt: "Equipo JAI-VIER"
+      }
+    ]
+  },
+  "cache-of-recipes": {
+    title: "Cache of Recipes",
+    description: "Aplicación web moderna para descubrir, guardar y compartir recetas culinarias con autenticación, favoritos y calificaciones.",
+    image: "/images/CacheOfRecipes/Cache.png",
+    iconName: "Cake",
+    iconColor: "text-orange-500",
+    tags: ["Next.js 15", "React 19", "TypeScript", "Firebase", "Spoonacular API", "GSAP", "Tailwind CSS"],
+    githubUrl: "https://github.com/Aaron3312/cacheofrecipes",
+    liveUrl: "https://cacheofrecipes.vercel.app",
+    fullDescription: `
+      <h2>Overview</h2>
+      <p>Cache of Recipes es una aplicación web moderna construida con Next.js que permite a los usuarios descubrir, guardar y compartir recetas culinarias. La aplicación utiliza la API de Spoonacular para obtener una amplia variedad de recetas y ofrece funcionalidades avanzadas como autenticación, gestión de favoritos y calificaciones.</p>
+      
+      <h2>Key Features</h2>
+      <ul>
+        <li><strong>Búsqueda Avanzada:</strong> Busca recetas por nombre, ingredientes, tipo de cocina, dietas especiales y más.</li>
+        <li><strong>Sistema de Favoritos:</strong> Guarda tus recetas preferidas para acceso rápido con sincronización en Firebase.</li>
+        <li><strong>Calificaciones y Reseñas:</strong> Sistema completo de valoración con estrellas y comentarios.</li>
+        <li><strong>Autenticación Completa:</strong> Registro e inicio de sesión con email/contraseña o Google OAuth.</li>
+        <li><strong>Diseño Responsivo:</strong> Interfaz optimizada para dispositivos móviles y escritorio.</li>
+        <li><strong>Animaciones GSAP:</strong> Experiencia de usuario fluida con animaciones modernas y efectos visuales.</li>
+        <li><strong>Modo Oscuro:</strong> Soporte completo para tema claro y oscuro con transiciones suaves.</li>
+        <li><strong>Gestión Inteligente de API:</strong> Sistema robusto con múltiples claves API y manejo de errores.</li>
+      </ul>
+      
+      <h2>Technical Architecture</h2>
+      <ul>
+        <li><strong>Frontend Moderno:</strong> Next.js 15.3.2 con React 19, TypeScript y Tailwind CSS 4.</li>
+        <li><strong>Animaciones Avanzadas:</strong> GSAP para efectos visuales y transiciones fluidas.</li>
+        <li><strong>UI Components:</strong> Radix UI y shadcn/ui para componentes accesibles y modernos.</li>
+        <li><strong>Backend Services:</strong> Firebase para autenticación, Firestore para datos y Spoonacular API para recetas.</li>
+        <li><strong>Form Management:</strong> React Hook Form con validación Zod para formularios robustos.</li>
+        <li><strong>State Management:</strong> React Query para gestión eficiente del estado del servidor.</li>
+      </ul>
+      
+      <h2>Security & Performance</h2>
+      <ul>
+        <li><strong>Autenticación Firebase:</strong> Gestión segura de sesiones con email/password y Google OAuth.</li>
+        <li><strong>Reglas Firestore:</strong> Control granular de acceso a datos por usuario.</li>
+        <li><strong>API Proxy:</strong> Protección de claves API del frontend con balanceo de carga.</li>
+        <li><strong>Optimización:</strong> Lazy loading, code splitting y optimización de imágenes con Next.js.</li>
+        <li><strong>Middleware Protection:</strong> Rutas protegidas por autenticación y validación de entrada.</li>
+      </ul>
+      
+      <h2>Data Structure</h2>
+      <ul>
+        <li><strong>Users Collection:</strong> Perfiles de usuario con información personal y preferencias.</li>
+        <li><strong>Favorites Collection:</strong> Gestión de recetas favoritas por usuario.</li>
+        <li><strong>Reviews Collection:</strong> Sistema de calificaciones y comentarios con agregación automática.</li>
+        <li><strong>Spoonacular Integration:</strong> Proxy inteligente para datos de recetas y nutrición.</li>
+      </ul>
+    `,
+    screenshots: [
+      {
+        url: "/images/CacheOfRecipes/Cache.png",
+        alt: "Cache of Recipes - Página Principal"
       }
     ]
   }

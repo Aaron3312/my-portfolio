@@ -7,6 +7,24 @@ export const getProjectData = (slug: string): Project | undefined => {
 
 export const projectsMin = [
   {
+    title: "Cache of Recipes",
+    description: "Aplicación web moderna para descubrir, guardar y compartir recetas culinarias con autenticación, favoritos y calificaciones.",
+    image: "/images/CacheOfRecipes/Cache.png",
+    tags: ["Next.js 15", "React 19", "TypeScript", "Firebase", "Spoonacular API", "GSAP"],
+    githubUrl: "https://github.com/Aaron3312/cacheofrecipes",
+    liveUrl: "https://cacheofrecipes.vercel.app",
+    slug: "cache-of-recipes"
+  },
+  {
+    title: "JAI-VIER: Sistema de Gestión de Tareas",
+    description: "Sistema completo de gestión de tareas inspirado en Jira, desarrollado con Next.js, TypeScript y patrones de diseño avanzados.",
+    image: "/images/jaivier/image.png",
+    tags: ["Next.js", "TypeScript", "Spring Boot", "TailwindCSS", "Docker"],
+    githubUrl: "https://github.com/Aaron3312/task-management-system",
+    liveUrl: "http://jai-vier.online",
+    slug: "jai-vier"
+  },
+  {
     title: "BakeryPOS",
     description: "Comprehensive point-of-sale system for bakeries with offline functionality and real-time order management.",
     image: "/images/BakeryPos/BakeryPos.gif",
