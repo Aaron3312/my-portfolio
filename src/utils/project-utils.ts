@@ -69,15 +69,7 @@ export const projectsMin = [
     liveUrl: "https://aaron3312.github.io/web2/",
     slug: "cuevana"
   },
-  {
-    title: "Cronos Project",
-    description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
-    tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
-    githubUrl: "https://github.com/Aaron3312/CronosProyect1",
 
-    slug: "cronos"
-  },
   {
     title: "SupplyStream",
     description: "AI-powered inventory management system for Food Bank Guadalajara, reducing manual tracking time by 50%.",
@@ -95,14 +87,5 @@ export const projectsMin = [
     githubUrl: "https://github.com/Aaron3312/ProyectoSkeletons",
     liveUrl: "https://photos.app.goo.gl/vM2MzAaMhbRRqmNJ8",
     slug: "warehouse-system"
-  },
-  {
-    title: "Security Multi-Agent System",
-    description: "Prison security simulation with autonomous drones, security cameras, and AI-powered threat detection.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Security.gif",
-    tags: ["Unity", "Python", "Computer Vision", "AI", "Autonomous Agents"],
-    githubUrl: "https://github.com/Aaron3312/ProyectoDronUnity",
-    liveUrl: "https://youtu.be/k5nwyPjoEUE",
-    slug: "security-system"
   }
 ]
