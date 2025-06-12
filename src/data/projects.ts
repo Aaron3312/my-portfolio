@@ -411,6 +411,12 @@ export const projects: ProjectsData = {
       <h2>Overview</h2>
       <p>JAI-VIER es un sistema completo de gestión de tareas inspirado en Jira, desarrollado con Next.js, TypeScript y patrones de diseño avanzados. Ofrece una solución integral para la gestión de proyectos, sprints y tareas con una interfaz moderna y intuitiva.</p>
       
+      <h2>Project Presentation</h2>
+      <div style="position: relative; width: 100%; height: 0; padding-top: 56.2500%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden; border-radius: 8px; will-change: transform;">
+        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0; margin: 0;" src="https://www.canva.com/design/DAGp59TPwPo/IEnPjcm00_xPazineNMjJA/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+      </div>
+      <p style="font-size: 12px; margin-top: 0.5em; text-align: center;"><a href="https://www.canva.com/design/DAGp59TPwPo/IEnPjcm00_xPazineNMjJA/view?utm_content=DAGp59TPwPo&utm_campaign=designshare&utm_medium=embeds&utm_source=link" target="_blank" rel="noopener" style="color: #666; text-decoration: none;">JAI-VIER Presentation</a> by Luis Fernando Cuevas Arroyo</p>
+      
       <h2>Key Features</h2>
       <ul>
         <li><strong>Gestión de Proyectos:</strong> Crear, editar y monitorear proyectos con herramientas completas de administración.</li>
