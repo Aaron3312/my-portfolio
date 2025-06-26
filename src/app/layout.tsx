@@ -4,6 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '@/components/theme-provider'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -50,7 +51,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.png', // Imagen optimizada 1200x630px
+        url: '/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Aaron Hernández Jiménez - Full Stack Developer & Cloud Solutions Architect',
@@ -81,9 +82,6 @@ export const metadata: Metadata = {
   },
   verification: {
     // Agrega aquí tus códigos de verificación cuando los tengas
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
-    // yahoo: 'your-yahoo-verification-code',
   },
 }
 
@@ -109,6 +107,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
