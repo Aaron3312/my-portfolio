@@ -160,6 +160,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                 fill
                 className="object-cover z-0"
                 priority
+                fetchPriority="high"
               />
             </div>
           </div>

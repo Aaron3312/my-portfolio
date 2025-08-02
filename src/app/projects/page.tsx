@@ -121,7 +121,7 @@ export default function ProjectsPage() {
   return (
     <div ref={container} className="projects-page">
       {/* Progress Bar */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-[#0a0a0a] dark:bg-[#ededed] z-50">
+      <div className="fixed top-0 left-0 w-full h-1 bg-[#0a0a0a] dark:bg-[#020618] z-50">
         <div className="progress-bar h-full bg-gradient-to-r from-blue-400 to-purple-400 origin-left scale-x-0"></div>
       </div>
 
@@ -278,7 +278,7 @@ function ProjectCardWrapper({ project, index }) {
         backfaceVisibility: 'hidden'
       }}
     >
-      <div className="relative h-full bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg transition-colors duration-300">
+      <div className="relative h-full bg-black dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg transition-colors duration-300">
         {/* Image Container */}
         <div className="relative h-48 overflow-hidden">
           <img 

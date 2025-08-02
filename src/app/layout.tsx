@@ -113,10 +113,21 @@ export default function RootLayout({
       <head>
         <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
         <link rel="manifest" href="/manifest.json" />
+        <link rel="preconnect" href="https://raw.githubusercontent.com" />
+        <link rel="dns-prefetch" href="https://raw.githubusercontent.com" />
+        <link rel="preload" as="image" href="https://raw.githubusercontent.com/Aaron3312/aaron3312/main/SGCAM_20241125_163111155.PORTRAIT.jpg" fetchPriority="high" />
         <meta name="theme-color" content="#3b82f6" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Aaron Dev" />
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            :root { --background: #ffffff; --foreground: #171717; }
+            @media (prefers-color-scheme: dark) { :root { --background: #0a0a0a; --foreground: #ededed; } }
+            body { background: var(--background); color: var(--foreground); font-family: system-ui, -apple-system, sans-serif; margin: 0; line-height: 1.6; }
+            .loading-screen { position: fixed; inset: 0; background: var(--background); display: flex; align-items: center; justify-content: center; z-index: 100; }
+          `
+        }} />
       </head>
       <body className={inter.className}>
         <ThemeProvider

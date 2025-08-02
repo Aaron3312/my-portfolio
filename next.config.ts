@@ -2,6 +2,7 @@
 
 const nextConfig = {
   output: 'export',
+  compress: true,
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -29,8 +30,65 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
-  // Remove the experimental section if it exists
-  experimental: {}
+  experimental: {
+    optimizeCss: true,
+  },
+
+  // Modern JavaScript target - removes unnecessary polyfills
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  // Performance optimizations
+  swcMinify: true,
+  
+  // Bundle optimization
+  webpack: (config: any) => {
+    // Code splitting optimization
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+            maxSize: 244000, // 244kb chunks
+          },
+          common: {
+            name: 'common',
+            minChunks: 2,
+            chunks: 'all',
+            maxSize: 244000,
+          },
+        },
+      },
+    };
+
+    // Tree shaking optimization
+    config.resolve.alias = {
+      ...config.resolve.alias,
+    };
+
+    return config;
+  },
+
+  // Bundle analyzer for development
+  ...(process.env.ANALYZE === 'true' && {
+    webpack: (config: any, { isServer }: any) => {
+      if (!isServer) {
+        const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+        config.plugins.push(
+          new BundleAnalyzerPlugin({
+            analyzerMode: 'static',
+            openAnalyzer: false,
+          })
+        );
+      }
+      return config;
+    }
+  })
 };
 
 module.exports = nextConfig;
