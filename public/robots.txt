@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://aaronhernandez.me/sitemap.xml
+
+# Host
+Host: https://aaronhernandez.me
+
+# Crawl-delay
+Crawl-delay: 1

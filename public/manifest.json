@@ -1,0 +1,21 @@
+{
+  "name": "Aaron Hernández Jiménez - Full Stack Developer",
+  "short_name": "Aaron Dev",
+  "description": "Portafolio profesional de Aaron Hernández Jiménez - Full Stack Developer especializado en React, Node.js, AWS y soluciones cloud",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "categories": ["portfolio", "developer", "technology"],
+  "lang": "es",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

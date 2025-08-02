@@ -66,18 +66,21 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-image.png',
+        url: 'https://aaronhernandez.me/og-image.png',
         width: 1200,
         height: 630,
         alt: 'Aaron Hernández Jiménez - Full Stack Developer & Cloud Solutions Architect',
       },
     ],
   },
+  other: {
+    'fb:app_id': '1234567890123456',
+  },
   twitter: {
     card: 'summary_large_image',
     title: 'Aaron Hernández Jiménez | Full Stack Developer & Cloud Solutions Architect',
     description: 'Full Stack Developer especializado en React, Node.js, AWS y sistemas con IA. Disponible para proyectos freelance y posiciones full-time.',
-    images: ['/og-image.png'],
+    images: ['https://aaronhernandez.me/og-image.png'],
   },
   robots: {
     index: true,
@@ -107,6 +110,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" suppressHydrationWarning>
+      <head>
+        <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="theme-color" content="#3b82f6" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Aaron Dev" />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
