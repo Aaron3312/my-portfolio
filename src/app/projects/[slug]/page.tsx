@@ -1,26 +1,12 @@
 // src/app/projects/[slug]/page.tsx
 import Image from "next/image"
 import { Button } from "../../../components/ui/Button"
-import { ArrowLeft, Github, ExternalLink, Globe, Cake, Hourglass, Film, HeartHandshake, Brain, Shield, CheckCircle2 } from "lucide-react"
+import { ArrowLeft, Github, ExternalLink, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
 import { getProjectData } from "@/utils/project-utils"
 import ProjectCarousel from "@/components/project-carousel"
 import { projects } from "@/data/projects"
-
-// Helper function to get the correct icon component
-const getIconComponent = (iconName: string, className: string) => {
-  const icons = {
-    Globe: <Globe className={className} />,
-    Cake: <Cake className={className} />,
-    Hourglass: <Hourglass className={className} />,
-    Film: <Film className={className} />,
-    HeartHandshake: <HeartHandshake className={className} />,
-    Brain: <Brain className={className} />,
-    Shield: <Shield className={className} />
-  };
-  
-  return icons[iconName as keyof typeof icons] || <Globe className={className} />;
-};
+import { getProjectIcon } from "@/utils/projectIcons"
 
 // This function generates all the possible slug values at build time
 export async function generateStaticParams() {
@@ -109,8 +95,8 @@ export default async function ProjectDetail({ params }: { params: { slug: string
     );
   }
 
-  // Get the icon
-  const icon = getIconComponent(project.iconName, `h-6 w-6 ${project.iconColor}`);
+  // Get the icon using the same function as ProjectsSection
+  const icon = getProjectIcon(slug);
   
   // Format the description content
   const formattedContent = formatDescription(project.fullDescription);
@@ -153,7 +139,10 @@ export default async function ProjectDetail({ params }: { params: { slug: string
       <div className="mb-10 grid grid-cols-1 gap-8 md:grid-cols-3">
         <div className="col-span-2">
           {useRawHtml ? (
-            <div className="prose max-w-none dark:prose-invert" dangerouslySetInnerHTML={{ __html: project.fullDescription }} />
+            <div 
+              className="project-content space-y-6"
+              dangerouslySetInnerHTML={{ __html: project.fullDescription }} 
+            />
           ) : (
             <div className="space-y-6">
               {/* Overview Section */}
