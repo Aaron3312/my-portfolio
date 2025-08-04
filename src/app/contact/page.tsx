@@ -4,6 +4,27 @@ import { useState, useRef } from "react"
 import { Button } from "../../components/ui/Button"
 import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react"
 import emailjs from '@emailjs/browser';
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Contacto - Aaron Hernández | Contratar Desarrollador Web',
+  description: 'Contacta conmigo para proyectos de desarrollo web, aplicaciones React, soluciones AWS y consultoría técnica. Disponible para freelance y colaboraciones en México.',
+  keywords: [
+    'contactar desarrollador web México',
+    'contratar programador React',
+    'solicitar cotización desarrollo web',
+    'freelance developer México contact',
+    'hire React developer México',
+    'consultoría desarrollo web',
+    'presupuesto aplicación web',
+    'Aaron Hernández contacto'
+  ],
+  openGraph: {
+    title: 'Contacto - Aaron Hernández | Contratar Desarrollador Web',
+    description: 'Contacta conmigo para proyectos de desarrollo web, aplicaciones React, soluciones AWS y consultoría técnica. Disponible para freelance y colaboraciones.',
+    url: 'https://aaronhernandez.me/contact',
+  }
+}
 
 export default function ContactPage() {
   const formRef = useRef<HTMLFormElement>(null);

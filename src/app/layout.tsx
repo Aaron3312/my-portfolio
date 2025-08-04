@@ -12,38 +12,45 @@ export const metadata: Metadata = {
   title: 'Desarrollador Web México | Aaron Hernández - Full Stack Developer',
   description: 'Desarrollador web profesional en México especializado en React, Next.js, Node.js y AWS. Servicios de desarrollo web, aplicaciones móviles y soluciones cloud. Disponible para proyectos freelance.',
   keywords: [
-    'desarrollador web',
-    "web developer",
-    "web developer México",
-    'desarrollador web México',
-    'programador web',
-
-    'desarrollador frontend',
-    'desarrollador frontend México',
-    'desarrollador backend',
-    "backend developer México",
-    'full stack developer México',
-    'React developer México',
+    // Términos de trabajo freelance
+    'desarrollador web freelance México',
+    'programador freelance Guadalajara',
+    'freelance React developer México',
+    'contratación desarrollador web México',
+    'servicios desarrollo web freelance',
+    'desarrollador full stack disponible',
+    'busco desarrollador web México',
+    'hiring React developer México',
     
-    'Next.js developer',
-    'Node.js developer',
-    'AWS solutions architect',
-    'desarrollador freelance',
-    'desarrollador freelance México',
-    'programador freelance México',
-    "programador web freelance",
-    'desarrollador de software',
-    "website developer México",
-    "websites developer",
-    'desarrollador de aplicaciones web',
-    'desarrollo web profesional',
-    'freelance developer México',
-    'AWS developer',
-    'programador freelance',
-    'desarrollo de aplicaciones web',
+    // Proyectos específicos
+    'desarrollo aplicaciones web personalizadas',
+    'creación sitios web empresariales',
+    'desarrollo e-commerce México',
+    'aplicaciones React a medida',
+    'sistemas gestión tareas',
+    'desarrollo PWA México',
+    'migración legacy a React',
+    'optimización rendimiento web',
+    
+    // Tecnologías específicas
+    'desarrollador Next.js México',
+    'especialista TypeScript México',
+    'desarrollador Node.js freelance',
+    'AWS solutions architect México',
+    'desarrollador Firebase México',
+    'integración APIs REST México',
+    'desarrollo microservicios',
+    'arquitectura serverless AWS',
+    
+    // Términos de búsqueda específicos
     'Aaron Hernández desarrollador',
-    'servicios desarrollo web',
-    'Tecnológico de Monterrey developer'
+    'programador Tecnológico Monterrey',
+    'desarrollador web Jalisco',
+    'full stack developer Guadalajara',
+    'contrato desarrollador React',
+    'proyecto desarrollo web México',
+    'consultor técnico desarrollo',
+    'mentor desarrollo web México'
   ],
   authors: [{ name: 'Aaron Hernández Jiménez' }],
   creator: 'Aaron Hernández Jiménez',
@@ -128,6 +135,72 @@ export default function RootLayout({
             .loading-screen { position: fixed; inset: 0; background: var(--background); display: flex; align-items: center; justify-content: center; z-index: 100; }
           `
         }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Aaron Hernández Jiménez",
+              "jobTitle": "Full Stack Developer & Cloud Solutions Architect",
+              "description": "Desarrollador web profesional especializado en React, Next.js, Node.js, AWS y sistemas con IA. Disponible para proyectos freelance y posiciones full-time.",
+              "url": "https://aaronhernandez.me",
+              "image": "https://raw.githubusercontent.com/Aaron3312/aaron3312/main/SGCAM_20241125_163111155.PORTRAIT.jpg",
+              "email": "mailto:aaron3312.dev@gmail.com",
+              "telephone": "+52-33-1234-5678",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Guadalajara",
+                "addressRegion": "Jalisco",
+                "addressCountry": "México"
+              },
+              "alumniOf": {
+                "@type": "Organization",
+                "name": "Tecnológico de Monterrey",
+                "sameAs": "https://tec.mx"
+              },
+              "knowsAbout": [
+                "React", "Next.js", "Node.js", "TypeScript", "JavaScript",
+                "AWS", "Cloud Computing", "Machine Learning", "AI",
+                "Python", "PostgreSQL", "Firebase", "Docker",
+                "Desarrollo Web", "Desarrollo Full Stack", "Arquitectura de Software"
+              ],
+              "seeks": {
+                "@type": "JobPosting",
+                "title": "Proyectos de Desarrollo Web y Software",
+                "description": "Busco oportunidades freelance y proyectos full-time en desarrollo web, aplicaciones móviles y soluciones cloud",
+                "hiringOrganization": {
+                  "@type": "Person",
+                  "name": "Aaron Hernández Jiménez"
+                }
+              },
+              "sameAs": [
+                "https://github.com/Aaron3312",
+                "https://linkedin.com/in/aaron-hernandez-jimenez"
+              ],
+              "worksFor": {
+                "@type": "Organization",
+                "name": "Freelance Developer"
+              },
+              "hasOccupation": {
+                "@type": "Occupation",
+                "name": "Software Developer",
+                "occupationLocation": {
+                  "@type": "Place",
+                  "name": "México"
+                },
+                "skills": [
+                  "React Development",
+                  "Full Stack Development", 
+                  "Cloud Architecture",
+                  "Machine Learning",
+                  "Web Development",
+                  "Mobile Development"
+                ]
+              }
+            })
+          }}
+        />
       </head>
       <body className={inter.className}>
         <ThemeProvider

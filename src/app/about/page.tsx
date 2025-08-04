@@ -2,6 +2,25 @@
 import Image from "next/image"
 import { Button } from "../../components/ui/Button"
 import { FileText, GraduationCap, Briefcase } from "lucide-react"
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Sobre Mí - Aaron Hernández | Desarrollador Full Stack',
+  description: 'Conoce mi trayectoria como desarrollador full stack. Egresado del Tecnológico de Monterrey con experiencia en React, Node.js, AWS y proyectos de machine learning. Disponible para colaboraciones.',
+  keywords: [
+    'Aaron Hernández programador',
+    'desarrollador Tecnológico Monterrey',
+    'experiencia desarrollador web México',
+    'trayectoria profesional desarrollador',
+    'educación Tecnológico Monterrey',
+    'skills desarrollador full stack'
+  ],
+  openGraph: {
+    title: 'Sobre Mí - Aaron Hernández | Desarrollador Full Stack',
+    description: 'Conoce mi trayectoria como desarrollador full stack. Egresado del Tecnológico de Monterrey con experiencia en React, Node.js, AWS y proyectos de machine learning.',
+    url: 'https://aaronhernandez.me/about',
+  }
+}
 
 export default function AboutPage() {
   return (

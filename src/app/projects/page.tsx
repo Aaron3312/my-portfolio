@@ -6,6 +6,27 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
 import { projectsMin } from "@/utils/project-utils";
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Proyectos - Aaron Hernández | Portfolio Desarrollador Web',
+  description: 'Explora mis proyectos de desarrollo web: aplicaciones React, sistemas de gestión, e-commerce, APIs REST y soluciones cloud. Casos de estudio y ejemplos de código.',
+  keywords: [
+    'proyectos desarrollador web México',
+    'portfolio React developer',
+    'ejemplos desarrollo web',
+    'aplicaciones React proyectos',
+    'casos estudio desarrollo software',
+    'proyectos Node.js México',
+    'portfolio full stack developer',
+    'ejemplos código React'
+  ],
+  openGraph: {
+    title: 'Proyectos - Aaron Hernández | Portfolio Desarrollador Web',
+    description: 'Explora mis proyectos de desarrollo web: aplicaciones React, sistemas de gestión, e-commerce, APIs REST y soluciones cloud.',
+    url: 'https://aaronhernandez.me/projects',
+  }
+}
 
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, useGSAP);
