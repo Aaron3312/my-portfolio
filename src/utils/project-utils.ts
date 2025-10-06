@@ -12,7 +12,7 @@ export const projectsMin = [
     image: "/images/nodo/nodo.png",
     tags: ["Next.js 15.3.4", "TypeScript 5", "Tailwind CSS 4", "GSAP 3.13.0", "Radix UI", "EmailJS"],
     githubUrl: "https://github.com/Aaron3312/dark-kitchens-paraguay",
-    liveUrl: "",
+    liveUrl: "https://nododk.com/",
     slug: "nodo-dark-kitchens"
   },
 
