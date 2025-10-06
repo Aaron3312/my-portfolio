@@ -15,6 +15,7 @@ export const projectsMin = [
     liveUrl: "",
     slug: "nodo-dark-kitchens"
   },
+
   {
     title: "Security Multi-Agent System",
     description: "Prison security simulation with autonomous drones, security cameras, and AI-powered threat detection.",
@@ -32,6 +33,15 @@ export const projectsMin = [
     githubUrl: "https://github.com/Aaron3312/task-management-system",
     liveUrl: "https://task-management-system-blue-six.vercel.app",
     slug: "jai-vier"
+  },
+    {
+    title: "Cronos Project",
+    description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
+    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
+    tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
+    githubUrl: "https://github.com/Aaron3312/CronosProyect1",
+    liveUrl: "",
+    slug: "cronos"
   },
   {
     title: "Cache of Recipes",
