@@ -30,7 +30,7 @@ export const projectsMin = [
     image: "/images/jaivier/image.png",
     tags: ["Next.js", "TypeScript", "Spring Boot", "TailwindCSS", "Docker"],
     githubUrl: "https://github.com/Aaron3312/task-management-system",
-    liveUrl: "http://jai-vier.online",
+    liveUrl: "https://task-management-system-blue-six.vercel.app",
     slug: "jai-vier"
   },
   {
