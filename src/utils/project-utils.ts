@@ -16,15 +16,6 @@ export const projectsMin = [
     slug: "nodo-dark-kitchens"
   },
   {
-    title: "JAI-VIER: Sistema de Gestión de Tareas",
-    description: "Sistema completo de gestión de tareas inspirado en Jira, desarrollado con Next.js, TypeScript y patrones de diseño avanzados.",
-    image: "/images/jaivier/image.png",
-    tags: ["Next.js", "TypeScript", "Spring Boot", "TailwindCSS", "Docker"],
-    githubUrl: "https://github.com/Aaron3312/task-management-system",
-    liveUrl: "http://jai-vier.online",
-    slug: "jai-vier"
-  },
-  {
     title: "Security Multi-Agent System",
     description: "Prison security simulation with autonomous drones, security cameras, and AI-powered threat detection.",
     image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Security.gif",
