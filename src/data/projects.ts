@@ -406,7 +406,7 @@ export const projects: ProjectsData = {
     iconColor: "text-blue-600",
     tags: ["Next.js", "TypeScript", "Spring Boot", "TailwindCSS", "Docker"],
     githubUrl: "https://github.com/Aaron3312/task-management-system",
-    liveUrl: "http://jai-vier.online",
+    liveUrl: "https://task-management-system-blue-six.vercel.app",
     fullDescription: `
       <h2>Overview</h2>
       <p>JAI-VIER es un sistema completo de gestión de tareas inspirado en Jira, desarrollado con Next.js, TypeScript y patrones de diseño avanzados. Ofrece una solución integral para la gestión de proyectos, sprints y tareas con una interfaz moderna y intuitiva.</p>

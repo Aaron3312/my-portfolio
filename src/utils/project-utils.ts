@@ -34,13 +34,13 @@ export const projectsMin = [
     slug: "security-system"
   },
   {
-    title: "Cronos Project",
-    description: "AI-powered project management platform that transforms project descriptions into actionable task lists.",
-    image: "https://raw.githubusercontent.com/Aaron3312/my-portfolio/master/public/images/Cronos.png",
-    tags: ["Node.js", "Express", "PostgreSQL", "OpenAI API", "Notion API"],
-    githubUrl: "https://github.com/Aaron3312/CronosProyect1",
-    liveUrl: "",
-    slug: "cronos"
+    title: "JAI-VIER: Sistema de Gestión de Tareas",
+    description: "Sistema completo de gestión de tareas inspirado en Jira, desarrollado con Next.js, TypeScript y patrones de diseño avanzados.",
+    image: "/images/jaivier/image.png",
+    tags: ["Next.js", "TypeScript", "Spring Boot", "TailwindCSS", "Docker"],
+    githubUrl: "https://github.com/Aaron3312/task-management-system",
+    liveUrl: "https://task-management-system-blue-six.vercel.app",
+    slug: "jai-vier"
   },
   {
     title: "Cache of Recipes",

@@ -1,6 +1,5 @@
-import { projectsMin } from "@/utils/project-utils";
-import { Metadata } from 'next';
-import ProjectsClient from './ProjectsClient';
+import { Metadata } from 'next'
+import ProjectsContent from '@/components/ProjectsContent'
 
 export const metadata: Metadata = {
   title: 'Proyectos - Aaron Hernández | Portfolio Desarrollador Web',
@@ -23,5 +22,5 @@ export const metadata: Metadata = {
 }
 
 export default function ProjectsPage() {
-  return <ProjectsClient projects={projectsMin} />;
+  return <ProjectsContent />
 }
