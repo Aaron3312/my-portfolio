@@ -543,5 +543,96 @@ export const projects: ProjectsData = {
         alt: "Cache of Recipes - Página Principal"
       }
     ]
+  },
+  "nodo-dark-kitchens": {
+    title: "NODO Dark Kitchens Paraguay",
+    description: "Primera red de cocinas fantasma en Paraguay para expansión de delivery sin inversión inicial.",
+    image: "/images/nodo/website.png",
+    iconName: "Globe",
+    iconColor: "text-orange-600",
+    tags: ["Next.js 15.3.4", "TypeScript 5", "Tailwind CSS 4", "GSAP 3.13.0", "Radix UI", "EmailJS"],
+    githubUrl: "https://github.com/Aaron3312/dark-kitchens-paraguay",
+    liveUrl: "https://nododk.com",
+    fullDescription: `
+      <h2>Overview</h2>
+      <p>NODO Dark Kitchens Paraguay es una aplicación web moderna para la primera red de cocinas fantasma (dark kitchens) en Paraguay. El sitio web promociona servicios de expansión de delivery para restaurantes sin inversión inicial, ofreciendo una solución completa para el crecimiento del negocio gastronómico.</p>
+      
+      <h2>Key Features</h2>
+      <ul>
+        <li><strong>Landing Page Completa:</strong> Diseño moderno con video background y animaciones GSAP para una experiencia inmersiva.</li>
+        <li><strong>Formulario Lead Generation:</strong> Sistema integrado con EmailJS para captura de restaurantes interesados.</li>
+        <li><strong>Galería Interactiva:</strong> Showcase completo de las instalaciones con renders 3D y fotografías profesionales.</li>
+        <li><strong>Mapa de Cobertura:</strong> Visualización clara de las áreas de servicio en Paraguay.</li>
+        <li><strong>WhatsApp Integration:</strong> Botón flotante para contacto directo y consultas rápidas.</li>
+        <li><strong>Responsive Design:</strong> Mobile-first approach con diseño adaptado para todos los dispositivos.</li>
+        <li><strong>Animaciones Avanzadas:</strong> GSAP con ScrollTrigger para efectos visuales fluidos y profesionales.</li>
+        <li><strong>Newsletter Signup:</strong> Sistema de suscripción para mantenerse actualizado.</li>
+      </ul>
+      
+      <h2>Technical Architecture</h2>
+      <ul>
+        <li><strong>Framework Moderno:</strong> Next.js 15.3.4 con App Router para SSG optimizado.</li>
+        <li><strong>TypeScript 5:</strong> Desarrollo type-safe con mejor mantenibilidad del código.</li>
+        <li><strong>Styling System:</strong> Tailwind CSS 4 con sistema de tipografía personalizado (Inter, Space Grotesk, JetBrains Mono, Montserrat).</li>
+        <li><strong>UI Components:</strong> Radix UI + Shadcn/ui para componentes accesibles y reutilizables.</li>
+        <li><strong>Animation System:</strong> GSAP 3.13.0 con ScrollTrigger para animaciones complejas y efectos glassmorphism.</li>
+        <li><strong>Forms:</strong> EmailJS para manejo de formularios sin backend adicional.</li>
+        <li><strong>Deployment:</strong> Static export configurado para hosting compartido con optimización de imágenes WebP/AVIF.</li>
+      </ul>
+      
+      <h2>Business Impact</h2>
+      <ul>
+        <li><strong>Lead Generation:</strong> Captura efectiva de restaurantes interesados en el modelo de dark kitchens.</li>
+        <li><strong>Brand Positioning:</strong> Establece NODO como líder innovador en el mercado paraguayo.</li>
+        <li><strong>Información Educativa:</strong> Explica claramente el modelo de negocio y beneficios.</li>
+        <li><strong>Showcase Profesional:</strong> Demuestra la calidad y capacidades de las instalaciones.</li>
+        <li><strong>Múltiples Canales:</strong> Diversos puntos de contacto para diferentes tipos de usuarios.</li>
+        <li><strong>SEO Optimizado:</strong> Configurado para mejor visibilidad en búsquedas locales.</li>
+      </ul>
+      
+      <h2>Performance & Optimization</h2>
+      <ul>
+        <li><strong>Static Export:</strong> Generación estática para máximo rendimiento en hosting compartido.</li>
+        <li><strong>Image Optimization:</strong> Formatos modernos WebP y AVIF para carga rápida.</li>
+        <li><strong>Code Splitting:</strong> Carga optimizada de componentes con lazy loading.</li>
+        <li><strong>Bundle Optimization:</strong> Scripts automatizados para deploy FTP y Vercel.</li>
+        <li><strong>Performance Metrics:</strong> Lighthouse optimizado para velocidad y accesibilidad.</li>
+      </ul>
+      
+      <h2>Project Structure</h2>
+      <ul>
+        <li><strong>Components:</strong> 15+ componentes React personalizados organizados por funcionalidad.</li>
+        <li><strong>Sections:</strong> 8 secciones principales (Hero, About, Coverage, Gallery, etc.).</li>
+        <li><strong>Custom Hooks:</strong> useGSAPAnimations para manejo centralizado de animaciones.</li>
+        <li><strong>Context System:</strong> ThemeContext para gestión de temas y estado global.</li>
+        <li><strong>Assets Management:</strong> Organización optimizada de imágenes y videos.</li>
+      </ul>
+    `,
+    screenshots: [
+      {
+        url: "/images/nodo/website.png",
+        alt: "NODO Dark Kitchens - Página Web Principal"
+      },
+      {
+        url: "/images/nodo/SobreNodo.png",
+        alt: "NODO Dark Kitchens - Sección Sobre NODO"
+      },
+      {
+        url: "/images/nodo/ComoFunciona.png",
+        alt: "NODO Dark Kitchens - Cómo Funciona el Servicio"
+      },
+      {
+        url: "/images/nodo/ContactForm.png",
+        alt: "NODO Dark Kitchens - Formulario de Contacto"
+      },
+      {
+        url: "/images/nodo/AnalisisComparativo.png",
+        alt: "NODO Dark Kitchens - Análisis Comparativo de Beneficios"
+      },
+      {
+        url: "/images/nodo/Render1.jpeg",
+        alt: "NODO Dark Kitchens - Render 3D de las Instalaciones"
+      }
+    ]
   }
 };

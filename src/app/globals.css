@@ -24,3 +24,48 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Project Content Styles */
+.project-content h2 {
+  @apply text-2xl font-bold mb-4 mt-8 text-gray-900 dark:text-gray-100;
+}
+
+.project-content h2:first-child {
+  @apply mt-0;
+}
+
+.project-content p {
+  @apply text-base text-gray-600 dark:text-gray-300 mb-4 leading-relaxed;
+}
+
+.project-content ul {
+  @apply space-y-3 mb-6;
+}
+
+.project-content li {
+  @apply text-base text-gray-600 dark:text-gray-300 relative pl-6;
+}
+
+.project-content li::before {
+  content: "•";
+  @apply absolute left-0 text-blue-600 dark:text-blue-400 font-bold;
+}
+
+.project-content strong {
+  @apply text-gray-900 dark:text-gray-100 font-semibold;
+}
+
+.project-content h3 {
+  @apply text-xl font-bold mb-3 mt-6 text-gray-900 dark:text-gray-100;
+}
+
+/* Swiper Custom Pagination Styles */
+.swiper-pagination-custom .swiper-pagination-bullet {
+  @apply w-2 h-2 bg-gray-400 dark:bg-gray-600 rounded-full transition-all duration-200;
+  opacity: 0.5;
+}
+
+.swiper-pagination-custom .swiper-pagination-bullet-active {
+  @apply bg-blue-600 dark:bg-blue-400 w-6;
+  opacity: 1;
+}
