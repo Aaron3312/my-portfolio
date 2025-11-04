@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useMediaQuery } from 'react-responsive';
 
-// BounceCards Component
+// BounceCards Component (Desktop)
 interface BounceCardsProps {
   className?: string;
   images?: Array<{ url: string; alt: string }>;
@@ -171,6 +172,170 @@ function BounceCards({
   );
 }
 
+// Mobile Carousel with Swiper-like functionality
+interface MobileCarouselProps {
+  screenshots: Screenshot[];
+  onImageClick: (index: number) => void;
+}
+
+function MobileCarousel({ screenshots, onImageClick }: MobileCarouselProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(0);
+  const [touchEnd, setTouchEnd] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [offset, setOffset] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(0);
+    setTouchStart(e.targetTouches[0].clientX);
+    setIsDragging(true);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return;
+    const currentTouch = e.targetTouches[0].clientX;
+    setTouchEnd(currentTouch);
+    const diff = currentTouch - touchStart;
+    setOffset(diff);
+  };
+
+  const onTouchEnd = () => {
+    if (!isDragging) return;
+    setIsDragging(false);
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && currentIndex < screenshots.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+    if (isRightSwipe && currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+    
+    setOffset(0);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  return (
+    <div className="w-full px-4">
+      {/* Carousel Container */}
+      <div className="relative overflow-hidden rounded-2xl">
+        <div
+          ref={containerRef}
+          className="relative h-[400px] touch-pan-y"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <div
+            className="flex h-full transition-transform duration-300 ease-out"
+            style={{
+              transform: `translateX(calc(-${currentIndex * 100}% + ${isDragging ? offset : 0}px))`
+            }}
+          >
+            {screenshots.map((screenshot, idx) => (
+              <div
+                key={idx}
+                className="min-w-full h-full flex items-center justify-center px-2"
+              >
+                <div
+                  className="relative w-full h-full rounded-xl overflow-hidden shadow-2xl cursor-pointer"
+                  onClick={() => !isDragging && onImageClick(idx)}
+                >
+                  <img
+                    src={screenshot.url}
+                    alt={screenshot.alt}
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <p className="text-white text-sm font-medium drop-shadow-lg line-clamp-2">
+                      {screenshot.alt}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Navigation Arrows */}
+        {currentIndex > 0 && (
+          <button
+            onClick={() => goToSlide(currentIndex - 1)}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-800/90 shadow-lg backdrop-blur-sm"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-800 dark:text-gray-200" />
+          </button>
+        )}
+        {currentIndex < screenshots.length - 1 && (
+          <button
+            onClick={() => goToSlide(currentIndex + 1)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center rounded-full bg-white/90 dark:bg-gray-800/90 shadow-lg backdrop-blur-sm"
+          >
+            <ChevronRight className="w-6 h-6 text-gray-800 dark:text-gray-200" />
+          </button>
+        )}
+      </div>
+
+      {/* Pagination Dots */}
+      <div className="flex justify-center items-center gap-2 mt-6">
+        {screenshots.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => goToSlide(idx)}
+            className={`transition-all duration-300 rounded-full ${
+              idx === currentIndex
+                ? 'w-8 h-2 bg-blue-600'
+                : 'w-2 h-2 bg-gray-300 dark:bg-gray-600'
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Counter */}
+      <div className="text-center mt-4">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {currentIndex + 1} / {screenshots.length}
+        </p>
+      </div>
+
+      {/* Thumbnails Preview */}
+      <div className="mt-6 overflow-x-auto pb-4">
+        <div className="flex gap-2 px-1">
+          {screenshots.map((screenshot, idx) => (
+            <button
+              key={idx}
+              onClick={() => goToSlide(idx)}
+              className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden transition-all duration-300 ${
+                idx === currentIndex
+                  ? 'ring-2 ring-blue-600 scale-110'
+                  : 'opacity-60 hover:opacity-100'
+              }`}
+            >
+              <img
+                src={screenshot.url}
+                alt={`Thumbnail ${idx + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Main ProjectCarousel Component
 interface Screenshot {
   url: string;
@@ -183,16 +348,23 @@ interface ProjectCarouselProps {
 }
 
 export default function ProjectCarousel({ screenshots, title }: ProjectCarouselProps) {
+  const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [currentGroup, setCurrentGroup] = useState(0);
+  const [isClient, setIsClient] = useState(false);
   
   const lightboxRef = useRef<HTMLDivElement>(null);
   const gsapRef = useRef<any>(null);
 
   const imagesPerGroup = 6;
   const totalGroups = Math.ceil(screenshots.length / imagesPerGroup);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Initialize GSAP for lightbox
   useEffect(() => {
@@ -357,14 +529,6 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
     setZoomLevel(newZoom);
   };
 
-  const nextGroup = () => {
-    setCurrentGroup((prev) => (prev < totalGroups - 1 ? prev + 1 : 0));
-  };
-
-  const prevGroup = () => {
-    setCurrentGroup((prev) => (prev > 0 ? prev - 1 : totalGroups - 1));
-  };
-
   const getCurrentGroupImages = () => {
     const start = currentGroup * imagesPerGroup;
     const end = start + imagesPerGroup;
@@ -401,6 +565,102 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
   const currentImages = getCurrentGroupImages();
   const transformStyles = getTransformStyles(currentImages.length);
 
+  // Mobile View
+  if (isMobile) {
+    return (
+      <div className="mt-12">
+        <div className="text-center mb-8 px-4">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+            {title} Gallery
+          </h2>
+          <p className="text-gray-600 dark:text-gray-400">
+            {isClient ? 'Swipe to explore' : 'Gallery'}
+          </p>
+        </div>
+        
+        <MobileCarousel 
+          screenshots={screenshots} 
+          onImageClick={openLightbox}
+        />
+
+        {/* Lightbox Modal for Mobile */}
+        {lightboxOpen && (
+          <div className="fixed inset-0 z-50 bg-black">
+            <div className="absolute inset-0 flex flex-col">
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 bg-black/80">
+                <span className="text-white text-sm font-medium">
+                  {currentImageIndex + 1} / {screenshots.length}
+                </span>
+                <button 
+                  onClick={closeLightbox}
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Image */}
+              <div className="flex-1 relative flex items-center justify-center p-4">
+                <img
+                  src={screenshots[currentImageIndex].url}
+                  alt={screenshots[currentImageIndex].alt}
+                  className="max-w-full max-h-full object-contain"
+                  style={{ transform: `scale(${zoomLevel})` }}
+                />
+                
+                {/* Navigation */}
+                {screenshots.length > 1 && (
+                  <>
+                    <button 
+                      onClick={handlePrev}
+                      className="absolute left-2 w-12 h-12 flex items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm"
+                    >
+                      <ChevronLeft className="w-6 h-6" />
+                    </button>
+                    <button 
+                      onClick={handleNext}
+                      className="absolute right-2 w-12 h-12 flex items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm"
+                    >
+                      <ChevronRight className="w-6 h-6" />
+                    </button>
+                  </>
+                )}
+              </div>
+
+              {/* Bottom Controls */}
+              <div className="p-4 bg-black/80">
+                <div className="flex items-center justify-center gap-4 mb-3">
+                  <button 
+                    onClick={decreaseZoom}
+                    disabled={zoomLevel <= 1}
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 text-white disabled:opacity-30"
+                  >
+                    <ZoomOut className="w-5 h-5" />
+                  </button>
+                  <span className="text-white text-sm font-medium min-w-[4rem] text-center">
+                    {Math.round(zoomLevel * 100)}%
+                  </span>
+                  <button 
+                    onClick={increaseZoom}
+                    disabled={zoomLevel >= 3}
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-white/20 text-white disabled:opacity-30"
+                  >
+                    <ZoomIn className="w-5 h-5" />
+                  </button>
+                </div>
+                <p className="text-white/80 text-sm text-center line-clamp-2">
+                  {screenshots[currentImageIndex].alt}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Desktop View
   return (
     <div className="mt-12 relative">
       <div className="text-center mb-8">
@@ -426,7 +686,6 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
           enableHover={true}
           onImageClick={(idx) => openLightbox(currentGroup * imagesPerGroup + idx)}
         />
-        
       </div>
 
       {/* Group Indicator */}
@@ -446,7 +705,7 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
         </div>
       )}
 
-      {/* Lightbox Modal */}
+      {/* Desktop Lightbox Modal */}
       {lightboxOpen && (
         <div ref={lightboxRef} className="fixed inset-0 z-50">
           <div 
