@@ -220,7 +220,6 @@ export default async function ProjectDetail({ params }: { params: { slug: string
       
       {project.screenshots && project.screenshots.length > 0 && (
         <div className="bg-slate-50 dark:bg-slate-800/30 py-10 px-4 rounded-lg mt-12">
-          <h2 className="text-2xl font-bold mb-6 text-center">Project Gallery</h2>
           <ProjectCarousel screenshots={project.screenshots} title={project.title} />
         </div>
       )}

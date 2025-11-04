@@ -1,16 +1,181 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y, Autoplay } from 'swiper/modules';
-import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from 'lucide-react';
-import { Screenshot } from '@/data/projects';
+import { X, ZoomIn, ZoomOut, ChevronLeft, ChevronRight } from 'lucide-react';
 
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+// BounceCards Component
+interface BounceCardsProps {
+  className?: string;
+  images?: Array<{ url: string; alt: string }>;
+  containerWidth?: number;
+  containerHeight?: number;
+  animationDelay?: number;
+  animationStagger?: number;
+  easeType?: string;
+  transformStyles?: string[];
+  enableHover?: boolean;
+  onImageClick?: (index: number) => void;
+}
+
+function BounceCards({
+  className = '',
+  images = [],
+  containerWidth = 400,
+  containerHeight = 400,
+  animationDelay = 0.5,
+  animationStagger = 0.06,
+  easeType = 'elastic.out(1, 0.8)',
+  transformStyles = [
+    'rotate(10deg) translate(-170px)',
+    'rotate(5deg) translate(-85px)',
+    'rotate(-3deg)',
+    'rotate(-10deg) translate(85px)',
+    'rotate(2deg) translate(170px)'
+  ],
+  enableHover = false,
+  onImageClick
+}: BounceCardsProps) {
+  const gsapRef = useRef<any>(null);
+
+  useEffect(() => {
+    const initGSAP = async () => {
+      try {
+        const gsap = await import('gsap').then(mod => mod.gsap);
+        gsapRef.current = gsap;
+
+        gsap.fromTo(
+          '.bounce-card',
+          { scale: 0 },
+          {
+            scale: 1,
+            stagger: animationStagger,
+            ease: easeType,
+            delay: animationDelay
+          }
+        );
+      } catch (error) {
+        console.warn('GSAP failed to load:', error);
+      }
+    };
+
+    initGSAP();
+  }, [animationStagger, easeType, animationDelay]);
+
+  const getNoRotationTransform = (transformStr: string): string => {
+    const hasRotate = /rotate\([\s\S]*?\)/.test(transformStr);
+    if (hasRotate) {
+      return transformStr.replace(/rotate\([\s\S]*?\)/, 'rotate(0deg)');
+    } else if (transformStr === 'none') {
+      return 'rotate(0deg)';
+    } else {
+      return `${transformStr} rotate(0deg)`;
+    }
+  };
+
+  const getPushedTransform = (baseTransform: string, offsetX: number): string => {
+    const translateRegex = /translate\(([-0-9.]+)px\)/;
+    const match = baseTransform.match(translateRegex);
+    if (match) {
+      const currentX = parseFloat(match[1]);
+      const newX = currentX + offsetX;
+      return baseTransform.replace(translateRegex, `translate(${newX}px)`);
+    } else {
+      return baseTransform === 'none' ? `translate(${offsetX}px)` : `${baseTransform} translate(${offsetX}px)`;
+    }
+  };
+
+  const pushSiblings = (hoveredIdx: number) => {
+    if (!enableHover || !gsapRef.current) return;
+
+    images.forEach((_, i) => {
+      gsapRef.current.killTweensOf(`.bounce-card-${i}`);
+      const baseTransform = transformStyles[i] || 'none';
+      
+      if (i === hoveredIdx) {
+        const noRotation = getNoRotationTransform(baseTransform);
+        gsapRef.current.to(`.bounce-card-${i}`, {
+          transform: noRotation,
+          duration: 0.4,
+          ease: 'back.out(1.4)',
+          overwrite: 'auto'
+        });
+      } else {
+        const offsetX = i < hoveredIdx ? -160 : 160;
+        const pushedTransform = getPushedTransform(baseTransform, offsetX);
+        const distance = Math.abs(hoveredIdx - i);
+        const delay = distance * 0.05;
+        gsapRef.current.to(`.bounce-card-${i}`, {
+          transform: pushedTransform,
+          duration: 0.4,
+          ease: 'back.out(1.4)',
+          delay,
+          overwrite: 'auto'
+        });
+      }
+    });
+  };
+
+  const resetSiblings = () => {
+    if (!enableHover || !gsapRef.current) return;
+    
+    images.forEach((_, i) => {
+      gsapRef.current.killTweensOf(`.bounce-card-${i}`);
+      const baseTransform = transformStyles[i] || 'none';
+      gsapRef.current.to(`.bounce-card-${i}`, {
+        transform: baseTransform,
+        duration: 0.4,
+        ease: 'back.out(1.4)',
+        overwrite: 'auto'
+      });
+    });
+  };
+
+  return (
+    <div
+      className={`relative flex justify-center items-center ${className}`}
+      style={{
+        width: containerWidth,
+        height: containerHeight
+      }}
+    >
+      {images.map((img, idx) => (
+        <div
+          key={idx}
+          className={`bounce-card bounce-card-${idx} absolute cursor-pointer group`}
+          style={{ 
+            transform: transformStyles[idx] ?? 'none',
+            width: '280px',
+            aspectRatio: '1',
+            border: '5px solid color-mix(in oklab, var(--color-blue-900) 50%, transparent)',
+            borderRadius: '25px',
+            overflow: 'hidden',
+            boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)'
+          }}
+          onMouseEnter={() => pushSiblings(idx)}
+          onMouseLeave={resetSiblings}
+          onClick={() => onImageClick?.(idx)}
+        >
+          <img 
+            className="w-full h-full object-cover" 
+            src={img.url} 
+            alt={img.alt}
+          />
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-800/90 rounded-full p-3">
+              <ZoomIn className="h-6 w-6 text-gray-800 dark:text-gray-200" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Main ProjectCarousel Component
+interface Screenshot {
+  url: string;
+  alt: string;
+}
 
 interface ProjectCarouselProps {
   screenshots: Screenshot[];
@@ -21,79 +186,25 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const [currentGroup, setCurrentGroup] = useState(0);
   
-  // Refs for GSAP animations
-  const carouselRef = useRef<HTMLDivElement>(null);
   const lightboxRef = useRef<HTMLDivElement>(null);
-  const prevButtonRef = useRef<HTMLButtonElement>(null);
-  const nextButtonRef = useRef<HTMLButtonElement>(null);
   const gsapRef = useRef<any>(null);
 
-  // Initialize GSAP animations
+  const imagesPerGroup = 6;
+  const totalGroups = Math.ceil(screenshots.length / imagesPerGroup);
+
+  // Initialize GSAP for lightbox
   useEffect(() => {
     const initGSAP = async () => {
       try {
-        const { gsap } = await import('gsap');
+        const gsap = await import('gsap').then(mod => mod.gsap);
         gsapRef.current = gsap;
-
-        // Carousel entrance animation
-        if (carouselRef.current) {
-          gsap.fromTo(carouselRef.current, 
-            { 
-              opacity: 0, 
-              y: 50 
-            },
-            { 
-              opacity: 1, 
-              y: 0, 
-              duration: 0.8,
-              ease: "power2.out"
-            }
-          );
-        }
-
-        // Navigation buttons hover animations
-        const animateButton = (button: HTMLElement, isHover: boolean) => {
-          gsap.to(button, {
-            scale: isHover ? 1.1 : 1,
-            rotate: isHover ? 360 : 0,
-            duration: 0.3,
-            ease: "back.out(1.7)"
-          });
-        };
-
-        // Setup button hover effects
-        [prevButtonRef.current, nextButtonRef.current].forEach(button => {
-          if (button) {
-            const handleMouseEnter = () => animateButton(button, true);
-            const handleMouseLeave = () => animateButton(button, false);
-            
-            button.addEventListener('mouseenter', handleMouseEnter);
-            button.addEventListener('mouseleave', handleMouseLeave);
-            
-            // Cleanup function will be returned later
-            button._gsapCleanup = () => {
-              button.removeEventListener('mouseenter', handleMouseEnter);
-              button.removeEventListener('mouseleave', handleMouseLeave);
-            };
-          }
-        });
-
       } catch (error) {
-        console.warn('GSAP failed to load for carousel:', error);
+        console.warn('GSAP failed to load:', error);
       }
     };
-
     initGSAP();
-
-    // Cleanup
-    return () => {
-      [prevButtonRef.current, nextButtonRef.current].forEach(button => {
-        if (button && button._gsapCleanup) {
-          button._gsapCleanup();
-        }
-      });
-    };
   }, []);
 
   // Lightbox GSAP animations
@@ -101,35 +212,15 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
     if (!gsapRef.current) return;
 
     if (lightboxOpen && lightboxRef.current) {
-      // Lightbox entrance animation
       gsapRef.current.fromTo(lightboxRef.current,
-        {
-          opacity: 0,
-          scale: 0.8
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.4,
-          ease: "back.out(1.4)"
-        }
+        { opacity: 0, scale: 0.8 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(1.4)" }
       );
 
-      // Animate lightbox controls
       const controls = lightboxRef.current.querySelectorAll('.lightbox-control');
       gsapRef.current.fromTo(controls,
-        {
-          opacity: 0,
-          y: 20
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.3,
-          stagger: 0.1,
-          delay: 0.2,
-          ease: "power2.out"
-        }
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.3, stagger: 0.1, delay: 0.2, ease: "power2.out" }
       );
     }
   }, [lightboxOpen]);
@@ -154,7 +245,6 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
 
     document.addEventListener('keydown', handleKeyDown);
     
-    // Lock scrolling when lightbox is open
     if (lightboxOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -165,7 +255,7 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
       document.removeEventListener('keydown', handleKeyDown);
       document.body.style.overflow = '';
     };
-  }, [lightboxOpen, screenshots.length, currentImageIndex]);
+  }, [lightboxOpen, screenshots.length]);
 
   const openLightbox = (index: number) => {
     setCurrentImageIndex(index);
@@ -174,7 +264,6 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
   };
 
   const closeLightbox = () => {
-    // Animate out before closing
     if (gsapRef.current && lightboxRef.current) {
       gsapRef.current.to(lightboxRef.current, {
         opacity: 0,
@@ -193,7 +282,6 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
   };
 
   const handlePrev = () => {
-    // Animate image transition
     if (gsapRef.current && lightboxRef.current) {
       const imageContainer = lightboxRef.current.querySelector('.image-container');
       if (imageContainer) {
@@ -217,7 +305,6 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
   };
 
   const handleNext = () => {
-    // Animate image transition
     if (gsapRef.current && lightboxRef.current) {
       const imageContainer = lightboxRef.current.querySelector('.image-container');
       if (imageContainer) {
@@ -270,104 +357,105 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
     setZoomLevel(newZoom);
   };
 
+  const nextGroup = () => {
+    setCurrentGroup((prev) => (prev < totalGroups - 1 ? prev + 1 : 0));
+  };
+
+  const prevGroup = () => {
+    setCurrentGroup((prev) => (prev > 0 ? prev - 1 : totalGroups - 1));
+  };
+
+  const getCurrentGroupImages = () => {
+    const start = currentGroup * imagesPerGroup;
+    const end = start + imagesPerGroup;
+    return screenshots.slice(start, end);
+  };
+
+  const getTransformStyles = (count: number) => {
+    if (count === 1) return ['rotate(0deg)'];
+    if (count === 2) return ['rotate(5deg) translate(-150px)', 'rotate(-5deg) translate(150px)'];
+    if (count === 3) return ['rotate(8deg) translate(-200px)', 'rotate(0deg)', 'rotate(-8deg) translate(200px)'];
+    if (count === 4) return [
+      'rotate(10deg) translate(-240px)',
+      'rotate(3deg) translate(-80px)',
+      'rotate(-3deg) translate(80px)',
+      'rotate(-10deg) translate(240px)'
+    ];
+    if (count === 6) return [
+      'rotate(12deg) translate(-320px)',
+      'rotate(6deg) translate(-200px)',
+      'rotate(2deg) translate(-80px)',
+      'rotate(-2deg) translate(80px)',
+      'rotate(-6deg) translate(200px)',
+      'rotate(-12deg) translate(320px)'
+    ];
+    return [
+      'rotate(10deg) translate(-280px)',
+      'rotate(5deg) translate(-140px)',
+      'rotate(-3deg)',
+      'rotate(-10deg) translate(140px)',
+      'rotate(2deg) translate(280px)'
+    ];
+  };
+
+  const currentImages = getCurrentGroupImages();
+  const transformStyles = getTransformStyles(currentImages.length);
+
   return (
-    <div ref={carouselRef} className="mt-12 relative">
+    <div className="mt-12 relative">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Project Gallery</h2>
-        <p className="text-gray-600 dark:text-gray-400">Click on any image to view in full screen</p>
+        <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+          {title} Gallery
+        </h2>
+        <p className="text-gray-600 dark:text-gray-400">
+          Click on any image to view in full screen
+        </p>
       </div>
       
-      {/* Main Carousel */}
-      <div className="relative carousel-container px-4">
-        <Swiper
-          modules={[Navigation, Pagination, A11y]}
-          spaceBetween={24}
-          slidesPerView={1}
-          navigation={{
-            prevEl: '.swiper-button-prev-custom',
-            nextEl: '.swiper-button-next-custom',
-          }}
-          pagination={{ 
-            clickable: true,
-            dynamicBullets: true,
-            el: '.swiper-pagination-custom'
-          }}
-          breakpoints={{
-            640: {
-              slidesPerView: 2,
-              spaceBetween: 20,
-            },
-            1024: {
-              slidesPerView: 2.5,
-              spaceBetween: 24,
-            },
-            1280: {
-              slidesPerView: 3,
-              spaceBetween: 24,
-            },
-          }}
-          className="w-full pb-12"
-        >
-          {screenshots.map((screenshot, index) => (
-            <SwiperSlide key={index}>
-              <div className="group relative">
-                <div 
-                  className="cursor-pointer overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm hover:shadow-xl transition-all duration-300 aspect-video relative"
-                  onClick={() => openLightbox(index)}
-                >
-                  <Image
-                    src={screenshot.url}
-                    alt={screenshot.alt}
-                    fill
-                    className="object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                  {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-800/90 rounded-full p-3">
-                      <ZoomIn className="h-6 w-6 text-gray-800 dark:text-gray-200" />
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-3 px-2">
-                  <p className="text-sm font-medium text-gray-800 dark:text-gray-200 line-clamp-2">
-                    {screenshot.alt}
-                  </p>
-                </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+      {/* Bounce Cards Container */}
+      <div className="flex justify-center items-center min-h-[600px] relative">
+        <BounceCards
+          className="bounce-cards-wrapper"
+          images={currentImages}
+          containerWidth={1200}
+          containerHeight={500}
+          animationDelay={0.5}
+          animationStagger={0.08}
+          easeType="elastic.out(1, 0.5)"
+          transformStyles={transformStyles}
+          enableHover={true}
+          onImageClick={(idx) => openLightbox(currentGroup * imagesPerGroup + idx)}
+        />
         
-        {/* Custom Navigation Buttons */}
-        <button 
-          ref={prevButtonRef}
-          className="swiper-button-prev-custom absolute left-0 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-200"
-        >
-          <ChevronLeft className="h-6 w-6" />
-        </button>
-        <button 
-          ref={nextButtonRef}
-          className="swiper-button-next-custom absolute right-0 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 shadow-lg hover:shadow-xl border border-gray-200 dark:border-gray-700 transition-all duration-200"
-        >
-          <ChevronRight className="h-6 w-6" />
-        </button>
-        
-        {/* Custom Pagination */}
-        <div className="swiper-pagination-custom flex justify-center mt-6"></div>
       </div>
 
-      {/* Modern Lightbox Modal - FIXED */}
+      {/* Group Indicator */}
+      {totalGroups > 1 && (
+        <div className="flex justify-center mt-6 gap-2">
+          {Array.from({ length: totalGroups }).map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentGroup(idx)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                idx === currentGroup 
+                  ? 'w-8 bg-blue-600' 
+                  : 'w-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400'
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Lightbox Modal */}
       {lightboxOpen && (
         <div ref={lightboxRef} className="fixed inset-0 z-50">
-          {/* Backdrop */}
           <div 
             className="absolute inset-0 bg-black/95 backdrop-blur-md"
             onClick={closeLightbox}
           />
           
-          {/* Top Controls Row */}
+          {/* Top Controls */}
           <div className="absolute top-0 left-0 right-0 z-30 flex justify-between items-center p-4">
-            {/* Thumbnail Strip - Top Left */}
             {screenshots.length > 1 && (
               <div className="lightbox-control">
                 <div className="flex items-center gap-2 px-4 py-2 bg-black/60 backdrop-blur-md rounded-full max-w-sm overflow-x-auto border border-white/20">
@@ -381,11 +469,10 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
                           : 'border-white/30 opacity-60 hover:opacity-100 hover:border-white/60'
                       }`}
                     >
-                      <Image
+                      <img
                         src={screenshot.url}
                         alt={screenshot.alt}
-                        fill
-                        className="object-cover"
+                        className="w-full h-full object-cover"
                       />
                     </button>
                   ))}
@@ -393,95 +480,79 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
               </div>
             )}
             
-            {/* Close Button - Top Right */}
             <button 
               onClick={closeLightbox}
               className="lightbox-control flex h-12 w-12 items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80 transition-colors border border-white/20"
-              aria-label="Close lightbox"
             >
               <X className="h-6 w-6" />
             </button>
           </div>
           
-          {/* Full Screen Image Container - FIXED */}
+          {/* Image Container */}
           <div className="absolute inset-0 flex items-center justify-center p-4 pt-20 pb-32">
-            {/* Left Navigation - Now inside the image area */}
             {screenshots.length > 1 && (
               <button 
                 onClick={handlePrev}
                 className="lightbox-control absolute left-4 top-1/2 -translate-y-1/2 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white hover:bg-black/90 transition-colors border border-white/20 shadow-2xl"
-                aria-label="Previous image"
               >
                 <ChevronLeft className="h-6 w-6" />
               </button>
             )}
             
-            {/* Image Container - Now takes full available space */}
-<div 
-  className="image-container relative w-[190vw] h-[80vh]"
-  style={{ transform: `scale(${zoomLevel})` }}
->
-  <Image
-    src={screenshots[currentImageIndex].url}
-    alt={screenshots[currentImageIndex].alt}
-    fill
-    className="object-contain rounded-lg shadow-2xl"
-    priority
-    sizes="100vw"
-  />
-</div>
-
+            <div 
+              className="image-container relative w-[90vw] h-[80vh]"
+              style={{ transform: `scale(${zoomLevel})` }}
+            >
+              <img
+                src={screenshots[currentImageIndex].url}
+                alt={screenshots[currentImageIndex].alt}
+                className="w-full h-full object-contain rounded-lg shadow-2xl"
+              />
+            </div>
             
-            {/* Right Navigation */}
             {screenshots.length > 1 && (
               <button 
                 onClick={handleNext}
                 className="lightbox-control absolute right-4 top-1/2 -translate-y-1/2 z-30 flex h-12 w-12 items-center justify-center rounded-full bg-black/70 text-white hover:bg-black/90 transition-colors border border-white/20 shadow-2xl"
-                aria-label="Next image"
               >
                 <ChevronRight className="h-6 w-6" />
               </button>
             )}
           </div>
           
-          {/* Bottom Controls Row */}
+          {/* Bottom Controls */}
           <div className="absolute bottom-0 left-0 right-0 z-30 p-4">
             <div className="flex flex-col items-center gap-4">
-              {/* Image Caption */}
               <div className="lightbox-control max-w-3xl">
                 <div className="px-6 py-3 bg-black/70 backdrop-blur-md rounded-lg text-white text-center border border-white/20">
                   <p className="text-base leading-relaxed">{screenshots[currentImageIndex].alt}</p>
                 </div>
               </div>
               
-              {/* Controls Bar */}
               <div className="lightbox-control">
                 <div className="flex items-center gap-6 px-8 py-4 bg-black/70 backdrop-blur-md rounded-full text-white border border-white/20">
-                  {/* Zoom Controls */}
                   <div className="flex items-center gap-4">
                     <button 
                       onClick={decreaseZoom}
                       disabled={zoomLevel <= 1}
                       className="p-2 rounded-full hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                      aria-label="Zoom out"
                     >
                       <ZoomOut className="h-5 w-5" />
                     </button>
-                    <span className="text-base min-w-[4rem] text-center font-medium">{Math.round(zoomLevel * 100)}%</span>
+                    <span className="text-base min-w-[4rem] text-center font-medium">
+                      {Math.round(zoomLevel * 100)}%
+                    </span>
                     <button 
                       onClick={increaseZoom}
                       disabled={zoomLevel >= 3}
                       className="p-2 rounded-full hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                      aria-label="Zoom in"
                     >
                       <ZoomIn className="h-5 w-5" />
                     </button>
                   </div>
                   
-                  {/* Separator */}
                   <div className="w-px h-8 bg-white/30"></div>
                   
-                  {/* Image Info */}
                   <div className="text-center px-3">
                     <p className="text-base font-medium">
                       {currentImageIndex + 1} of {screenshots.length}
@@ -496,3 +567,4 @@ export default function ProjectCarousel({ screenshots, title }: ProjectCarouselP
     </div>
   );
 }
+
