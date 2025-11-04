@@ -179,11 +179,29 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                         size={2} 
                         color={skill.color}
                         items={[
-                          // Paper 1: Icon with gradient background
-                          <div key="1" className="flex flex-col items-center justify-center h-full w-full p-2 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg">
-                            <div 
-                              className="rounded-full p-3 mb-2"
-                              style={{ 
+                          // Paper 1: Icon with glassmorphism effect
+                          <div
+                            key="1"
+                            className="flex flex-col items-center justify-center h-full w-full p-2 rounded-lg relative overflow-hidden"
+                            style={{
+                              background: 'rgba(255, 255, 255, 0.08)',
+                              backdropFilter: 'blur(12px)',
+                              WebkitBackdropFilter: 'blur(12px)',
+                              border: `1px solid ${skill.color}30`,
+                              boxShadow: `0 8px 32px 0 rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1)`
+                            }}
+                          >
+                            {/* Subtle gradient overlay */}
+                            <div
+                              className="absolute inset-0 opacity-20 pointer-events-none"
+                              style={{
+                                background: `radial-gradient(circle at 50% 0%, ${skill.color}40, transparent 70%)`
+                              }}
+                            />
+
+                            <div
+                              className="rounded-full p-3 mb-2 relative z-10"
+                              style={{
                                 background: `linear-gradient(135deg, ${skill.color}40, ${skill.color}60)`,
                                 boxShadow: `0 4px 12px ${skill.color}40`
                               }}
@@ -192,7 +210,7 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                                 {skill.icon}
                               </span>
                             </div>
-                            <p className="text-[5px] font-bold text-center" style={{ color: "white", marginTop: '-10px' }}>
+                            <p className="text-[5px] font-bold text-center relative z-10" style={{ color: "white", textShadow: `0 1px 2px rgba(0, 0, 0, 0.5)` }}>
                               {skill.title}
                             </p>
                           </div>,
