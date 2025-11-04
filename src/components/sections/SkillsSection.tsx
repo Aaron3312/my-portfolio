@@ -23,20 +23,44 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
   const skillImages: Record<string, { project: string; tech: string }> = {
     "Frontend Development": {
       project: "/images/SupplyStream.png",
-      tech: "/images/BakeryPos.png"
+      tech: "/images/blueGlobe.png"
     },
     "Backend Development": {
-      project: "/images/Cronos.png",
-      tech: "/images/Security.gif"
+      project: "/images/Cronos/ResponseProyect2.png",
+      tech: "/images/Crono2s.png"
     },
     "AI & Machine Learning": {
       project: "/images/Warehouse.gif",
-      tech: "/images/blueGlobe.png"
+      tech: "/images/Security.gif"
     },
     "Cloud & DevOps": {
-      project: "/images/Web2.png",
+      project: "https://raw.githubusercontent.com/Aaron3312/tienda-limpieza-corporal/master/NosotrosSoloEva.png",
       tech: "/images/SoloParaEva.png"
+    },
+    "Programming Languages": {
+      project: "/images/BakeryPosDetails.png",
+      tech: "/images/BakeryPos/BakeryPos.gif"
+    },
+    "Software Engineering": {
+      project: "/images/nodo/website.png",
+      tech: "/images/nodo/nodo.png"
     }
+  };
+
+  // Map projects to their URLs (add your project URLs here)
+  const projectLinks: Record<string, string> = {
+    "Supply Stream Dashboard": "/projects/supply-stream",
+    "Bakery POS System": "/projects/bakery-pos",
+    "Cronos Time Management": "/projects/cronos",
+    "E-commerce API": "/projects/ecommerce-api",
+    "Object Detection System": "/projects/warehouse-system",
+    "AI Writing Assistant": "/projects/ai-assistant",
+    "Microservices Infrastructure": "/projects/solo-para-eva",
+    "CI/CD Pipeline Setup": "/projects/cicd-pipeline",
+    "Algorithm Visualizer": "/projects/bakery-pos",
+    "Compiler Design": "/projects/compiler-design",
+    "Enterprise System Architecture": "/projects/nodo-dark-kitchens",
+    "Network Design": "/projects/network-design"
   };
 
   useEffect(() => {
@@ -140,7 +164,7 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                   }}
                 >
                   {/* Folder Section - Top */}
-                  <div className="relative pt-6 pb-3 flex justify-center items-center min-h-[140px]">
+                  <div className="relative pt-6 pb-3 flex justify-center items-center" style={{ minHeight: '200px', height: '200px' }}>
                     {/* Decorative gradient bg - More vibrant */}
                     <div 
                       className="absolute inset-0 opacity-30"
@@ -150,7 +174,7 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                     />
                     
                     {/* Folder Component - Smaller size */}
-                    <div className="relative z-10 mb-10">
+                    <div className="relative z-10">
                       <Folder 
                         size={2} 
                         color={skill.color}
@@ -173,8 +197,13 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                             </p>
                           </div>,
                           
-                          // Paper 2: Project image
-                          <div key="2" className="h-full w-full overflow-hidden rounded-lg relative">
+                          // Paper 2: Project image - Clickeable
+                          <a 
+                            key="2" 
+                            href={projectLinks[skill.projects[0]] || '/projects'} 
+                            className="h-full w-full overflow-hidden rounded-lg relative block cursor-pointer hover:scale-105 transition-transform"
+                            onClick={(e) => e.stopPropagation()}
+                          >
                             {skillImages[skill.title] && (
                               <>
                                 <img 
@@ -184,15 +213,20 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                                   style={{ filter: `hue-rotate(0deg) saturate(1.2)` }}
                                 />
                                 <div 
-                                  className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end justify-center p-2"
+                                  className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent flex items-end justify-center p-2"
                                 >
-                                  <p className="text-[7px] font-bold text-white text-center">
-                                    {skill.projects[0]}
-                                  </p>
+                                  <div className="text-center">
+                                    <p className="text-[7px] font-bold text-white mb-1">
+                                      {skill.projects[0]}
+                                    </p>
+                                    <p className="text-[5px] text-slate-300">
+                                      Click to view →
+                                    </p>
+                                  </div>
                                 </div>
                               </>
                             )}
-                          </div>,
+                          </a>,
                           
                           // Paper 3: Technology image/preview
                           <div key="3" className="h-full w-full overflow-hidden rounded-lg relative">
