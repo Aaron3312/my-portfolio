@@ -1,22 +1,42 @@
 // File: src/components/sections/SkillsSection.jsx
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import { skills } from "@/data/skillsData";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Folder from "@/components/Folder";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const SkillsSection = ({ skillsRef, skillItemsRef }) => {
-  const [activeSkillIndex, setActiveSkillIndex] = useState(null);
-  const [skillsInView, setSkillsInView] = useState(false);
+interface Props {
+  skillsRef: React.RefObject<HTMLElement>;
+  skillItemsRef: React.MutableRefObject<(HTMLDivElement | null)[]>;
+}
 
-  // Handle skill click to show detailed view
-  const handleSkillClick = (index) => {
-    setActiveSkillIndex(activeSkillIndex === index ? null : index);
+const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+  // Map skill titles to relevant images
+  const skillImages: Record<string, { project: string; tech: string }> = {
+    "Frontend Development": {
+      project: "/images/SupplyStream.png",
+      tech: "/images/BakeryPos.png"
+    },
+    "Backend Development": {
+      project: "/images/Cronos.png",
+      tech: "/images/Security.gif"
+    },
+    "AI & Machine Learning": {
+      project: "/images/Warehouse.gif",
+      tech: "/images/blueGlobe.png"
+    },
+    "Cloud & DevOps": {
+      project: "/images/Web2.png",
+      tech: "/images/SoloParaEva.png"
+    }
   };
 
   useEffect(() => {
@@ -28,8 +48,7 @@ const SkillsSection = ({ skillsRef, skillItemsRef }) => {
       scrollTrigger: {
         trigger: skillsRef.current,
         start: "top 80%",
-        once: true,
-        onEnter: () => setSkillsInView(true)
+        once: true
       }
     });
 
@@ -42,7 +61,7 @@ const SkillsSection = ({ skillsRef, skillItemsRef }) => {
       stagger: 0.2
     });
 
-    // Animate skill cards on scroll with staggered entrance
+    // Animate folder cards on scroll with staggered entrance
     skillItemsRef.current.forEach((card, index) => {
       if (!card) return;
 
@@ -52,11 +71,11 @@ const SkillsSection = ({ skillsRef, skillItemsRef }) => {
           start: "top 85%",
           once: true
         },
-        y: 100,
+        y: 80,
         opacity: 0,
-        scale: 0.9,
-        duration: 0.8,
-        delay: index * 0.1,
+        scale: 0.95,
+        duration: 0.7,
+        delay: index * 0.06,
         ease: "power3.out"
       });
     });
@@ -66,53 +85,17 @@ const SkillsSection = ({ skillsRef, skillItemsRef }) => {
       if (sectionTimeline.scrollTrigger) {
         sectionTimeline.scrollTrigger.kill();
       }
-      
+
+      // Kill any ScrollTriggers attached to items
       skillItemsRef.current.forEach((card) => {
-        if (card && ScrollTrigger.getById(card)) {
-          ScrollTrigger.getById(card).kill();
+        if (card) {
+          const st = ScrollTrigger.getById(card as any) as any;
+          if (st && st.kill) st.kill();
         }
       });
     };
   }, [skillsRef, skillItemsRef]);
-
-  // Card expansion animation effect
-  useEffect(() => {
-    if (activeSkillIndex !== null) {
-      const activeCard = skillItemsRef.current[activeSkillIndex];
-      if (!activeCard) return;
-
-      // Create expansion timeline
-      const expandTl = gsap.timeline();
-      
-      // Animate the expansion
-      expandTl.to(activeCard, {
-        scale: 1.02,
-        duration: 0.3,
-        ease: "power2.out"
-      })
-      .to(activeCard.querySelector('.p-6, .p-8'), {
-        backgroundColor: "#000000", // black
-        boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-        duration: 0.3
-      }, "<");
-      
-      // Animate content appearing
-      const content = activeCard.querySelector('.w-full.mt-4');
-      if (content) {
-        expandTl.from(content.children, {
-          opacity: 0,
-          y: 20,
-          stagger: 0.1,
-          duration: 0.4
-        }, "-=0.2");
-      }
-      
-      // Clean up animations when component unmounts
-      return () => {
-        expandTl.kill();
-      };
-    }
-  }, [activeSkillIndex, skillItemsRef]);
+  // Folder handles expansion animations itself; no extra effect needed here
 
   return (
     <section ref={skillsRef} className="py-16 sm:py-20 md:py-28 bg-dark dark:bg-slate-950 relative">
@@ -126,70 +109,207 @@ const SkillsSection = ({ skillsRef, skillItemsRef }) => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
-          {skills.map((skill, index) => (
-            <div
-              key={skill.title}
-              ref={el => skillItemsRef.current[index] = el}
-              className={`relative cursor-pointer transition-all duration-500 transform ${activeSkillIndex === index ? 'col-span-full' : ''}`}
-              onClick={() => handleSkillClick(index)}
-            >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-7xl mx-auto">
+          {skills.map((skill, index) => {
+            const isExpanded = expandedIndex === index;
+            
+            return (
               <div 
-                className={`flex flex-col items-center p-6 sm:p-8 rounded-xl border border-dark dark:border-slate-800 shadow-sm overflow-hidden ${activeSkillIndex === index ? 'bg-white dark:bg-slate-900' : 'bg-gray-50 dark:bg-slate-900 hover:shadow-md hover:-translate-y-1'}`}
-                style={{
-                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                }}
+                key={skill.title} 
+                ref={(el) => { skillItemsRef.current[index] = el; }}
+                className="group relative"
+                style={{ overflow: 'visible' }}
               >
-                {/* Background gradient */}
+                {/* Card Container */}
                 <div 
-                  className="absolute inset-0 opacity-10" 
-                  style={{ 
-                    background: `radial-gradient(circle at 50% 0%, ${skill.color}40, transparent 70%)`,
-                    transition: 'all 0.5s ease'
+                  className={`
+                    relative rounded-2xl 
+                    bg-gradient-to-br from-slate-900/95 to-slate-950/95
+                    backdrop-blur-sm shadow-xl
+                    transition-all duration-500 ease-out
+                    hover:shadow-2xl hover:scale-[1.02]
+                    ${isExpanded ? 'ring-2 scale-[1.02]' : 'border-2'}
+                  `}
+                  style={{
+                    background: `linear-gradient(135deg, ${skill.color}12 0%, rgba(15, 23, 42, 0.95) 100%)`,
+                    borderColor: isExpanded ? `${skill.color}80` : `${skill.color}40`,
+                    boxShadow: isExpanded 
+                      ? `0 20px 50px -12px ${skill.color}40, 0 0 0 2px ${skill.color}60`
+                      : `0 10px 30px -10px ${skill.color}20`,
+                    overflow: 'visible'
                   }}
-                ></div>
-                
-                <div className={`relative z-10 flex ${activeSkillIndex === index ? 'flex-col w-full items-start' : 'flex-col items-center'}`}>
-                  {/* Icon and Title */}
-                  <div className={`flex ${activeSkillIndex === index ? 'flex-row items-center mb-6' : 'flex-col items-center'}`}>
+                >
+                  {/* Folder Section - Top */}
+                  <div className="relative pt-6 pb-3 flex justify-center items-center min-h-[140px]">
+                    {/* Decorative gradient bg - More vibrant */}
                     <div 
-                      className={`rounded-full p-3 mb-4 ${activeSkillIndex === index ? 'mb-0 mr-4' : ''}`}
+                      className="absolute inset-0 opacity-30"
+                      style={{
+                        background: `radial-gradient(ellipse at top, ${skill.color}60, transparent 70%)`
+                      }}
+                    />
+                    
+                    {/* Folder Component - Smaller size */}
+                    <div className="relative z-10 mb-10">
+                      <Folder 
+                        size={2} 
+                        color={skill.color}
+                        items={[
+                          // Paper 1: Icon with gradient background
+                          <div key="1" className="flex flex-col items-center justify-center h-full w-full p-2 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg">
+                            <div 
+                              className="rounded-full p-3 mb-2"
+                              style={{ 
+                                background: `linear-gradient(135deg, ${skill.color}40, ${skill.color}60)`,
+                                boxShadow: `0 4px 12px ${skill.color}40`
+                              }}
+                            >
+                              <span style={{ color: '#fff', fontSize: '24px', display: 'flex' }}>
+                                {skill.icon}
+                              </span>
+                            </div>
+                            <p className="text-[5px] font-bold text-center" style={{ color: "white", marginTop: '-10px' }}>
+                              {skill.title}
+                            </p>
+                          </div>,
+                          
+                          // Paper 2: Project image
+                          <div key="2" className="h-full w-full overflow-hidden rounded-lg relative">
+                            {skillImages[skill.title] && (
+                              <>
+                                <img 
+                                  src={skillImages[skill.title].project}
+                                  alt={`${skill.title} project`}
+                                  className="w-full h-full object-cover"
+                                  style={{ filter: `hue-rotate(0deg) saturate(1.2)` }}
+                                />
+                                <div 
+                                  className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end justify-center p-2"
+                                >
+                                  <p className="text-[7px] font-bold text-white text-center">
+                                    {skill.projects[0]}
+                                  </p>
+                                </div>
+                              </>
+                            )}
+                          </div>,
+                          
+                          // Paper 3: Technology image/preview
+                          <div key="3" className="h-full w-full overflow-hidden rounded-lg relative">
+                            {skillImages[skill.title] && (
+                              <>
+                                <img 
+                                  src={skillImages[skill.title].tech}
+                                  alt={`${skill.title} tech`}
+                                  className="w-full h-full object-cover"
+                                  style={{ filter: `hue-rotate(0deg) saturate(1.2)` }}
+                                />
+                                <div 
+                                  className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent flex items-end justify-center p-2"
+                                >
+                                  <p className="text-[6px] font-mono text-center font-semibold" style={{ color: skill.color }}>
+                                    {skill.technologies.slice(0, 2).join(' • ')}
+                                  </p>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        ]}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Content Section - Bottom */}
+                  <div className="px-6 pb-6" style={{ overflow: 'visible' }}>
+                    {/* Title */}
+                    <h3 
+                      className="text-xl font-bold mb-2 text-center drop-shadow-lg"
                       style={{ 
-                        background: `linear-gradient(135deg, ${skill.color}20, ${skill.color}40)` 
+                        color: skill.color,
+                        textShadow: `0 0 20px ${skill.color}40`
                       }}
                     >
-                      {React.cloneElement(skill.icon, { 
-                        style: { color: skill.color } 
-                      })}
-                    </div>
-                    <h3 className={`font-bold ${activeSkillIndex === index ? 'text-2xl' : 'text-lg sm:text-xl'}`}>
                       {skill.title}
                     </h3>
-                  </div>
-                  
-                  {/* Basic view - Technologies list */}
-                  {activeSkillIndex !== index && (
-                    <p className="text-xs sm:text-sm text-muted-foreground text-center mt-2">
-                      {skill.technologies.join(", ")}
+
+                    {/* Short Description */}
+                    <p className="text-sm text-slate-300 text-center mb-4 line-clamp-2">
+                      {skill.description}
                     </p>
-                  )}
-                  
-                  {/* Expanded view */}
-                  {activeSkillIndex === index && (
-                    <div className="w-full mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <p className="text-base mb-4 text-muted-foreground">{skill.description}</p>
-                        
-                        <div className="mb-4">
-                          <h4 className="text-sm font-semibold mb-2">Technologies:</h4>
+
+                    {/* Quick Tech Tags */}
+                    <div className="flex flex-wrap gap-2 justify-center mb-4">
+                      {skill.technologies.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech}
+                          className="px-3 py-1.5 text-[11px] rounded-lg font-semibold transition-all duration-200 hover:scale-105"
+                          style={{
+                            backgroundColor: `${skill.color}25`,
+                            color: skill.color,
+                            border: `1.5px solid ${skill.color}50`,
+                            boxShadow: `0 2px 8px ${skill.color}15`
+                          }}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {skill.technologies.length > 3 && (
+                        <span 
+                          className="px-3 py-1.5 text-[11px] font-medium rounded-lg"
+                          style={{
+                            backgroundColor: `${skill.color}10`,
+                            color: `${skill.color}aa`,
+                            border: `1px solid ${skill.color}20`
+                          }}
+                        >
+                          +{skill.technologies.length - 3} more
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Expand Button */}
+                    <button
+                      onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                      className="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-all duration-300
+                                 hover:scale-[1.02] active:scale-[0.98]"
+                      style={{
+                        background: isExpanded 
+                          ? `linear-gradient(135deg, ${skill.color}30, ${skill.color}20)` 
+                          : `linear-gradient(135deg, ${skill.color}20, ${skill.color}10)`,
+                        border: `2px solid ${skill.color}40`,
+                        color: skill.color,
+                        boxShadow: `0 4px 12px ${skill.color}20`
+                      }}
+                    >
+                      {isExpanded ? '↑ Show Less' : '↓ Show More'}
+                    </button>
+
+                    {/* Expanded Content */}
+                    {isExpanded && (
+                      <div 
+                        className="mt-6 pt-6 space-y-4 animate-in fade-in slide-in-from-top-2 duration-300"
+                        style={{
+                          borderTop: `2px solid ${skill.color}30`
+                        }}
+                      >
+                        {/* All Technologies */}
+                        <div>
+                          <h4 
+                            className="text-xs font-bold mb-3 uppercase tracking-wider flex items-center gap-2"
+                            style={{ color: skill.color }}
+                          >
+                            <span className="inline-block w-1 h-4 rounded-full" style={{ backgroundColor: skill.color }}></span>
+                            All Technologies
+                          </h4>
                           <div className="flex flex-wrap gap-2">
-                            {skill.technologies.map(tech => (
-                              <span 
-                                key={tech} 
-                                className="px-2 py-1 text-xs rounded-md" 
-                                style={{ 
-                                  backgroundColor: `${skill.color}20`,
-                                  color: skill.color 
+                            {skill.technologies.map((tech) => (
+                              <span
+                                key={tech}
+                                className="px-3 py-1.5 text-xs rounded-lg font-medium transition-all hover:scale-105"
+                                style={{
+                                  backgroundColor: `${skill.color}25`,
+                                  color: skill.color,
+                                  border: `1px solid ${skill.color}40`
                                 }}
                               >
                                 {tech}
@@ -197,42 +317,61 @@ const SkillsSection = ({ skillsRef, skillItemsRef }) => {
                             ))}
                           </div>
                         </div>
-                        
+
+                        {/* Related Projects */}
                         <div>
-                          <h4 className="text-sm font-semibold mb-2">Related Projects:</h4>
-                          <ul className="list-disc list-inside text-sm text-muted-foreground">
-                            {skill.projects.map(project => (
-                              <li key={project}>{project}</li>
+                          <h4 
+                            className="text-xs font-bold mb-3 uppercase tracking-wider flex items-center gap-2"
+                            style={{ color: skill.color }}
+                          >
+                            <span className="inline-block w-1 h-4 rounded-full" style={{ backgroundColor: skill.color }}></span>
+                            Related Projects
+                          </h4>
+                          <ul className="space-y-2">
+                            {skill.projects.map((project) => (
+                              <li key={project} className="text-xs text-slate-300 flex items-start group">
+                                <span 
+                                  className="mr-2 mt-0.5 transition-all group-hover:scale-125" 
+                                  style={{ color: skill.color }}
+                                >
+                                  ▸
+                                </span>
+                                <span className="group-hover:text-white transition-colors">{project}</span>
+                              </li>
                             ))}
                           </ul>
                         </div>
+
+                        {/* Code Snippet */}
+                        {skill.codeSnippet && (
+                          <div>
+                            <h4 
+                              className="text-xs font-bold mb-3 uppercase tracking-wider flex items-center gap-2"
+                              style={{ color: skill.color }}
+                            >
+                              <span className="inline-block w-1 h-4 rounded-full" style={{ backgroundColor: skill.color }}></span>
+                              Example Code
+                            </h4>
+                            <div 
+                              className="rounded-lg p-3 overflow-x-auto"
+                              style={{
+                                backgroundColor: `${skill.color}08`,
+                                border: `1px solid ${skill.color}30`
+                              }}
+                            >
+                              <pre className="text-[10px] text-slate-300 leading-relaxed">
+                                <code>{skill.codeSnippet}</code>
+                              </pre>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      
-                      <div className="relative">
-                        <h4 className="text-sm font-semibold mb-2">Example Code:</h4>
-                        <div className="text-xs bg-slate-900 text-slate-100 p-4 rounded-md overflow-x-auto">
-                          <pre><code>{skill.codeSnippet}</code></pre>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Expanded view close button */}
-                  {activeSkillIndex === index && (
-                    <button 
-                      className="mt-6 text-sm text-blue-600 dark:text-blue-400 hover:underline self-center"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setActiveSkillIndex(null);
-                      }}
-                    >
-                      Close
-                    </button>
-                  )}
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
