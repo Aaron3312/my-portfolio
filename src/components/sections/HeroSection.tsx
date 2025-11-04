@@ -1,9 +1,11 @@
 // File: src/components/sections/HeroSection.tsx
+"use client";
 import React, { RefObject, useEffect } from 'react';
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import gsap from "gsap";
 import { FileText } from "lucide-react";
+import Dither from '@/components/Dither';
 
 interface HeroSectionProps {
   heroRef: RefObject<HTMLElement>;
@@ -94,7 +96,23 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       ref={heroRef} 
       id="hero-section"
       className="min-h-screen py-12 sm:py-16 md:py-20 relative overflow-hidden flex items-center">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-blue-950/30 dark:via-slate-950 dark:to-indigo-950/30"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-indigo-50 dark:from-blue-950/30 dark:via-slate-950 dark:to-indigo-950/30 z-0"></div>
+
+      {/* Dither animated background (behind content) */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <Dither
+            waveColor={[0.12, 0.16, 0.26]}
+            disableAnimation={false}
+            enableMouseInteraction={true}
+            mouseRadius={0.3}
+            colorNum={4}
+            waveAmplitude={0.3}
+            waveFrequency={3}
+            waveSpeed={0.05}
+          />
+        </div>
+      </div>
       
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
