@@ -8,7 +8,8 @@ import ProjectsSection from "@/components/sections/ProjectsSection";
 import CTASection from "@/components/sections/CTASection";
 import BackgroundCanvas from "@/components/ui/BackgroundCanvas";
 import LoadingScreen from "@/components/ui/LoadingScreen";
-import { projectsMin } from "@/utils/project-utils";
+import { projectsMin, projectsMin_spanish } from "@/data/projects";
+import { useLanguage } from "@/contexts/LanguageContext";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -20,8 +21,11 @@ if (typeof window !== "undefined") {
 }
 
 export default function Home() {
-  // Get 3 featured projects to display on the home page
-  const featuredProjects = projectsMin.slice(0, 3);
+  const { language } = useLanguage();
+
+  // Get 3 featured projects to display on the home page (based on language)
+  const currentProjects = language === 'es' ? projectsMin_spanish : projectsMin;
+  const featuredProjects = currentProjects.slice(0, 3);
   
   // State for 3D effect and interactive elements
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

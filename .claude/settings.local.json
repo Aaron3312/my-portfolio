@@ -3,7 +3,8 @@
     "allow": [
       "WebFetch(domain:aaronhernandez.me)",
       "WebFetch(domain:reactbits.dev)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(npx tsc:*)"
     ],
     "deny": []
   }

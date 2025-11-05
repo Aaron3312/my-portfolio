@@ -5,13 +5,18 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { useRouter } from "next/navigation";
-import { projectsMin } from "@/utils/project-utils";
+import { projectsMin, projectsMin_spanish } from "@/data/projects";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Register plugins
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function ProjectsContent() {
   const container = useRef(null);
+  const { language, t } = useLanguage();
+
+  // Select projects based on language
+  const currentProjects = language === 'es' ? projectsMin_spanish : projectsMin;
 
   useGSAP(() => {
     // Set GSAP defaults for consistency
@@ -139,16 +144,16 @@ export default function ProjectsContent() {
 
         <div className="relative z-10 container mx-auto px-4">
           <h1 className="hero-heading text-4xl md:text-6xl lg:text-7xl font-bold text-[#ededed] mb-6">
-            My Projects
+            {t('projects.title')}
           </h1>
 
           <p className="hero-description text-lg md:text-xl text-[#ededed]/80 max-w-2xl mx-auto mb-8">
-            A showcase of my web development projects and applications
+            {t('projects.description')}
           </p>
 
           <div className="projects-count inline-flex items-center gap-2 px-6 py-3 bg-[#ededed]/10 backdrop-blur-sm rounded-full border border-[#ededed]/20">
             <span className="w-3 h-3 bg-blue-400 rounded-full animate-pulse"></span>
-            <span className="text-sm font-medium text-[#ededed]">{projectsMin.length} Projects Available</span>
+            <span className="text-sm font-medium text-[#ededed]">{currentProjects.length} {t('projects.count')}</span>
           </div>
         </div>
       </section>
@@ -157,7 +162,7 @@ export default function ProjectsContent() {
       <section className="projects-section py-20 bg-[#090a0b]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {projectsMin.map((project, index) => (
+            {currentProjects.map((project, index) => (
               <ProjectCardWrapper
                 key={project.slug}
                 project={project}

@@ -3,20 +3,23 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { ThemeToggle } from "../theme-toggle"
+import { LanguageSwitcher } from "../LanguageSwitcher"
+import { useLanguage } from "@/contexts/LanguageContext"
 import { cn } from "@/lib/utils"
 import { Code, Home, User, FolderKanban, Mail } from "lucide-react"
 import { useState } from "react"
 
 const links = [
-  { name: "Home", href: "/", icon: Home },
-  { name: "Projects", href: "/projects", icon: FolderKanban },
-  { name: "About", href: "/about", icon: User },
-  { name: "Contact", href: "/contact", icon: Mail },
+  { nameKey: "nav.home", href: "/", icon: Home },
+  { nameKey: "nav.projects", href: "/projects", icon: FolderKanban },
+  { nameKey: "nav.about", href: "/about", icon: User },
+  { nameKey: "nav.contact", href: "/contact", icon: Mail },
 ]
 
 export function Navbar() {
   const pathname = usePathname()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { t } = useLanguage()
 
   return (
     <header className="sticky top-0 z-40 border-b bg-white dark:bg-slate-950 dark:border-slate-800">
@@ -42,13 +45,17 @@ export function Navbar() {
               )}
             >
               <link.icon className="h-4 w-4" />
-              <span>{link.name}</span>
+              <span>{t(link.nameKey)}</span>
             </Link>
           ))}
+          <LanguageSwitcher />
+          <ThemeToggle />
         </nav>
 
         {/* Mobile navigation */}
-        <div className="md:hidden flex items-center">
+        <div className="md:hidden flex items-center gap-2">
+          <LanguageSwitcher />
+          <ThemeToggle />
           <button
             className="text-gray-500 hover:text-gray-600 p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -84,7 +91,7 @@ export function Navbar() {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <link.icon className="h-5 w-5" />
-                <span>{link.name}</span>
+                <span>{t(link.nameKey)}</span>
               </Link>
             ))}
           </div>

@@ -1,12 +1,14 @@
 // src/app/projects/[slug]/page.tsx
+"use client";
+
 import Image from "next/image"
 import { Button } from "../../../components/ui/Button"
 import { ArrowLeft, Github, ExternalLink, CheckCircle2 } from "lucide-react"
 import Link from "next/link"
-import { getProjectData } from "@/utils/project-utils"
+import { projects, projects_spanish } from "@/data/projects"
 import ProjectCarousel from "@/components/project-carousel"
-import { projects } from "@/data/projects"
 import { getProjectIcon } from "@/utils/projectIcons"
+import { useLanguage } from "@/contexts/LanguageContext"
 
 // This function generates all the possible slug values at build time
 export async function generateStaticParams() {
@@ -71,25 +73,25 @@ const formatDescription = (content: string) => {
   return { paragraphs, features };
 };
 
-// Make the component async
-export default async function ProjectDetail({ params }: { params: { slug: string } }) {
-  // Make sure params is properly awaited
-  const paramData = await Promise.resolve(params);
-  const slug = paramData.slug;
-  
-  // If getProjectData is async, add await here
-  const project = getProjectData(slug);
+// Component is now client-side
+export default function ProjectDetail({ params }: { params: { slug: string } }) {
+  const { language, t } = useLanguage();
+  const slug = params.slug;
+
+  // Select correct projects object based on language
+  const currentProjects = language === 'es' ? projects_spanish : projects;
+  const project = currentProjects[slug];
   
   if (!project) {
     return (
       <div className="container max-w-5xl mx-auto py-20 text-center">
-        <h1 className="text-3xl font-bold">Project Not Found</h1>
+        <h1 className="text-3xl font-bold">{t('projects.notFound')}</h1>
         <p className="mt-4 text-muted-foreground">
-          The project you're looking for doesn't exist or has been removed.
+          {t('projects.notFoundDescription')}
         </p>
         <Button href="/projects" className="mt-8">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Projects
+          {t('common.backToProjects')}
         </Button>
       </div>
     );
@@ -107,12 +109,12 @@ export default async function ProjectDetail({ params }: { params: { slug: string
   return (
     <div className="container max-w-5xl mx-auto py-12 md:py-20 px-4 sm:px-6">
       <div className="mb-8">
-        <Link 
-          href="/projects" 
+        <Link
+          href="/projects"
           className="inline-flex items-center text-sm font-medium text-primary hover:underline"
         >
           <ArrowLeft className="mr-1 h-4 w-4" />
-          Back to Projects
+          {t('common.backToProjects')}
         </Link>
       </div>
       
@@ -175,7 +177,7 @@ export default async function ProjectDetail({ params }: { params: { slug: string
         
         <div className="space-y-8">
           <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-lg">
-            <h3 className="mb-4 text-xl font-bold">Technologies</h3>
+            <h3 className="mb-4 text-xl font-bold">{t('projects.technologies')}</h3>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <span
@@ -187,9 +189,9 @@ export default async function ProjectDetail({ params }: { params: { slug: string
               ))}
             </div>
           </div>
-          
+
           <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-lg">
-            <h3 className="mb-4 text-xl font-bold">Links</h3>
+            <h3 className="mb-4 text-xl font-bold">{t('projects.links')}</h3>
             <div className="flex flex-col space-y-3">
               {project.githubUrl && (
                 <a
@@ -199,7 +201,7 @@ export default async function ProjectDetail({ params }: { params: { slug: string
                   className="inline-flex items-center px-4 py-2 bg-slate-200 dark:bg-slate-700 rounded-md text-sm font-medium hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors"
                 >
                   <Github className="mr-2 h-4 w-4" />
-                  GitHub Repository
+                  {t('common.sourceCode')}
                 </a>
               )}
               {project.liveUrl && (
@@ -210,7 +212,7 @@ export default async function ProjectDetail({ params }: { params: { slug: string
                   className="inline-flex items-center px-4 py-2 bg-primary/10 rounded-md text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
                 >
                   <ExternalLink className="mr-2 h-4 w-4" />
-                  Live Demo
+                  {t('common.liveDemo')}
                 </a>
               )}
             </div>
