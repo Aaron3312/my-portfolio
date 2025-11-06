@@ -4,11 +4,30 @@ import Image from "next/image"
 import { Button } from "../../components/ui/Button"
 import { FileText, GraduationCap, Briefcase } from "lucide-react"
 import { useLanguage } from "@/contexts/LanguageContext"
+import Cubes from "@/components/ui/Cubes"
 
 export default function AboutPage() {
   const { data } = useLanguage();
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-12 md:py-20">
+    <div className="relative min-h-screen">
+      {/* Decorative cubes background - pointer-events-none so it doesn't block page interactions */}
+      <div className="fixed inset-0 -z-10 pointer-events-none opacity-70">
+        <Cubes 
+          fullScreen={true} 
+          gridSize={10} 
+          maxAngle={75} 
+          radius={5} 
+          cellGap={3}
+          borderStyle="2px solid rgba(82, 39, 255, 0.5)" 
+          faceColor="#0a0e1a" 
+          rippleColor="#ff6b6b" 
+          rippleSpeed={1.5} 
+          autoAnimate={true} 
+          rippleOnClick={true}
+          shadow="0 4px 15px rgba(0, 0, 0, 0.8)"
+        />
+      </div>
+      <div className="container mx-auto max-w-5xl px-4 py-12 md:py-20">
       <div className="mb-12 text-center">
         <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{data.about.title}</h1>
         <p className="mt-4 text-muted-foreground md:text-lg">
@@ -135,6 +154,7 @@ export default function AboutPage() {
           {data.about.cta.button}
         </Button>
       </div>
+    </div>
     </div>
   )
 }

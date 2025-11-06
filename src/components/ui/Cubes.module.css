@@ -1,0 +1,80 @@
+/* Variables are set inline from the component wrapper to keep scope local */
+
+.defaultAnimation {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.defaultAnimationScene {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  column-gap: var(--col-gap, 5%);
+  row-gap: var(--row-gap, 5%);
+  perspective: var(--cube-perspective, 1200px);
+  perspective-origin: center center;
+  grid-auto-rows: 1fr;
+  transform-style: preserve-3d;
+}
+
+.cube {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  transform-style: preserve-3d;
+}
+
+.cube::before {
+  content: '';
+  position: absolute;
+  top: -36px;
+  right: -36px;
+  bottom: -36px;
+  left: -36px;
+  pointer-events: none;
+}
+
+.cubeFace {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cube-face-bg, #060010);
+  border: var(--cube-face-border, 1px solid #fff);
+  opacity: 1;
+  backface-visibility: visible;
+  box-shadow: var(--cube-face-shadow, none);
+}
+
+/* Add depth to 3D effect with different opacity for different faces */
+.cubeFaceTop {
+  transform: translateY(-50%) rotateX(90deg);
+  filter: brightness(1.3);
+}
+
+.cubeFaceBottom {
+  transform: translateY(50%) rotateX(-90deg);
+  filter: brightness(0.5);
+}
+
+.cubeFaceLeft {
+  transform: translateX(-50%) rotateY(-90deg);
+  filter: brightness(0.7);
+}
+
+.cubeFaceRight {
+  transform: translateX(50%) rotateY(90deg);
+  filter: brightness(0.9);
+}
+
+.cubeFaceBack,
+.cubeFaceFront {
+  transform: rotateY(-90deg) translateX(50%) rotateY(90deg);
+  filter: brightness(0.6);
+}
