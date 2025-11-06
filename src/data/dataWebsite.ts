@@ -125,6 +125,7 @@ export interface WebsiteData {
     screenshots: string;
     notFound: string;
     notFoundDescription: string;
+    viewAll: string;
   };
 
   // Skills Section
@@ -260,6 +261,7 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
       screenshots: 'Screenshots',
       notFound: 'Project Not Found',
       notFoundDescription: "The project you're looking for doesn't exist or has been removed.",
+      viewAll: 'View All Projects',
     },
 
     skills: {
@@ -392,6 +394,7 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
       screenshots: 'Capturas de Pantalla',
       notFound: 'Proyecto No Encontrado',
       notFoundDescription: 'El proyecto que buscas no existe o ha sido eliminado.',
+      viewAll: 'Ver Todos los Proyectos',
     },
 
     skills: {

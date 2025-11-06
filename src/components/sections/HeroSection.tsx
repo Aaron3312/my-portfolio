@@ -3,6 +3,7 @@
 import React, { RefObject, useEffect } from 'react';
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/contexts/LanguageContext";
 import gsap from "gsap";
 import { FileText } from "lucide-react";
 import Dither from '@/components/Dither';
@@ -13,11 +14,13 @@ interface HeroSectionProps {
   heroImageRef: RefObject<HTMLDivElement>;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ 
-  heroRef, 
-  heroTextRef, 
-  heroImageRef 
+const HeroSection: React.FC<HeroSectionProps> = ({
+  heroRef,
+  heroTextRef,
+  heroImageRef
 }) => {
+  const { data } = useLanguage();
+
   useEffect(() => {
     // Create the main timeline
     const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -118,47 +121,47 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div ref={heroTextRef} className="flex flex-col gap-4 sm:gap-6 text-center md:text-left order-2 md:order-1">
             <div className="inline-block mx-auto md:mx-0 px-3 py-1 text-xs sm:text-sm font-medium rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300">
-              Software Engineer
+              {data.hero.badge}
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 leading-tight">
-              Hi, I'm Aaron Hernández Jiménez
+              {data.hero.title}
             </h1>
             <p className="text-xl sm:text-2xl text-blue-600 dark:text-blue-400 font-medium">
-              Full Stack Developer | Cloud Solutions Architect
+              {data.hero.subtitle}
             </p>
             <p className="text-base sm:text-lg text-muted-foreground">
-              Computer Science student at Tecnológico de Monterrey with expertise in building scalable web applications, cloud-native solutions, and AI-powered systems.
+              {data.hero.description}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mt-6 justify-center md:justify-start">
-              <Button 
-                href="/projects" 
+              <Button
+                href="/projects"
                 size="lg"
                 className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-white w-full sm:w-auto relative overflow-hidden group"
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full opacity-10 group-hover:w-96 group-hover:h-96"></span>
-                <span className="relative z-10">View My Work</span>
+                <span className="relative z-10">{data.hero.viewWorkButton}</span>
               </Button>
-              <Button 
-                href="/contact" 
-                variant="outline" 
+              <Button
+                href="/contact"
+                variant="outline"
                 size="lg"
                 className="border-2 hover:bg-slate-100 dark:hover:bg-slate-800 w-full sm:w-auto font-medium relative overflow-hidden group"
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-100 dark:bg-blue-900 rounded-full opacity-30 group-hover:w-96 group-hover:h-96"></span>
-                <span className="relative z-10">Get In Touch</span>
+                <span className="relative z-10">{data.hero.contactButton}</span>
               </Button>
-              <Button 
-  href="https://github.com/Aaron3312/my-portfolio/raw/master/resume.pdf" 
-  variant="outline" 
-  size="lg"
-  className="border-2 hover:bg-slate-100 dark:hover:bg-slate-800 w-full sm:w-auto font-medium relative overflow-hidden group"
->
-  <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-100 dark:bg-blue-900 rounded-full opacity-30 group-hover:w-96 group-hover:h-96"></span>
-  <span className="relative z-10 inline-flex items-center">
-    <FileText className="mr-2 h-4 w-4" />
-    Download Resume
-  </span>
-</Button>
+              <Button
+                href="https://github.com/Aaron3312/my-portfolio/raw/master/resume.pdf"
+                variant="outline"
+                size="lg"
+                className="border-2 hover:bg-slate-100 dark:hover:bg-slate-800 w-full sm:w-auto font-medium relative overflow-hidden group"
+              >
+                <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-blue-100 dark:bg-blue-900 rounded-full opacity-30 group-hover:w-96 group-hover:h-96"></span>
+                <span className="relative z-10 inline-flex items-center">
+                  <FileText className="mr-2 h-4 w-4" />
+                  {data.hero.resumeButton}
+                </span>
+              </Button>
             </div>
             
             {/* Bouncing scroll indicator */}

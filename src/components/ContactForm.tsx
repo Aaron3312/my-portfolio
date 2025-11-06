@@ -4,8 +4,10 @@ import { useState, useRef } from "react"
 import { Button } from "./ui/Button"
 import { Github, Linkedin, Mail, MapPin, Send } from "lucide-react"
 import emailjs from '@emailjs/browser'
+import { useLanguage } from "@/contexts/LanguageContext"
 
 export default function ContactForm() {
+  const { data } = useLanguage();
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: "",
@@ -61,15 +63,15 @@ export default function ContactForm() {
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="container py-12 md:py-20">
         <div className="mb-12 text-center">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">Get In Touch</h1>
+          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{data.contact.title}</h1>
           <p className="mt-4 text-muted-foreground md:text-lg">
-            Have a project in mind or want to discuss opportunities? I'd love to hear from you!
+            {data.contact.subtitle}
           </p>
         </div>
 
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           <div>
-            <h2 className="mb-6 text-2xl font-bold">Contact Information</h2>
+            <h2 className="mb-6 text-2xl font-bold">{data.contact.getInTouch.title}</h2>
 
             <div className="space-y-6">
               <div className="flex items-start">
@@ -77,7 +79,7 @@ export default function ContactForm() {
                   <Mail className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Email</h3>
+                  <h3 className="font-semibold">{data.contact.info.email}</h3>
                   <a href="mailto:a01642529@tec.mx" className="text-muted-foreground hover:text-primary">
                     a01642529@tec.mx
                   </a>
@@ -89,7 +91,7 @@ export default function ContactForm() {
                   <MapPin className="h-5 w-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold">Location</h3>
+                  <h3 className="font-semibold">{data.contact.info.location}</h3>
                   <p className="text-muted-foreground">Guadalajara, Mexico</p>
                 </div>
               </div>
@@ -127,7 +129,7 @@ export default function ContactForm() {
             </div>
 
             <div className="mt-10">
-              <h2 className="mb-4 text-2xl font-bold">Working Hours</h2>
+              <h2 className="mb-4 text-2xl font-bold">{data.contact.info.availability}</h2>
               <p className="text-muted-foreground">
                 Monday - Friday: 9:00 AM - 6:00 PM (CST)<br />
                 Weekend: Available for urgent matters
@@ -136,12 +138,12 @@ export default function ContactForm() {
           </div>
 
           <div>
-            <h2 className="mb-6 text-2xl font-bold">Send Me a Message</h2>
+            <h2 className="mb-6 text-2xl font-bold">{data.contact.getInTouch.description}</h2>
 
             <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="mb-2 block text-sm font-medium">
-                  Your Name
+                  {data.contact.nameLabel}
                 </label>
                 <input
                   type="text"
@@ -156,7 +158,7 @@ export default function ContactForm() {
 
               <div>
                 <label htmlFor="email" className="mb-2 block text-sm font-medium">
-                  Your Email
+                  {data.contact.emailLabel}
                 </label>
                 <input
                   type="email"
@@ -186,7 +188,7 @@ export default function ContactForm() {
 
               <div>
                 <label htmlFor="message" className="mb-2 block text-sm font-medium">
-                  Message
+                  {data.contact.messageLabel}
                 </label>
                 <textarea
                   id="message"
@@ -201,13 +203,13 @@ export default function ContactForm() {
 
               {submitSuccess && (
                 <div className="rounded-md bg-green-50 p-4 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                  Your message has been sent successfully! I'll get back to you soon.
+                  {data.contact.successMessage}
                 </div>
               )}
 
               {submitError && (
                 <div className="rounded-md bg-red-50 p-4 text-red-800 dark:bg-red-900/30 dark:text-red-400">
-                  {submitError}
+                  {data.contact.errorMessage}
                 </div>
               )}
 
@@ -222,12 +224,12 @@ export default function ContactForm() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       />
                     </svg>
-                    Sending...
+                    {data.contact.sending}
                   </>
                 ) : (
                   <>
                     <Send className="mr-2 h-4 w-4" />
-                    Send Message
+                    {data.contact.sendButton}
                   </>
                 )}
               </Button>

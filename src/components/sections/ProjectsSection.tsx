@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { getProjectIcon } from "@/utils/projectIcons";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
@@ -12,6 +13,7 @@ if (typeof window !== "undefined") {
 }
 
 const ProjectsSection = ({ projectsRef, projectItemsRef, featuredProjects }) => {
+  const { data } = useLanguage();
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
   const ctaButtonRef = useRef(null);
@@ -89,10 +91,10 @@ const ProjectsSection = ({ projectsRef, projectItemsRef, featuredProjects }) => 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col items-center justify-center text-center mb-12 sm:mb-16">
           <h2 ref={titleRef} className="text-3xl sm:text-4xl font-bold tracking-tighter md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-            Featured Projects
+            {data.projects.title}
           </h2>
           <p ref={subtitleRef} className="mt-4 text-base sm:text-lg text-muted-foreground max-w-3xl">
-            A selection of my most innovative work
+            {data.projects.description}
           </p>
         </div>
         
@@ -128,13 +130,13 @@ const ProjectsSection = ({ projectsRef, projectItemsRef, featuredProjects }) => 
                   {project.description}
                 </p>
                 <div className="flex justify-center">
-                  <Button 
-                    href={`/projects/${project.slug}`} 
-                    variant="outline" 
-                    size="sm" 
+                  <Button
+                    href={`/projects/${project.slug}`}
+                    variant="outline"
+                    size="sm"
                     className="text-xs sm:text-sm w-full border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/30"
                   >
-                    View Project
+                    {data.common.viewProject}
                   </Button>
                 </div>
                 <div className="absolute border border-transparent group-hover:border-blue-500/20 dark:group-hover:border-blue-400/20 rounded-lg transition-colors duration-300"></div>
@@ -144,15 +146,15 @@ const ProjectsSection = ({ projectsRef, projectItemsRef, featuredProjects }) => 
         </div>
         
         <div className="flex justify-center mt-10 sm:mt-12">
-          <Button 
+          <Button
             ref={ctaButtonRef}
-            href="/projects" 
-            variant="default" 
+            href="/projects"
+            variant="default"
             size="lg"
             className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl font-medium text-white w-full sm:w-auto max-w-xs mx-auto relative overflow-hidden group"
           >
             <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full opacity-10 group-hover:w-96 group-hover:h-96"></span>
-            <span className="relative z-10">View All Projects</span>
+            <span className="relative z-10">{data.projects.viewAll}</span>
           </Button>
         </div>
       </div>

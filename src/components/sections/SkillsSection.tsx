@@ -5,6 +5,7 @@ import { skills } from "@/data/skillsData";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Folder from "@/components/Folder";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Register GSAP plugins
 if (typeof window !== "undefined") {
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
+  const { data } = useLanguage();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   // Map skill titles to relevant images
@@ -126,10 +128,10 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center justify-center text-center mb-12 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tighter md:text-5xl bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-            My Skills
+            {data.skills.title}
           </h2>
           <p className="mt-4 text-base sm:text-lg text-muted-foreground max-w-3xl">
-            Expertise in multiple domains of software development and engineering
+            {data.skills.subtitle}
           </p>
         </div>
         
