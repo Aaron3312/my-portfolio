@@ -10,24 +10,6 @@ import ProjectCarousel from "@/components/project-carousel"
 import { getProjectIcon } from "@/utils/projectIcons"
 import { useLanguage } from "@/contexts/LanguageContext"
 
-// This function generates all the possible slug values at build time
-export async function generateStaticParams() {
-  // Get all project slugs from your projects data
-  const slugs = Object.keys(projects);
-  
-  return slugs.map((slug) => ({
-    slug: slug,
-  }));
-}
-
-// Define proper type that matches Next.js expectations
-type ProjectParams = {
-  params: {
-    slug: string;
-  };
-  searchParams?: Record<string, string | string[] | undefined>;
-};
-
 // Format description content with bullet points
 const formatDescription = (content: string) => {
   if (!content) return { paragraphs: [], features: [] };

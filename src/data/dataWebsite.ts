@@ -132,6 +132,12 @@ export interface WebsiteData {
   skills: {
     title: string;
     subtitle: string;
+    showMore: string;
+    showLess: string;
+    allTechnologies: string;
+    relatedProjects: string;
+    exampleCode: string;
+    clickToView: string;
   };
 
   // CTA Section
@@ -139,6 +145,14 @@ export interface WebsiteData {
     title: string;
     description: string;
     button: string;
+  };
+
+  // Footer
+  footer: {
+    description: string;
+    links: string;
+    connect: string;
+    rights: string;
   };
 }
 
@@ -267,12 +281,25 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
     skills: {
       title: 'Skills & Technologies',
       subtitle: 'Technologies I work with on a daily basis',
+      showMore: 'Show More',
+      showLess: 'Show Less',
+      allTechnologies: 'All Technologies',
+      relatedProjects: 'Related Projects',
+      exampleCode: 'Example Code',
+      clickToView: 'Click to view →',
     },
 
     cta: {
       title: 'Ready to work together?',
       description: "Let's build something amazing together. Contact me to discuss your project.",
       button: 'Start a Project',
+    },
+
+    footer: {
+      description: 'Web developer specializing in modern web applications and user-friendly interfaces.',
+      links: 'Links',
+      connect: 'Connect',
+      rights: 'All rights reserved.',
     },
   },
 
@@ -400,12 +427,25 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
     skills: {
       title: 'Habilidades y Tecnologías',
       subtitle: 'Tecnologías con las que trabajo diariamente',
+      showMore: 'Ver Más',
+      showLess: 'Ver Menos',
+      allTechnologies: 'Todas las Tecnologías',
+      relatedProjects: 'Proyectos Relacionados',
+      exampleCode: 'Código de Ejemplo',
+      clickToView: 'Clic para ver →',
     },
 
     cta: {
       title: '¿Listo para trabajar juntos?',
       description: 'Construyamos algo increíble juntos. Contáctame para discutir tu proyecto.',
       button: 'Iniciar un Proyecto',
+    },
+
+    footer: {
+      description: 'Desarrollador web especializado en aplicaciones web modernas e interfaces amigables.',
+      links: 'Enlaces',
+      connect: 'Conectar',
+      rights: 'Todos los derechos reservados.',
     },
   },
 };

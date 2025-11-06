@@ -1,7 +1,7 @@
 // File: src/components/sections/SkillsSection.jsx
 import { useEffect, useState } from "react";
 import React from "react";
-import { skills } from "@/data/skillsData";
+import { skills_en, skills_es } from "@/data/skillsData";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Folder from "@/components/Folder";
@@ -18,51 +18,74 @@ interface Props {
 }
 
 const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
-  const { data } = useLanguage();
+  const { data, language } = useLanguage();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
-  // Map skill titles to relevant images
-  const skillImages: Record<string, { project: string; tech: string }> = {
-    "Frontend Development": {
-      project: "/images/SupplyStream.png",
-      tech: "/images/blueGlobe.png"
-    },
-    "Backend Development": {
-      project: "/images/Cronos/ResponseProyect2.png",
-      tech: "/images/Crono2s.png"
-    },
-    "AI & Machine Learning": {
-      project: "/images/Warehouse.gif",
-      tech: "/images/Security.gif"
-    },
-    "Cloud & DevOps": {
-      project: "https://raw.githubusercontent.com/Aaron3312/tienda-limpieza-corporal/master/NosotrosSoloEva.png",
-      tech: "/images/SoloParaEva.png"
-    },
-    "Programming Languages": {
-      project: "/images/BakeryPosDetails.png",
-      tech: "/images/BakeryPos/BakeryPos.gif"
-    },
-    "Software Engineering": {
-      project: "/images/nodo/website.png",
-      tech: "/images/nodo/nodo.png"
-    }
+  // Select skills based on language
+  const skills = language === 'es' ? skills_es : skills_en;
+
+  // Map skill titles to relevant images (works for both English and Spanish)
+  const getSkillImages = (index: number): { project: string; tech: string } => {
+    const imageMap = [
+      { // Frontend Development / Desarrollo Frontend
+        project: "/images/SupplyStream.png",
+        tech: "/images/blueGlobe.png"
+      },
+      { // Backend Development / Desarrollo Backend
+        project: "/images/Cronos/ResponseProyect2.png",
+        tech: "/images/Crono2s.png"
+      },
+      { // AI & Machine Learning / IA y Machine Learning
+        project: "/images/Warehouse.gif",
+        tech: "/images/Security.gif"
+      },
+      { // Cloud & DevOps / Cloud y DevOps
+        project: "https://raw.githubusercontent.com/Aaron3312/tienda-limpieza-corporal/master/NosotrosSoloEva.png",
+        tech: "/images/SoloParaEva.png"
+      },
+      { // Programming Languages / Lenguajes de Programación
+        project: "/images/BakeryPosDetails.png",
+        tech: "/images/BakeryPos/BakeryPos.gif"
+      },
+      { // Software Engineering / Ingeniería de Software
+        project: "/images/nodo/website.png",
+        tech: "/images/nodo/nodo.png"
+      }
+    ];
+    return imageMap[index] || imageMap[0];
   };
 
-  // Map projects to their URLs (add your project URLs here)
-  const projectLinks: Record<string, string> = {
-    "Supply Stream Dashboard": "/projects/supply-stream",
-    "Bakery POS System": "/projects/bakery-pos",
-    "Cronos Time Management": "/projects/cronos",
-    "E-commerce API": "/projects/ecommerce-api",
-    "Object Detection System": "/projects/warehouse-system",
-    "AI Writing Assistant": "/projects/ai-assistant",
-    "Microservices Infrastructure": "/projects/solo-para-eva",
-    "CI/CD Pipeline Setup": "/projects/cicd-pipeline",
-    "Algorithm Visualizer": "/projects/bakery-pos",
-    "Compiler Design": "/projects/compiler-design",
-    "Enterprise System Architecture": "/projects/nodo-dark-kitchens",
-    "Network Design": "/projects/network-design"
+  // Map projects to their URLs (works for both English and Spanish)
+  const getProjectLink = (projectName: string): string => {
+    const linkMap: Record<string, string> = {
+      // English
+      "Supply Stream Dashboard": "/projects/supply-stream",
+      "Bakery POS System": "/projects/bakery-pos",
+      "Cronos Time Management": "/projects/cronos",
+      "E-commerce API": "/projects/ecommerce-api",
+      "Object Detection System": "/projects/warehouse-system",
+      "AI Writing Assistant": "/projects/ai-assistant",
+      "Microservices Infrastructure": "/projects/solo-para-eva",
+      "CI/CD Pipeline Setup": "/projects/cicd-pipeline",
+      "Algorithm Visualizer": "/projects/bakery-pos",
+      "Compiler Design": "/projects/compiler-design",
+      "Enterprise System Architecture": "/projects/nodo-dark-kitchens",
+      "Network Design": "/projects/network-design",
+      // Spanish
+      "Panel Supply Stream": "/projects/supply-stream",
+      "Sistema POS Panadería": "/projects/bakery-pos",
+      "Gestión de Tiempo Cronos": "/projects/cronos",
+      "API E-commerce": "/projects/ecommerce-api",
+      "Sistema de Detección de Objetos": "/projects/warehouse-system",
+      "Asistente de Escritura con IA": "/projects/ai-assistant",
+      "Infraestructura de Microservicios": "/projects/solo-para-eva",
+      "Configuración Pipeline CI/CD": "/projects/cicd-pipeline",
+      "Visualizador de Algoritmos": "/projects/bakery-pos",
+      "Diseño de Compilador": "/projects/compiler-design",
+      "Arquitectura de Sistema Empresarial": "/projects/nodo-dark-kitchens",
+      "Diseño de Redes": "/projects/network-design"
+    };
+    return linkMap[projectName] || '/projects';
   };
 
   useEffect(() => {
@@ -218,16 +241,16 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                           </div>,
                           
                           // Paper 2: Project image - Clickeable
-                          <a 
-                            key="2" 
-                            href={projectLinks[skill.projects[0]] || '/projects'} 
+                          <a
+                            key="2"
+                            href={getProjectLink(skill.projects[0])}
                             className="h-full w-full overflow-hidden rounded-lg relative block cursor-pointer hover:scale-105 transition-transform"
                             onClick={(e) => e.stopPropagation()}
                           >
-                            {skillImages[skill.title] && (
+                            {getSkillImages(index) && (
                               <>
-                                <img 
-                                  src={skillImages[skill.title].project}
+                                <img
+                                  src={getSkillImages(index).project}
                                   alt={`${skill.title} project`}
                                   className="w-full h-full object-cover"
                                   style={{ filter: `hue-rotate(0deg) saturate(1.2)` }}
@@ -240,7 +263,7 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                                       {skill.projects[0]}
                                     </p>
                                     <p className="text-[5px] text-slate-300">
-                                      Click to view →
+                                      {data.skills.clickToView}
                                     </p>
                                   </div>
                                 </div>
@@ -250,10 +273,10 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                           
                           // Paper 3: Technology image/preview
                           <div key="3" className="h-full w-full overflow-hidden rounded-lg relative">
-                            {skillImages[skill.title] && (
+                            {getSkillImages(index) && (
                               <>
-                                <img 
-                                  src={skillImages[skill.title].tech}
+                                <img
+                                  src={getSkillImages(index).tech}
                                   alt={`${skill.title} tech`}
                                   className="w-full h-full object-cover"
                                   style={{ filter: `hue-rotate(0deg) saturate(1.2)` }}
@@ -327,15 +350,15 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                       className="w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-all duration-300
                                  hover:scale-[1.02] active:scale-[0.98]"
                       style={{
-                        background: isExpanded 
-                          ? `linear-gradient(135deg, ${skill.color}30, ${skill.color}20)` 
+                        background: isExpanded
+                          ? `linear-gradient(135deg, ${skill.color}30, ${skill.color}20)`
                           : `linear-gradient(135deg, ${skill.color}20, ${skill.color}10)`,
                         border: `2px solid ${skill.color}40`,
                         color: skill.color,
                         boxShadow: `0 4px 12px ${skill.color}20`
                       }}
                     >
-                      {isExpanded ? '↑ Show Less' : '↓ Show More'}
+                      {isExpanded ? `↑ ${data.skills.showLess}` : `↓ ${data.skills.showMore}`}
                     </button>
 
                     {/* Expanded Content */}
@@ -348,12 +371,12 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                       >
                         {/* All Technologies */}
                         <div>
-                          <h4 
+                          <h4
                             className="text-xs font-bold mb-3 uppercase tracking-wider flex items-center gap-2"
                             style={{ color: skill.color }}
                           >
                             <span className="inline-block w-1 h-4 rounded-full" style={{ backgroundColor: skill.color }}></span>
-                            All Technologies
+                            {data.skills.allTechnologies}
                           </h4>
                           <div className="flex flex-wrap gap-2">
                             {skill.technologies.map((tech) => (
@@ -374,12 +397,12 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
 
                         {/* Related Projects */}
                         <div>
-                          <h4 
+                          <h4
                             className="text-xs font-bold mb-3 uppercase tracking-wider flex items-center gap-2"
                             style={{ color: skill.color }}
                           >
                             <span className="inline-block w-1 h-4 rounded-full" style={{ backgroundColor: skill.color }}></span>
-                            Related Projects
+                            {data.skills.relatedProjects}
                           </h4>
                           <ul className="space-y-2">
                             {skill.projects.map((project) => (
@@ -399,12 +422,12 @@ const SkillsSection: React.FC<Props> = ({ skillsRef, skillItemsRef }) => {
                         {/* Code Snippet */}
                         {skill.codeSnippet && (
                           <div>
-                            <h4 
+                            <h4
                               className="text-xs font-bold mb-3 uppercase tracking-wider flex items-center gap-2"
                               style={{ color: skill.color }}
                             >
                               <span className="inline-block w-1 h-4 rounded-full" style={{ backgroundColor: skill.color }}></span>
-                              Example Code
+                              {data.skills.exampleCode}
                             </h4>
                             <div 
                               className="rounded-lg p-3 overflow-x-auto"
