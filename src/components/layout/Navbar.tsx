@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { ThemeToggle } from "../theme-toggle"
 import { LanguageSwitcher } from "../LanguageSwitcher"
 import { useLanguage } from "@/contexts/LanguageContext"
 import { cn } from "@/lib/utils"
@@ -49,13 +48,11 @@ export function Navbar() {
             </Link>
           ))}
           <LanguageSwitcher />
-          <ThemeToggle />
         </nav>
 
         {/* Mobile navigation */}
         <div className="md:hidden flex items-center gap-2">
           <LanguageSwitcher />
-          <ThemeToggle />
           <button
             className="text-gray-500 hover:text-gray-600 p-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

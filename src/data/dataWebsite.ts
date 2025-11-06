@@ -89,6 +89,7 @@ export interface WebsiteData {
     subtitle: string;
     nameLabel: string;
     emailLabel: string;
+    subjectLabel: string;
     messageLabel: string;
     sendButton: string;
     sending: string;
@@ -103,6 +104,15 @@ export interface WebsiteData {
       location: string;
       availability: string;
     };
+    availabilityDetails: {
+      title: string;
+      status: string;
+      weekdays: string;
+      weekdaysTime: string;
+      weekend: string;
+      weekendNote: string;
+    };
+    socialConnect: string;
   };
 
   // Common
@@ -153,6 +163,14 @@ export interface WebsiteData {
     links: string;
     connect: string;
     rights: string;
+    ctaText: string;
+    ctaButton: string;
+  };
+
+  // Availability
+  availability: {
+    status: string;
+    message: string;
   };
 }
 
@@ -241,6 +259,7 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
       subtitle: "Have a question or want to work together? I'd love to hear from you.",
       nameLabel: 'Your Name',
       emailLabel: 'Your Email',
+      subjectLabel: 'Subject',
       messageLabel: 'Your Message',
       sendButton: 'Send Message',
       sending: 'Sending...',
@@ -255,6 +274,15 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
         location: 'Location',
         availability: 'Availability',
       },
+      availabilityDetails: {
+        title: 'Availability',
+        status: 'Available for Freelance',
+        weekdays: 'Monday - Friday',
+        weekdaysTime: '9:00 AM - 6:00 PM (CST)',
+        weekend: 'Weekend',
+        weekendNote: 'Available for urgent matters',
+      },
+      socialConnect: 'Connect with me',
     },
 
     common: {
@@ -300,6 +328,13 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
       links: 'Links',
       connect: 'Connect',
       rights: 'All rights reserved.',
+      ctaText: 'Ready to build something amazing together?',
+      ctaButton: 'Get in Touch',
+    },
+
+    availability: {
+      status: 'Available for Freelance',
+      message: 'Open to new opportunities and collaborations',
     },
   },
 
@@ -307,7 +342,7 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
     nav: {
       home: 'Inicio',
       projects: 'Proyectos',
-      about: 'Acerca de',
+      about: 'Sobre Mí',
       contact: 'Contacto',
     },
 
@@ -322,7 +357,7 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
     },
 
     about: {
-      title: 'Acerca de Mí',
+      title: 'Sobre Mí',
       subtitle: 'Conoce más sobre mi experiencia, habilidades y trayectoria',
       name: 'Aaron Hernandez',
       bio1: 'Soy estudiante de Ciencias de la Computación en el Tecnológico de Monterrey con experiencia en construcción de aplicaciones full-stack escalables, soluciones cloud-native y sistemas con IA. Me apasiona usar la tecnología para resolver problemas del mundo real y crear experiencias de usuario excepcionales.',
@@ -387,6 +422,7 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
       subtitle: '¿Tienes una pregunta o quieres trabajar juntos? Me encantaría escucharte.',
       nameLabel: 'Tu Nombre',
       emailLabel: 'Tu Email',
+      subjectLabel: 'Asunto',
       messageLabel: 'Tu Mensaje',
       sendButton: 'Enviar Mensaje',
       sending: 'Enviando...',
@@ -401,6 +437,15 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
         location: 'Ubicación',
         availability: 'Disponibilidad',
       },
+      availabilityDetails: {
+        title: 'Disponibilidad',
+        status: 'Disponible para Freelance',
+        weekdays: 'Lunes - Viernes',
+        weekdaysTime: '9:00 AM - 6:00 PM (CST)',
+        weekend: 'Fin de semana',
+        weekendNote: 'Disponible para asuntos urgentes',
+      },
+      socialConnect: 'Conéctate conmigo',
     },
 
     common: {
@@ -446,6 +491,13 @@ export const websiteData: Record<'en' | 'es', WebsiteData> = {
       links: 'Enlaces',
       connect: 'Conectar',
       rights: 'Todos los derechos reservados.',
+      ctaText: '¿Listo para crear algo increíble juntos?',
+      ctaButton: 'Contáctame',
+    },
+
+    availability: {
+      status: 'Disponible para Freelance',
+      message: 'Abierto a nuevas oportunidades y colaboraciones',
     },
   },
 };

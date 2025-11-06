@@ -124,69 +124,7 @@ export default function AboutPage() {
       </div>
       
       {/* Skills Section */}
-      <div className="mt-20">
-        <div className="mb-10 text-center">
-          <h2 className="text-2xl font-bold">{data.about.skills.title}</h2>
-          <p className="mt-2 text-muted-foreground">
-            {data.about.skills.subtitle}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          <div className="flex flex-col items-center rounded-lg border bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-            <h3 className="mb-4 text-lg font-semibold">{data.about.skills.frontend}</h3>
-            <ul className="space-y-2 text-center text-muted-foreground">
-              <li>React / Next.js</li>
-              <li>TypeScript</li>
-              <li>HTML / CSS</li>
-              <li>Tailwind CSS</li>
-              <li>Responsive Design</li>
-            </ul>
-          </div>
-
-          <div className="flex flex-col items-center rounded-lg border bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-            <h3 className="mb-4 text-lg font-semibold">{data.about.skills.backend}</h3>
-            <ul className="space-y-2 text-center text-muted-foreground">
-              <li>Node.js</li>
-              <li>Express</li>
-              <li>Python</li>
-              <li>Spring Boot</li>
-              <li>RESTful APIs</li>
-            </ul>
-          </div>
-
-          <div className="flex flex-col items-center rounded-lg border bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-            <h3 className="mb-4 text-lg font-semibold">{data.about.skills.databaseCloud}</h3>
-            <ul className="space-y-2 text-center text-muted-foreground">
-              <li>Firebase</li>
-              <li>MongoDB</li>
-              <li>SQL / PostgreSQL</li>
-              <li>AWS Services</li>
-              <li>Vercel / Netlify</li>
-            </ul>
-          </div>
-
-          <div className="flex flex-col items-center rounded-lg border bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950">
-            <h3 className="mb-4 text-lg font-semibold">{data.about.skills.toolsOthers}</h3>
-            <ul className="space-y-2 text-center text-muted-foreground">
-              <li>Git / GitHub</li>
-              <li>Docker</li>
-              <li>CI/CD Pipelines</li>
-              <li>UI/UX Design</li>
-              <li>Agile Methodology</li>
-            </ul>
-          </div>
-        </div>
-      </div>
       
-      {/* Interests Section */}
-      <div className="mt-20 text-center">
-        <h2 className="mb-6 text-2xl font-bold">{data.about.beyondCoding.title}</h2>
-        <p className="mx-auto max-w-2xl text-muted-foreground">
-          {data.about.beyondCoding.description}
-        </p>
-      </div>
-
       {/* Call to Action */}
       <div className="mt-20 rounded-lg bg-slate-100 p-10 text-center dark:bg-slate-800">
         <h2 className="mb-4 text-2xl font-bold">{data.about.cta.title}</h2>

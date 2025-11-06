@@ -80,8 +80,8 @@ export default function ContactForm() {
                 </div>
                 <div>
                   <h3 className="font-semibold">{data.contact.info.email}</h3>
-                  <a href="mailto:a01642529@tec.mx" className="text-muted-foreground hover:text-primary">
-                    a01642529@tec.mx
+                  <a href="mailto:aypierre223@gmail.com" className="text-muted-foreground hover:text-primary">
+                    aypierre223@gmail.com
                   </a>
                 </div>
               </div>
@@ -97,7 +97,7 @@ export default function ContactForm() {
               </div>
 
               <div>
-                <h3 className="mb-3 font-semibold">Connect with me</h3>
+                <h3 className="mb-3 font-semibold">{data.contact.socialConnect}</h3>
                 <div className="flex space-x-4">
                   <a
                     href="https://github.com/Aaron3312"
@@ -109,7 +109,7 @@ export default function ContactForm() {
                     <span className="sr-only">GitHub</span>
                   </a>
                   <a
-                    href="https://linkedin.com"
+                    href="https://www.linkedin.com/in/aaron3312"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="rounded-full bg-gray-100 p-3 text-slate-700 transition-colors hover:bg-gray-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
@@ -118,7 +118,7 @@ export default function ContactForm() {
                     <span className="sr-only">LinkedIn</span>
                   </a>
                   <a
-                    href="mailto:a01642529@tec.mx"
+                    href="mailto:aypierre223@gmail.com"
                     className="rounded-full bg-gray-100 p-3 text-slate-700 transition-colors hover:bg-gray-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
                   >
                     <Mail className="h-5 w-5" />
@@ -128,12 +128,33 @@ export default function ContactForm() {
               </div>
             </div>
 
-            <div className="mt-10">
-              <h2 className="mb-4 text-2xl font-bold">{data.contact.info.availability}</h2>
-              <p className="text-muted-foreground">
-                Monday - Friday: 9:00 AM - 6:00 PM (CST)<br />
-                Weekend: Available for urgent matters
-              </p>
+            <div className="mt-10 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6">
+              <h2 className="mb-4 text-xl font-bold flex items-center gap-2">
+                {data.contact.availabilityDetails.title}
+              </h2>
+
+              {/* Status Badge */}
+              <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                </span>
+                <span className="text-sm font-semibold text-green-700 dark:text-green-400">
+                  {data.contact.availabilityDetails.status}
+                </span>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-sm">{data.contact.availabilityDetails.weekdays}</span>
+                  <span className="text-sm text-muted-foreground">{data.contact.availabilityDetails.weekdaysTime}</span>
+                </div>
+                <div className="h-px bg-slate-200 dark:bg-slate-700"></div>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-sm">{data.contact.availabilityDetails.weekend}</span>
+                  <span className="text-sm text-muted-foreground">{data.contact.availabilityDetails.weekendNote}</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -173,7 +194,7 @@ export default function ContactForm() {
 
               <div>
                 <label htmlFor="subject" className="mb-2 block text-sm font-medium">
-                  Subject
+                  {data.contact.subjectLabel}
                 </label>
                 <input
                   type="text"

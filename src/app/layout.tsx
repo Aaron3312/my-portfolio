@@ -177,7 +177,7 @@ export default function RootLayout({
               },
               "sameAs": [
                 "https://github.com/Aaron3312",
-                "https://linkedin.com/in/aaron-hernandez-jimenez"
+                "https://www.linkedin.com/in/aaron3312"
               ],
               "worksFor": {
                 "@type": "Organization",
@@ -206,8 +206,9 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
+          forcedTheme="dark"
           disableTransitionOnChange
         >
           <LanguageProvider>
